@@ -1,0 +1,5 @@
+
+Pods/
+Carthage/
+*.lock
+*.resolved
