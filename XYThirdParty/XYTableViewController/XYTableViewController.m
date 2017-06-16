@@ -129,6 +129,29 @@ XYTableKey(ModelHeader);
     }
     return self;
 }
+-(BOOL)shouldAutorotate{
+    return YES;
+}
+-(UIInterfaceOrientationMask)supportedInterfaceOrientations{
+    return UIInterfaceOrientationMaskPortrait;
+}
+-(UIInterfaceOrientation)preferredInterfaceOrientationForPresentation{
+    return UIInterfaceOrientationPortrait;
+}
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBar.hidden = NO;
+    self.navigationController.navigationBar.translucent=NO;
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    if (self.navigationController.viewControllers.firstObject == self) {
+        self.tabBarController.tabBar.hidden=NO;
+        self.tabBarController.tabBar.translucent=NO;
+    }else{
+        self.tabBarController.tabBar.hidden=YES;
+        self.tabBarController.tabBar.translucent=YES;
+    }
+    [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationPortrait animated:NO];
+}
 -(void)setRowsPerPage:(NSUInteger)rowsPerPage {
     if (rowsPerPage > 1) {
         _rowsPerPage = rowsPerPage;
@@ -221,11 +244,11 @@ XYTableKey(ModelHeader);
     }
     self.isHeaderTriggerLastToken = YES;
     __weak typeof(self) weakself = self;
-    [self refresh:self.xy_tableView page:0 complete:^(NSArray<NSDictionary *> * _Nullable modelRect) {
+    [self refresh:self.xy_tableView page:0 complete:^(NSArray * _Nullable modelRect) {
         if (weakself.isHeaderTriggerLastToken) {
             if (modelRect) {
                 [weakself.ModelRect removeAllObjects];
-                if ([weakself.ModelRect.firstObject isKindOfClass:[XYSectionModel class]]) weakself.xy_isRect = YES;
+                if (weakself.ModelRect.count>0 && [weakself.ModelRect.firstObject isKindOfClass:[XYSectionModel class]]) weakself.xy_isRect = YES;
                 [weakself.ModelRect addObjectsFromArray:modelRect];
                 [weakself.xy_tableView reloadData];
             }
@@ -258,7 +281,7 @@ XYTableKey(ModelHeader);
         [weakself.xy_tableView.mj_footer endRefreshing];
     }];
 }
--(void)refresh:(UITableView*)tableView page:(NSUInteger)page complete:(void (^)(NSArray<NSDictionary<NSString *,id> *> * _Nullable))complete {
+-(void)refresh:(UITableView*)tableView page:(NSUInteger)page complete:(void (^)(NSArray* _Nullable))complete {
     complete(nil);
 }
 

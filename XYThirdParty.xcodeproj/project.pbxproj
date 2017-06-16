@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC1D56771EF3C86A00AF03AD /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = AC1D56761EF3C86A00AF03AD /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		AC8DDD7F1EEFC2A50009C5AC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8DDD7E1EEFC2A50009C5AC /* main.m */; };
 		AC8DDD821EEFC2A50009C5AC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8DDD811EEFC2A50009C5AC /* AppDelegate.m */; };
 		AC8DDD851EEFC2A50009C5AC /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8DDD841EEFC2A50009C5AC /* ViewController.m */; };
@@ -38,6 +39,8 @@
 		0717F8BC7866A89CF60A07EA /* Pods-XYThirdParty.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XYThirdParty.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XYThirdParty/Pods-XYThirdParty.debug.xcconfig"; sourceTree = "<group>"; };
 		4A5C7839696F10CE26F7C3C4 /* Pods-XYThirdParty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XYThirdParty.release.xcconfig"; path = "Pods/Target Support Files/Pods-XYThirdParty/Pods-XYThirdParty.release.xcconfig"; sourceTree = "<group>"; };
 		A76582D26C8528E28F0B7D17 /* Pods_XYThirdParty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XYThirdParty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AC1D56751EF3C86A00AF03AD /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
+		AC1D56761EF3C86A00AF03AD /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		AC8DDD7A1EEFC2A50009C5AC /* XYThirdParty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XYThirdParty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC8DDD7E1EEFC2A50009C5AC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AC8DDD801EEFC2A50009C5AC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -115,6 +118,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		AC1D56741EF3C84E00AF03AD /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				AC1D56751EF3C86A00AF03AD /* JSONKit.h */,
+				AC1D56761EF3C86A00AF03AD /* JSONKit.m */,
+			);
+			path = JSON;
+			sourceTree = "<group>";
+		};
 		AC8DDD711EEFC2A50009C5AC = {
 			isa = PBXGroup;
 			children = (
@@ -137,6 +149,7 @@
 		AC8DDD7C1EEFC2A50009C5AC /* XYThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				AC1D56741EF3C84E00AF03AD /* JSON */,
 				AC8DDDD51EEFC3970009C5AC /* File.swift */,
 				AC8DDDD61EEFC3970009C5AC /* TableViewController.h */,
 				AC8DDDD71EEFC3970009C5AC /* TableViewController.m */,
@@ -435,6 +448,7 @@
 				AC8DDE0D1EEFC3970009C5AC /* Log.swift in Sources */,
 				AC8DDE0C1EEFC3970009C5AC /* XYLoadingPage.m in Sources */,
 				AC8DDE141EEFC3970009C5AC /* XYWebVC.m in Sources */,
+				AC1D56771EF3C86A00AF03AD /* JSONKit.m in Sources */,
 				AC8DDE061EEFC3970009C5AC /* DatePickerVC.m in Sources */,
 				AC8DDE101EEFC3970009C5AC /* XYScroll.m in Sources */,
 				AC8DDE0E1EEFC3970009C5AC /* UIViewController+Log.m in Sources */,

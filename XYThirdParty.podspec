@@ -48,4 +48,9 @@ Pod::Spec.new do |s|
   s.dependency 'MZTimerLabel'
 #  s.libraries = "stdc++"
 
+s.subspec 'JSON' do |json|
+json.source_files = 'XYThirdParty/JSON/*.{h,m}'
+json.requires_arc = false
+end
+
 end

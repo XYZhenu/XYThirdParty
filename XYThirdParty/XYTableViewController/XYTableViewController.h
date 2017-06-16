@@ -60,7 +60,7 @@ NS_ASSUME_NONNULL_BEGIN;
 
 -(void)refreshHeaderSilently:(BOOL)silently;
 -(void)refreshFooterSilently:(BOOL)silently;
--(void)refresh:(UITableView*)tableView page:(NSUInteger)page complete:(void(^)(NSArray<NSDictionary<NSString*,id>*>* _Nullable modelRect))complete;
+-(void)refresh:(UITableView*)tableView page:(NSUInteger)page complete:(void(^)(NSArray* _Nullable modelRect))complete;
 
 -(void)XYModelResponse:(XYRowModel* )model;
 

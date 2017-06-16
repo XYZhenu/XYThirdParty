@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 @import AFNetworking;
 NS_ASSUME_NONNULL_BEGIN;
-#define XYNet [XYNetwork instance]
 typedef NS_ENUM(NSUInteger, XYSerializerType) {
     XYSerializerType_Origin,
     XYSerializerType_Json,
