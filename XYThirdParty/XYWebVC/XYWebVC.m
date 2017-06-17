@@ -51,7 +51,7 @@
     }
     UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
     if (!image) {
-        image = [UIImage imageNamed:@"return"];
+        image = [UIImage imageNamed:@"return" inBundle:[NSBundle bundleForClass:[XYWebVC class]] compatibleWithTraitCollection:nil];
     }
     [btn setImage:image forState:UIControlStateNormal];
     btn.frame = CGRectMake(0, 0, 40, 40);

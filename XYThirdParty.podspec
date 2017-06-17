@@ -46,6 +46,7 @@ Pod::Spec.new do |s|
   s.dependency 'MJRefresh'
   s.dependency 'FlyImage'
   s.dependency 'MZTimerLabel'
+  s.dependency 'GVUserDefaults'
 #  s.libraries = "stdc++"
 
 s.subspec 'JSON' do |json|

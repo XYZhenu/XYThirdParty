@@ -11,6 +11,7 @@ target 'XYThirdParty' do
     pod 'MBProgressHUD'
     pod 'MJRefresh'
     pod 'MZTimerLabel'
+    pod 'GVUserDefaults'
     pod 'FlyImage'#, :path=>'../../../FlyImage/'
     #pod 'FlyImage/WebP', :path=>'../../../FlyImage/'
 end
