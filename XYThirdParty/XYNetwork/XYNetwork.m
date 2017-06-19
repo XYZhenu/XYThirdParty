@@ -16,7 +16,7 @@
 
 @implementation XYResponSerializer
 -(NSMutableDictionary *)serializerTypeMap {
-    if (!_serializerTypeMap) { _serializerTypeMap = @[].mutableCopy; }
+    if (!_serializerTypeMap) { _serializerTypeMap = @{}.mutableCopy; }
     return _serializerTypeMap;
 }
 
