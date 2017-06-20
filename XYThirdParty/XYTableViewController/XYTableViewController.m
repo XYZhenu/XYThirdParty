@@ -126,6 +126,7 @@ XYTableKey(ModelHeader);
         self.rowsPerPage = 10;
         self.xy_isRect = NO;
         self.ModelRect = [NSMutableArray array];
+        self.cellForCaculating = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -134,6 +135,7 @@ XYTableKey(ModelHeader);
     self.rowsPerPage = 10;
     self.xy_isRect = NO;
     self.ModelRect = [NSMutableArray array];
+    self.cellForCaculating = [NSMutableDictionary dictionary];
 }
 -(BOOL)shouldAutorotate{
     return YES;
@@ -343,8 +345,9 @@ XYTableKey(ModelHeader);
                 if (!cell) {
                     cell = [self getReuseCellWithModel:data tableview:tableView];
                     self.cellForCaculating[data.identifier] = cell;
+                }else{
+                    cell.xyModel = data;
                 }
-                cell.xyModel = data;
                 height = [cell.contentView autoLayoutHeightWithWidth:tableView.frame.size.width];
                 data.height = height;
             }else if (height == -1){
