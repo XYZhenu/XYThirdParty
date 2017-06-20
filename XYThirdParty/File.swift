@@ -8,7 +8,5 @@
 
 import Foundation
 class VC: XYTableViewController {
-    override func refresh(_ tableView: UITableView, page: UInt, complete: @escaping ([[String : Any]]?) -> Void) {
-//        let rowmodel = XYRowModel(cls: UITableViewCell.self, msg: [:])
-    }
+    
 }

@@ -12,6 +12,7 @@
 @interface XYResponSerializer : AFHTTPResponseSerializer
 @property (strong, nonatomic) NSMutableDictionary *serializerTypeMap;
 @property (strong, nonatomic) AFJSONResponseSerializer *jsonSerializer;
+-(void)setAcceptableContentTypes:(NSSet <NSString *> *)acceptableContentTypes for:(XYSerializerType)type;
 @end
 
 @implementation XYResponSerializer
@@ -26,7 +27,15 @@
     }
     return _jsonSerializer;
 }
-
+-(void)setAcceptableContentTypes:(NSSet <NSString *> *)acceptableContentTypes for:(XYSerializerType)type {
+    switch (type) {
+        case XYSerializerType_Json:
+        self.jsonSerializer.acceptableContentTypes = acceptableContentTypes;
+        default:
+        self.acceptableContentTypes = acceptableContentTypes;
+        break;
+    }
+}
 -(id)responseObjectForResponse:(NSURLResponse *)response
                           data:(NSData *)data
                          error:(NSError *__autoreleasing  _Nullable *)error
@@ -87,6 +96,10 @@
     return manager;
 }
 -(void)initSetting{}
+-(void)setAcceptableContentTypes:(NSSet <NSString *> *)acceptableContentTypes for:(XYSerializerType)type {
+    [(XYResponSerializer*)self.responseSerializer setAcceptableContentTypes:acceptableContentTypes for:type];
+}
+
 -(void)setResponseSerializer:(AFHTTPResponseSerializer<AFURLResponseSerialization> *)responseSerializer {
     [super setResponseSerializer:responseSerializer];
     if ([responseSerializer isKindOfClass:[XYResponSerializer class]]) {

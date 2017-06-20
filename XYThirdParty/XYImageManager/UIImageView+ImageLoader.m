@@ -14,13 +14,7 @@
 -(void)xy_load:(nullable id)url {
     [self xy_load:url placeHolder:nil];
 }
--(void)xy_load:(nullable id)url placeHolder:(nullable id)placeHolder {
-    NSString* placeholderName = nil;
-    if ([placeHolder isKindOfClass:[UIImage class]]) {
-        self.image = placeHolder;
-    }else if ([placeHolder isKindOfClass:[NSString class]]){
-        placeholderName = placeHolder;
-    }
+-(void)xy_load:(nullable id)url placeHolder:(nullable NSString*)placeHolder {
     NSURL* imageurl = nil;
     if ([url isKindOfClass:[NSString class]]) {
         imageurl = [NSURL URLWithString:url];
@@ -29,18 +23,12 @@
     }else{
         return;
     }
-    [self setPlaceHolderImageName:placeholderName thumbnailURL:nil originalURL:imageurl];
+    [self setPlaceHolderImageName:placeHolder thumbnailURL:nil originalURL:imageurl];
 }
 -(void)xy_loadIcon:(nullable id)url {
     [self xy_loadIcon:url placeHolder:nil];
 }
--(void)xy_loadIcon:(nullable id)url placeHolder:(nullable id)placeHolder {
-    NSString* placeholderName = nil;
-    if ([placeHolder isKindOfClass:[UIImage class]]) {
-        self.image = placeHolder;
-    }else if ([placeHolder isKindOfClass:[NSString class]]){
-        placeholderName = placeHolder;
-    }
+-(void)xy_loadIcon:(nullable id)url placeHolder:(nullable NSString*)placeHolder {
     NSURL* imageurl = nil;
     if ([url isKindOfClass:[NSString class]]) {
         imageurl = [NSURL URLWithString:url];
@@ -49,6 +37,6 @@
     }else{
         return;
     }
-    [self setPlaceHolderImageName:placeholderName iconURL:imageurl];
+    [self setPlaceHolderImageName:placeHolder iconURL:imageurl];
 }
 @end

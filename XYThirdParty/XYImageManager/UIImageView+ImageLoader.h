@@ -10,8 +10,8 @@
 NS_ASSUME_NONNULL_BEGIN
 @interface UIImageView (XYImageLoader)
 -(void)xy_load:(nullable id)url;
--(void)xy_load:(nullable id)url placeHolder:(nullable id)placeHolder;
+-(void)xy_load:(nullable id)url placeHolder:(nullable NSString*)placeHolder;
 -(void)xy_loadIcon:(nullable id)url;
--(void)xy_loadIcon:(nullable id)url placeHolder:(nullable id)placeHolder;
+-(void)xy_loadIcon:(nullable id)url placeHolder:(nullable NSString*)placeHolder;
 @end
 NS_ASSUME_NONNULL_END

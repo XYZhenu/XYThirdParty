@@ -16,6 +16,7 @@ typedef NS_ENUM(NSUInteger, XYSerializerType) {
 @interface XYNetwork : AFHTTPSessionManager
 +(instancetype)instance;
 -(void)initSetting;//subclass using
+-(void)setAcceptableContentTypes:(NSSet <NSString *> *)acceptableContentTypes for:(XYSerializerType)type;
 -(NSURLSessionDataTask *)request:(NSMutableURLRequest *)request
                   serializerType:(XYSerializerType)type
                   uploadProgress:(nullable void (^)(NSProgress *uploadProgress)) uploadProgressBlock

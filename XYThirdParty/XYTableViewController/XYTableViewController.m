@@ -129,6 +129,12 @@ XYTableKey(ModelHeader);
     }
     return self;
 }
+-(void)awakeFromNib{
+    [super awakeFromNib];
+    self.rowsPerPage = 10;
+    self.xy_isRect = NO;
+    self.ModelRect = [NSMutableArray array];
+}
 -(BOOL)shouldAutorotate{
     return YES;
 }
@@ -159,7 +165,7 @@ XYTableKey(ModelHeader);
 }
 -(NSUInteger)currentPage {
     NSUInteger page = (NSUInteger)(self.ModelRect.count / self.rowsPerPage);
-    if (self.ModelRect.count % self.rowsPerPage > 0) {
+    if (self.ModelRect.count % self.rowsPerPage > 0 && self.ModelRect.count > self.rowsPerPage) {
         page ++;
     }
     return page;
@@ -269,7 +275,7 @@ XYTableKey(ModelHeader);
     NSUInteger unCompleteNum = self.ModelRect.count % self.rowsPerPage;
     self.isHeaderTriggerLastToken = NO;
     __weak typeof(self) weakself = self;
-    [self refresh:self.xy_tableView page:completePage + 1 complete:^(NSArray<NSDictionary *> * _Nullable modelRect) {
+    [self refresh:self.xy_tableView page:completePage complete:^(NSArray<NSDictionary *> * _Nullable modelRect) {
         if (!weakself.isHeaderTriggerLastToken) {
             if (modelRect) {
                 [weakself.ModelRect removeObjectsInRange:NSMakeRange(weakself.ModelRect.count - unCompleteNum, unCompleteNum)];
