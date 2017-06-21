@@ -118,6 +118,13 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		AC1A0A0A1EFA48B300D6E166 /* RichText */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = RichText;
+			sourceTree = "<group>";
+		};
 		AC1D56741EF3C84E00AF03AD /* JSON */ = {
 			isa = PBXGroup;
 			children = (
@@ -149,6 +156,7 @@
 		AC8DDD7C1EEFC2A50009C5AC /* XYThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				AC1A0A0A1EFA48B300D6E166 /* RichText */,
 				AC1D56741EF3C84E00AF03AD /* JSON */,
 				AC8DDDD51EEFC3970009C5AC /* File.swift */,
 				AC8DDDD61EEFC3970009C5AC /* TableViewController.h */,
