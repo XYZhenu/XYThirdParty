@@ -16,4 +16,6 @@ target 'XYThirdParty' do
     #pod 'FlyImage/WebP', :path=>'../../../FlyImage/'
     
     pod 'YYText'
+    pod 'YYImage'
+    
 end

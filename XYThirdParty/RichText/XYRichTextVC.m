@@ -7,7 +7,8 @@
 //
 
 #import "XYRichTextVC.h"
-#import <YYText/YYText.h>
+@import YYText;
+@import YYImage;
 @import TZImagePickerController;
 @import Photos;
 
@@ -64,24 +65,19 @@ static NSString* const keyRichTextImage = @"keyRichTextImage";
     [toolbar addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[alubmBtn]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(alubmBtn)]];
     
     NSMutableAttributedString *text = [[NSMutableAttributedString alloc] init];
-    text.font = [UIFont systemFontOfSize:20];
-    text.lineSpacing = 4;
-    text.firstLineHeadIndent = 0;
+    text.yy_font = [UIFont systemFontOfSize:20];
+    text.yy_lineSpacing = 4;
+    text.yy_firstLineHeadIndent = 0;
     
     YYTextView *textView = [YYTextView new];
     textView.attributedText = text;
-    textView.size = self.view.size;
     textView.textContainerInset = UIEdgeInsetsMake(10, 10, 10, 10);
     textView.delegate = self;
     textView.allowsPasteImage = YES; /// Pasts image
     textView.allowsPasteAttributedString = YES; /// Paste attributed string
-    if (kiOS7Later) {
-        textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
-    } else {
-        textView.height -= 64;
-    }
-    textView.contentInset = UIEdgeInsetsMake(toolbar.bottom, 0, 0, 0);
+    textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
     textView.scrollIndicatorInsets = textView.contentInset;
+    textView.showsHorizontalScrollIndicator = NO;
     textView.selectedRange = NSMakeRange(text.length, 0);
     [self.view insertSubview:textView belowSubview:toolbar];
     self.textView = textView;
@@ -189,9 +185,9 @@ static NSString* const keyRichTextImage = @"keyRichTextImage";
     while ((range = [plainText rangeOfString:YYTextAttachmentToken options:NSBackwardsSearch range:searchRange]).location != NSNotFound) {
         searchRange = NSMakeRange(0, range.location);
         
-        XYRichTextImage* RTimage = [allstr attribute:keyRichTextImage atIndex:range.location];
+        XYRichTextImage* RTimage = [allstr yy_attribute:keyRichTextImage atIndex:range.location];
         if (!RTimage) {
-            YYTextAttachment* content = [allstr attribute:YYTextAttachmentAttributeName atIndex:range.location];
+            YYTextAttachment* content = [allstr yy_attribute:YYTextAttachmentAttributeName atIndex:range.location];
             UIImage* image = nil;
             if ([content.content isKindOfClass:[UIImage class]]) {
                 image = content.content;
@@ -246,10 +242,10 @@ static NSString* const keyRichTextImage = @"keyRichTextImage";
             }
         }
         
-        NSMutableAttributedString *attText = [NSAttributedString attachmentStringWithContent:content contentMode:UIViewContentModeScaleToFill width:img.size.width ascent:img.size.height descent:0];
-        [attText addAttribute:keyRichTextImage value:sender range:attText.rangeOfAll];
+        NSMutableAttributedString *attText = [NSAttributedString yy_attachmentStringWithContent:content contentMode:UIViewContentModeScaleToFill width:img.size.width ascent:img.size.height descent:0];
+        [attText addAttribute:keyRichTextImage value:sender range:attText.yy_rangeOfAll];
         
-        NSDictionary *attrs = self.attributedText.attributes;
+        NSDictionary *attrs = self.attributedText.yy_attributes;
         if (attrs) [attText addAttributes:attrs range:NSMakeRange(0, attText.length)];
         
         NSUInteger endPosition = self.selectedRange.location + attText.length;

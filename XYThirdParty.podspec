@@ -45,5 +45,7 @@ Pod::Spec.new do |s|
         r.source_files = 'XYThirdParty/RichText/*.{h,m}'
         r.requires_arc = true
         r.dependency 'YYText'
+        r.dependency 'YYImage'
+        r.dependency 'TZImagePickerController'
     end
 end
