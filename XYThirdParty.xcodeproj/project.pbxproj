@@ -32,6 +32,7 @@
 		AC8DDE131EEFC3970009C5AC /* XYTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8DDDFE1EEFC3970009C5AC /* XYTableViewController.m */; };
 		AC8DDE141EEFC3970009C5AC /* XYWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8DDE031EEFC3970009C5AC /* XYWebVC.m */; };
 		AC8DDE171EEFC6830009C5AC /* XYThirdParty.podspec in Resources */ = {isa = PBXBuildFile; fileRef = AC8DDE161EEFC6830009C5AC /* XYThirdParty.podspec */; };
+		ACBCD22A1EFD1CE500D654A7 /* XYRichTextVC.m in Sources */ = {isa = PBXBuildFile; fileRef = ACBCD2291EFD1CE500D654A7 /* XYRichTextVC.m */; };
 		B2C5F2AB58E0470F3BFCFABE /* Pods_XYThirdParty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A76582D26C8528E28F0B7D17 /* Pods_XYThirdParty.framework */; };
 /* End PBXBuildFile section */
 
@@ -87,6 +88,8 @@
 		AC8DDE021EEFC3970009C5AC /* XYWebVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYWebVC.h; sourceTree = "<group>"; };
 		AC8DDE031EEFC3970009C5AC /* XYWebVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYWebVC.m; sourceTree = "<group>"; };
 		AC8DDE161EEFC6830009C5AC /* XYThirdParty.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = XYThirdParty.podspec; sourceTree = "<group>"; };
+		ACBCD2281EFD1CE500D654A7 /* XYRichTextVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYRichTextVC.h; sourceTree = "<group>"; };
+		ACBCD2291EFD1CE500D654A7 /* XYRichTextVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYRichTextVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +124,8 @@
 		AC1A0A0A1EFA48B300D6E166 /* RichText */ = {
 			isa = PBXGroup;
 			children = (
+				ACBCD2281EFD1CE500D654A7 /* XYRichTextVC.h */,
+				ACBCD2291EFD1CE500D654A7 /* XYRichTextVC.m */,
 			);
 			path = RichText;
 			sourceTree = "<group>";
@@ -463,6 +468,7 @@
 				AC8DDE0F1EEFC3970009C5AC /* XYNetwork.m in Sources */,
 				AC8DDD851EEFC2A50009C5AC /* ViewController.m in Sources */,
 				AC8DDE041EEFC3970009C5AC /* File.swift in Sources */,
+				ACBCD22A1EFD1CE500D654A7 /* XYRichTextVC.m in Sources */,
 				AC8DDD821EEFC2A50009C5AC /* AppDelegate.m in Sources */,
 				AC8DDE081EEFC3970009C5AC /* UIViewController+DatePicker.m in Sources */,
 				AC8DDE051EEFC3970009C5AC /* TableViewController.m in Sources */,

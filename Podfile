@@ -14,4 +14,6 @@ target 'XYThirdParty' do
     pod 'GVUserDefaults'
     pod 'FlyImage'#, :path=>'../../../FlyImage/'
     #pod 'FlyImage/WebP', :path=>'../../../FlyImage/'
+    
+    pod 'YYText'
 end

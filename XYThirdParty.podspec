@@ -41,5 +41,9 @@ Pod::Spec.new do |s|
         json.source_files = 'XYThirdParty/JSON/*.{h,m}'
         json.requires_arc = false
     end
-
+    s.subspec 'RichText' do |r|
+        r.source_files = 'XYThirdParty/RichText/*.{h,m}'
+        r.requires_arc = true
+        r.dependency 'YYText'
+    end
 end
