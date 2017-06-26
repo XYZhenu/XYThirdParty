@@ -135,7 +135,8 @@ static NSString* const keyRichTextImage = @"keyRichTextImage";
             image.asset = assets[i];
             image.image = images[i];
             image.info = infos[i];
-            image.url = image.info[@"PHImageFileURLKey"];
+            NSURL* fileurl = image.info[@"PHImageFileURLKey"];
+            image.fileName = [fileurl.absoluteString componentsSeparatedByString:@"/"].lastObject;
             image.isSelectOriginalPhoto = isSelectOriginalPhoto;
             [self.textView insertImage:image];
         }
@@ -201,7 +202,7 @@ static NSString* const keyRichTextImage = @"keyRichTextImage";
         }
         if (RTimage && RTimage.image) {
             if (!RTimage.identifier) {
-                if (RTimage.url) RTimage.identifier = RTimage.url.absoluteString;
+                if (RTimage.fileurl) RTimage.identifier = RTimage.fileurl.absoluteString;
                 else RTimage.identifier = [self generateId];
             }
             [imagesDic setValue:RTimage forKey:RTimage.identifier];

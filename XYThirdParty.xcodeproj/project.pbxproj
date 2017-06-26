@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC00AEB31F00E1FE00EEDC3E /* ImageUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = AC00AEB21F00E1FE00EEDC3E /* ImageUploader.m */; };
 		AC1D56771EF3C86A00AF03AD /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = AC1D56761EF3C86A00AF03AD /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		AC8DDD7F1EEFC2A50009C5AC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8DDD7E1EEFC2A50009C5AC /* main.m */; };
 		AC8DDD821EEFC2A50009C5AC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8DDD811EEFC2A50009C5AC /* AppDelegate.m */; };
@@ -40,6 +41,8 @@
 		0717F8BC7866A89CF60A07EA /* Pods-XYThirdParty.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XYThirdParty.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XYThirdParty/Pods-XYThirdParty.debug.xcconfig"; sourceTree = "<group>"; };
 		4A5C7839696F10CE26F7C3C4 /* Pods-XYThirdParty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XYThirdParty.release.xcconfig"; path = "Pods/Target Support Files/Pods-XYThirdParty/Pods-XYThirdParty.release.xcconfig"; sourceTree = "<group>"; };
 		A76582D26C8528E28F0B7D17 /* Pods_XYThirdParty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XYThirdParty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AC00AEB11F00E1FE00EEDC3E /* ImageUploader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageUploader.h; sourceTree = "<group>"; };
+		AC00AEB21F00E1FE00EEDC3E /* ImageUploader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageUploader.m; sourceTree = "<group>"; };
 		AC1D56751EF3C86A00AF03AD /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		AC1D56761EF3C86A00AF03AD /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		AC8DDD7A1EEFC2A50009C5AC /* XYThirdParty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XYThirdParty.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -126,6 +129,8 @@
 			children = (
 				ACBCD2281EFD1CE500D654A7 /* XYRichTextVC.h */,
 				ACBCD2291EFD1CE500D654A7 /* XYRichTextVC.m */,
+				AC00AEB11F00E1FE00EEDC3E /* ImageUploader.h */,
+				AC00AEB21F00E1FE00EEDC3E /* ImageUploader.m */,
 			);
 			path = RichText;
 			sourceTree = "<group>";
@@ -401,7 +406,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		9F64C7B462801E1F9BB2A422 /* [CP] Copy Pods Resources */ = {
@@ -476,6 +481,7 @@
 				AC8DDE091EEFC3970009C5AC /* UIViewController+ImagePicker.m in Sources */,
 				AC8DDE111EEFC3970009C5AC /* XYSegment.m in Sources */,
 				AC8DDE121EEFC3970009C5AC /* XYSlider.m in Sources */,
+				AC00AEB31F00E1FE00EEDC3E /* ImageUploader.m in Sources */,
 				AC8DDE071EEFC3970009C5AC /* ImagePickerVC.m in Sources */,
 				AC8DDD7F1EEFC2A50009C5AC /* main.m in Sources */,
 			);

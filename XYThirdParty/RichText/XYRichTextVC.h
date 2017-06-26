@@ -15,10 +15,15 @@ typedef NS_ENUM(NSUInteger,XYRichTextImageSaveType) {
 @interface XYRichTextImage : NSObject
 @property (nonatomic,strong,nullable)PHAsset* asset;
 @property (nonatomic,strong,nullable)UIImage* image;
+
+
 @property (nonatomic,strong,nullable)NSDictionary* info;
-@property (nonatomic,strong,nullable)NSURL* url;
+@property (nonatomic,strong,nullable)NSString* fileName;
+
 @property (nonatomic,strong,nullable)NSString* identifier;
 @property (nonatomic,assign)BOOL isSelectOriginalPhoto;//default no
+
+@property (nonatomic,strong,nullable)NSString* uploadedUrl;
 @end
 @interface XYRichTextVC : UIViewController
 @property (nonatomic,strong)NSString* picSymbolPrefix;//default [
