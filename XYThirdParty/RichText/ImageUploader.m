@@ -18,6 +18,7 @@
 @property (nonatomic,strong)NSString* cachePathImage;
 @property (nonatomic,strong)NSPort* port;
 @property (nonatomic,strong)NSRunLoop* loop;
+@property (nonatomic,strong)NSThread* thread;
 @end
 @implementation ImageUploader
 #pragma mark -- archive & unarchive
@@ -89,10 +90,11 @@
     executing = YES;
     [self didChangeValueForKey:@"isExecuting"];
 
+    self.thread = [NSThread currentThread];
     self.loop = [NSRunLoop currentRunLoop];
     self.port = [NSPort port];
     [self.loop addPort:self.port forMode:NSDefaultRunLoopMode];
-    [self.loop performSelector:@selector(main) target:self argument:nil order:0 modes:@[UITrackingRunLoopMode]];
+    [self.loop performSelector:@selector(main) target:self argument:nil order:0 modes:@[NSDefaultRunLoopMode]];
     [self.loop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
 //    BOOL shouldKeepRunning = YES; // global
 //    NSRunLoop *theRL = [NSRunLoop currentRunLoop];
@@ -109,7 +111,7 @@
 -(void)main{
     [self convert:^(NSData* imageData) {
         [self processData:imageData complete:^(NSString *completeKey) {
-            [self.loop performSelector:@selector(completeWithKey:) target:self argument:completeKey order:0 modes:@[UITrackingRunLoopMode]];
+            [self performSelector:@selector(completeWithKey:) onThread:self.thread withObject:imageData waitUntilDone:NO];
         }];
     }];
 }
@@ -127,10 +129,11 @@
     self.msg.uploadedUrl = completeKey;
     [self changeMsgKey:self.msg.identifier newKey:completeKey];
     [self.port invalidate];
-    [self.loop removePort:self.port forMode:UITrackingRunLoopMode];
+    [self.loop removePort:self.port forMode:NSDefaultRunLoopMode];
     self.port = nil;
     CFRunLoopStop(self.loop.getCFRunLoop);
     self.loop = nil;
+    self.thread = nil;
 }
 -(void)convert:(void(^)(NSData* newMsg))complete {
     if (self.cachePathImage) {
@@ -172,7 +175,7 @@
 }
 
 -(void)processData:(NSData*)imageData complete:(void(^)(NSString* completeKey))complete {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         complete(@"http://www.baidu.com");
     });
 }

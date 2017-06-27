@@ -88,9 +88,9 @@ static NSString* const keyRichTextImage = @"keyRichTextImage";
     id toplayout = self.topLayoutGuide;
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[toplayout]-0-[textView]-0-[toolbar]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(textView,toolbar,toplayout)]];
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [textView becomeFirstResponder];
-    });
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [textView becomeFirstResponder];
+//    });
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UIKeyboardWillChangeFrameNotification:) name:UIKeyboardWillChangeFrameNotification object:nil];
 }

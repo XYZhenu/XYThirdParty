@@ -19,7 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.operqueue = [[NSOperationQueue alloc] init];
-    self.operqueue.maxConcurrentOperationCount = 1;
+    self.operqueue.maxConcurrentOperationCount = 2;
     self.operqueue.name = @"rich_text_uploader";
     self.imagesDic = [NSMutableDictionary dictionary];
     // Do any additional setup after loading the view.
