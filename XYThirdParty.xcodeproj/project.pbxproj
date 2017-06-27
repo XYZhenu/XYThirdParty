@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AC00AEB31F00E1FE00EEDC3E /* ImageUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = AC00AEB21F00E1FE00EEDC3E /* ImageUploader.m */; };
+		AC00AEB71F02365E00EEDC3E /* RichTextVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AC00AEB61F02365E00EEDC3E /* RichTextVC.m */; };
 		AC1D56771EF3C86A00AF03AD /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = AC1D56761EF3C86A00AF03AD /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		AC8DDD7F1EEFC2A50009C5AC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8DDD7E1EEFC2A50009C5AC /* main.m */; };
 		AC8DDD821EEFC2A50009C5AC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8DDD811EEFC2A50009C5AC /* AppDelegate.m */; };
@@ -43,6 +44,8 @@
 		A76582D26C8528E28F0B7D17 /* Pods_XYThirdParty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XYThirdParty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC00AEB11F00E1FE00EEDC3E /* ImageUploader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageUploader.h; sourceTree = "<group>"; };
 		AC00AEB21F00E1FE00EEDC3E /* ImageUploader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageUploader.m; sourceTree = "<group>"; };
+		AC00AEB51F02365E00EEDC3E /* RichTextVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RichTextVC.h; sourceTree = "<group>"; };
+		AC00AEB61F02365E00EEDC3E /* RichTextVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RichTextVC.m; sourceTree = "<group>"; };
 		AC1D56751EF3C86A00AF03AD /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		AC1D56761EF3C86A00AF03AD /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		AC8DDD7A1EEFC2A50009C5AC /* XYThirdParty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XYThirdParty.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -124,9 +127,19 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		AC00AEB41F02364700EEDC3E /* test */ = {
+			isa = PBXGroup;
+			children = (
+				AC00AEB51F02365E00EEDC3E /* RichTextVC.h */,
+				AC00AEB61F02365E00EEDC3E /* RichTextVC.m */,
+			);
+			path = test;
+			sourceTree = "<group>";
+		};
 		AC1A0A0A1EFA48B300D6E166 /* RichText */ = {
 			isa = PBXGroup;
 			children = (
+				AC00AEB41F02364700EEDC3E /* test */,
 				ACBCD2281EFD1CE500D654A7 /* XYRichTextVC.h */,
 				ACBCD2291EFD1CE500D654A7 /* XYRichTextVC.m */,
 				AC00AEB11F00E1FE00EEDC3E /* ImageUploader.h */,
@@ -355,7 +368,7 @@
 				TargetAttributes = {
 					AC8DDD791EEFC2A50009C5AC = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = 9FYGYU94H6;
+						DevelopmentTeam = 4QVJ865SD9;
 						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 					};
@@ -464,6 +477,7 @@
 				AC8DDE0A1EEFC3970009C5AC /* XYButton.m in Sources */,
 				AC8DDE0B1EEFC3970009C5AC /* UIImageView+ImageLoader.m in Sources */,
 				AC8DDE0D1EEFC3970009C5AC /* Log.swift in Sources */,
+				AC00AEB71F02365E00EEDC3E /* RichTextVC.m in Sources */,
 				AC8DDE0C1EEFC3970009C5AC /* XYLoadingPage.m in Sources */,
 				AC8DDE141EEFC3970009C5AC /* XYWebVC.m in Sources */,
 				AC1D56771EF3C86A00AF03AD /* JSONKit.m in Sources */,
@@ -607,7 +621,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = 9FYGYU94H6;
+				DEVELOPMENT_TEAM = 4QVJ865SD9;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$PODS_CONFIGURATION_BUILD_DIR/AFNetworking\"",
@@ -624,7 +638,7 @@
 				INFOPLIST_FILE = XYThirdParty/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = xyz.XYThirdParty;
+				PRODUCT_BUNDLE_IDENTIFIER = cici.net.cn.common;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "XYThirdParty/XYThirdParty-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -638,7 +652,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = 9FYGYU94H6;
+				DEVELOPMENT_TEAM = 4QVJ865SD9;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$PODS_CONFIGURATION_BUILD_DIR/AFNetworking\"",
@@ -655,7 +669,7 @@
 				INFOPLIST_FILE = XYThirdParty/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = xyz.XYThirdParty;
+				PRODUCT_BUNDLE_IDENTIFIER = cici.net.cn.common;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "XYThirdParty/XYThirdParty-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;

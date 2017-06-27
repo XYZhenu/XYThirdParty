@@ -8,17 +8,12 @@
 
 #import <Foundation/Foundation.h>
 @class XYRichTextImage;
-@interface ImageUploader : NSObject <NSCoding>
+@interface ImageUploader : NSOperation <NSCoding>
 @property (nonatomic,strong)NSString* group;
 @property (nonatomic,strong)NSString* identifier;
 
--(void)start;
--(void)suspend;
--(void)cancel;
 
 @property (nonatomic,strong)XYRichTextImage* msg;
-
-@property (nonatomic,strong)NSString* cachePathImage;
 
 -(void)save;
 @end

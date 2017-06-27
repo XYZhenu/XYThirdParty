@@ -15,7 +15,7 @@
 static NSString* const keyRichTextImage = @"keyRichTextImage";
 
 @interface YYTextView (InsertImage)
-- (void)insertImage:(id)sender;
+- (void)insertImage:(XYRichTextImage*)sender attribu:(NSDictionary*)attri;
 @end
 
 @implementation XYRichTextImage
@@ -32,6 +32,7 @@ static NSString* const keyRichTextImage = @"keyRichTextImage";
 @property (nonatomic, assign) YYTextView *textView;
 @property (nonatomic, assign) NSUInteger imageCount;
 @property (nonatomic, strong) NSLayoutConstraint* toolBarBottom;
+@property (nonatomic, strong) NSDictionary* attribuateDic;
 @end
 
 @implementation XYRichTextVC
@@ -56,7 +57,7 @@ static NSString* const keyRichTextImage = @"keyRichTextImage";
     [toolbar addConstraint:[NSLayoutConstraint constraintWithItem:toolbar attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:40]];
     self.toolBarBottom = [NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:toolbar attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
     [self.view addConstraint:self.toolBarBottom];
-
+    
     UIButton* alubmBtn = [UIButton buttonWithType:UIButtonTypeContactAdd];
     [alubmBtn addTarget:self action:@selector(addImageClick) forControlEvents:UIControlEventTouchUpInside];
     [toolbar addSubview:alubmBtn];
@@ -64,10 +65,11 @@ static NSString* const keyRichTextImage = @"keyRichTextImage";
     [toolbar addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[alubmBtn(40)]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(alubmBtn)]];
     [toolbar addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[alubmBtn]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(alubmBtn)]];
     
-    NSMutableAttributedString *text = [[NSMutableAttributedString alloc] init];
+    NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:@"  "];
     text.yy_font = [UIFont systemFontOfSize:20];
     text.yy_lineSpacing = 4;
     text.yy_firstLineHeadIndent = 0;
+    self.attribuateDic = text.yy_attributes;
     
     YYTextView *textView = [YYTextView new];
     textView.attributedText = text;
@@ -138,7 +140,7 @@ static NSString* const keyRichTextImage = @"keyRichTextImage";
             NSURL* fileurl = image.info[@"PHImageFileURLKey"];
             image.fileName = [fileurl.absoluteString componentsSeparatedByString:@"/"].lastObject;
             image.isSelectOriginalPhoto = isSelectOriginalPhoto;
-            [self.textView insertImage:image];
+            [self.textView insertImage:image attribu:self.attribuateDic];
         }
         if (self.saveType & XYRichTextImageSaveTypeOnInsert) {
             [self saveComplete:NO];
@@ -161,7 +163,7 @@ static NSString* const keyRichTextImage = @"keyRichTextImage";
 #pragma mark - save image
 - (NSString*)generateId{
     self.imageCount ++;
-    return [NSString stringWithFormat:@"XYRichText_%ld",(unsigned long)self.imageCount];
+    return [NSString stringWithFormat:@"XYRichText_%ld_%lld",(unsigned long)self.imageCount,(long long)[NSDate timeIntervalSinceReferenceDate]];
 }
 
 - (NSArray *)rangesOfString:(NSString *)searchString inString:(NSString *)str {
@@ -202,8 +204,13 @@ static NSString* const keyRichTextImage = @"keyRichTextImage";
         }
         if (RTimage && RTimage.image) {
             if (!RTimage.identifier) {
-                if (RTimage.fileurl) RTimage.identifier = RTimage.fileurl.absoluteString;
-                else RTimage.identifier = [self generateId];
+                if (RTimage.fileName) RTimage.identifier = RTimage.fileName;
+                else if ([RTimage.image isKindOfClass:[YYImage class]]){
+                    NSString* type = YYImageTypeGetExtension(((YYImage*)RTimage.image).animatedImageType);
+                    RTimage.identifier = [[self generateId] stringByAppendingFormat:@".%@",type];
+                }else{
+                    RTimage.identifier = [[self generateId] stringByAppendingString:@".JPG"];
+                }
             }
             [imagesDic setValue:RTimage forKey:RTimage.identifier];
             [plainText replaceCharactersInRange:range withString:[NSString stringWithFormat:@"%@%@%@",self.picSymbolPrefix,RTimage.identifier,self.picSymbolSuffix]];
@@ -220,7 +227,7 @@ static NSString* const keyRichTextImage = @"keyRichTextImage";
 
 @implementation YYTextView (InsertImage)
 
-- (void)insertImage:(XYRichTextImage*)sender {
+- (void)insertImage:(XYRichTextImage*)sender attribu:(NSDictionary*)attri{
     UIImage *img = sender.image;
     if (img && img.size.width > 1 && img.size.height > 1) {
         id content = img;
@@ -245,10 +252,8 @@ static NSString* const keyRichTextImage = @"keyRichTextImage";
         
         NSMutableAttributedString *attText = [NSAttributedString yy_attachmentStringWithContent:content contentMode:UIViewContentModeScaleToFill width:img.size.width ascent:img.size.height descent:0];
         [attText addAttribute:keyRichTextImage value:sender range:attText.yy_rangeOfAll];
-        
-        NSDictionary *attrs = self.attributedText.yy_attributes;
-        if (attrs) [attText addAttributes:attrs range:NSMakeRange(0, attText.length)];
-        
+        if (attri) [attText addAttributes:attri range:attText.yy_rangeOfAll];
+
         NSUInteger endPosition = self.selectedRange.location + attText.length;
         NSMutableAttributedString *text = self.attributedText.mutableCopy;
         [text replaceCharactersInRange:self.selectedRange withAttributedString:attText];
