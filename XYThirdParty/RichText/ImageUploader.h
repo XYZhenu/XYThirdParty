@@ -7,13 +7,20 @@
 //
 
 #import <Foundation/Foundation.h>
+@protocol XYOperateProtocol <NSObject>
+-(void)cancel;
+@end
+@class ImageUploader;
+@protocol XYOperateDelegate <NSObject>
+-(void)uploaderComplete:(ImageUploader*)uploader error:(BOOL)error;
+@end
 @class XYRichTextImage;
-@interface ImageUploader : NSOperation <NSCoding>
+@interface ImageUploader : NSOperation <NSCoding,XYOperateProtocol>
 @property (nonatomic,strong)NSString* group;
 @property (nonatomic,strong)NSString* identifier;
 
-
 @property (nonatomic,strong)XYRichTextImage* msg;
 
+@property (nonatomic,weak)id<XYOperateDelegate>operDelegate;
 -(void)save;
 @end

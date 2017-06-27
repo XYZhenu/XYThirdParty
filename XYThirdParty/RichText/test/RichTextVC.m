@@ -9,9 +9,9 @@
 #import "RichTextVC.h"
 #import "ImageUploader.h"
 
-@interface RichTextVC ()
+@interface RichTextVC ()<XYOperateDelegate>
 @property(nonatomic,strong)NSOperationQueue* operqueue;
-@property(nonatomic,strong)NSMutableDictionary* imagesDic;
+@property(nonatomic,strong)NSMutableDictionary<NSString*,ImageUploader*>* imagesDic;
 @end
 
 @implementation RichTextVC
@@ -32,7 +32,7 @@
         return nil == images[obj];
     }];
     [discard enumerateObjectsUsingBlock:^(NSString *  _Nonnull obj, BOOL * _Nonnull stop) {
-//        [self cancel:self.imagesDic[obj]];
+        [self.imagesDic[obj] cancel];
         [self.imagesDic removeObjectForKey:obj];
     }];
     
@@ -45,8 +45,30 @@
         ImageUploader* lo = [[ImageUploader alloc] init];
         lo.msg = images[obj];
         lo.group = @"test";
-        [self.operqueue addOperation:lo];
-        [self.imagesDic setValue:images[obj] forKey:obj];
+        lo.operDelegate = self;
+        [self.imagesDic setValue:lo forKey:obj];
     }];
+    if (complete) {
+        
+        [self.operqueue addOperations:self.imagesDic.allValues waitUntilFinished:NO];
+    }else{
+        [added enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, BOOL * _Nonnull stop) {
+            [self.imagesDic[obj] save]; 
+        }];
+    }
+}
+
+-(void)uploaderComplete:(ImageUploader *)uploader error:(BOOL)error{
+    if (error) {
+        ImageUploader* lo = [[ImageUploader alloc] init];
+        lo.msg = uploader.msg;
+        lo.group = @"test";
+        lo.operDelegate = self;
+        [self.imagesDic setObject:lo forKey:lo.identifier];
+    }
+    for (ImageUploader* loader in self.imagesDic.allValues) {
+        if (!loader.msg.uploadedUrl) return;
+    }
+    //TODO:  complete
 }
 @end

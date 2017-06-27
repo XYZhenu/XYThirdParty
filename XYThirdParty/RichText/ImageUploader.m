@@ -19,6 +19,7 @@
 @property (nonatomic,strong)NSPort* port;
 @property (nonatomic,strong)NSRunLoop* loop;
 @property (nonatomic,strong)NSThread* thread;
+@property (nonatomic,strong)id<XYOperateProtocol>operation;
 @end
 @implementation ImageUploader
 #pragma mark -- archive & unarchive
@@ -38,7 +39,7 @@
     [aCoder encodeObject:self.identifier forKey:@"identifier"];
     [aCoder encodeObject:self.msg.uploadedUrl forKey:@"uploadedUrl"];
 }
--(void)save {
+-(void)saveArchive {
     [NSKeyedArchiver archiveRootObject:self toFile:[self pathOfArchive]];
 }
 +(NSArray<ImageUploader*>*)instancesOfGroup:(NSString*)group{
@@ -55,7 +56,11 @@
     }
     return nil;
 }
-
+-(void)save {
+    [self convert:nil];
+    [self saveArchive];
+    NSLog(@"saved %@",self.identifier);
+}
 #pragma mark -- operation
 - (id)init {
     if(self = [super init])
@@ -76,7 +81,7 @@
 }
 - (void)start {
     
-    NSLog(@"start current thread %@",[NSThread currentThread]);
+    NSLog(@"start process %@",self.identifier);
     //第一步就要检测是否被取消了，如果取消了，要实现相应的KVO
     if ([self isCancelled]) {
         [self willChangeValueForKey:@"isFinished"];
@@ -90,16 +95,26 @@
     executing = YES;
     [self didChangeValueForKey:@"isExecuting"];
 
-    self.thread = [NSThread currentThread];
-    self.loop = [NSRunLoop currentRunLoop];
-    self.port = [NSPort port];
-    [self.loop addPort:self.port forMode:NSDefaultRunLoopMode];
-    [self.loop performSelector:@selector(main) target:self argument:nil order:0 modes:@[NSDefaultRunLoopMode]];
-    [self.loop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+    if (!self.msg.uploadedUrl) {
+        self.thread = [NSThread currentThread];
+        self.loop = [NSRunLoop currentRunLoop];
+        self.port = [NSPort port];
+        [self.loop addPort:self.port forMode:NSDefaultRunLoopMode];
+        [self.loop performSelector:@selector(main) target:self argument:nil order:0 modes:@[NSDefaultRunLoopMode]];
+        [self.loop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+    }
+
 //    BOOL shouldKeepRunning = YES; // global
 //    NSRunLoop *theRL = [NSRunLoop currentRunLoop];
 //    while (shouldKeepRunning && [theRL runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]]);
-    
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        if (self.msg.uploadedUrl) {
+            [self.operDelegate uploaderComplete:self error:NO];
+        }else{
+            [self.operDelegate uploaderComplete:self error:YES];
+        }
+    });
+    NSLog(@"finish process %@   result  %@",self.identifier,self.msg.uploadedUrl);
     [self willChangeValueForKey:@"isExecuting"];
     executing = NO;
     [self didChangeValueForKey:@"isExecuting"];
@@ -110,47 +125,51 @@
 }
 -(void)main{
     [self convert:^(NSData* imageData) {
-        [self processData:imageData complete:^(NSString *completeKey) {
-            [self performSelector:@selector(completeWithKey:) onThread:self.thread withObject:imageData waitUntilDone:NO];
+        self.operation = [self processData:imageData complete:^(NSString *completeKey) {
+            [self performSelector:@selector(completeWithKey:) onThread:self.thread withObject:completeKey waitUntilDone:NO];
         }];
     }];
 }
--(void)suspend {
-    [self save];
-}
 -(void)cancel {
-    
+    [super cancel];
+    if (self.operation) {
+        [self.operation cancel];
+    }
+    [self completeWithKey:nil];
 }
 
 
 
 #pragma mark -- process
 -(void)completeWithKey:(NSString*)completeKey{
-    self.msg.uploadedUrl = completeKey;
-    [self changeMsgKey:self.msg.identifier newKey:completeKey];
+    if (completeKey) {
+        self.msg.uploadedUrl = completeKey;
+        [self changeMsgKey:self.msg.identifier newKey:completeKey];
+    }
     [self.port invalidate];
     [self.loop removePort:self.port forMode:NSDefaultRunLoopMode];
     self.port = nil;
     CFRunLoopStop(self.loop.getCFRunLoop);
     self.loop = nil;
     self.thread = nil;
+    self.operation = nil;
 }
 -(void)convert:(void(^)(NSData* newMsg))complete {
     if (self.cachePathImage) {
-        complete([NSData dataWithContentsOfFile:self.cachePathImage]);
+        if (complete) complete([NSData dataWithContentsOfFile:self.cachePathImage]);
         return;
     }
     if (!self.msg.asset && self.msg.image) {
         NSData* data = self.msg.image.yy_imageDataRepresentation;
         [self save:data];
-        complete(data);
+        if (complete) complete(data);
         return;
     }
     if ([[self.msg.asset valueForKey:@"filename"] hasSuffix:@"GIF"] || self.msg.isSelectOriginalPhoto){
         [[TZImageManager manager] getOriginalPhotoDataWithAsset:self.msg.asset completion:^(NSData *data, NSDictionary *info, BOOL isDegraded) {
             if (isDegraded) return;
-            [self.loop performSelector:@selector(save:) target:self argument:data order:0 modes:@[UITrackingRunLoopMode]];
-            complete(data);
+            if (self.thread) [self performSelector:@selector(save:) onThread:self.thread withObject:data waitUntilDone:NO];else [self save:data];
+            if (complete) complete(data);
         }];
         return;
     }
@@ -158,8 +177,8 @@
         [[TZImageManager manager] getPhotoWithAsset:self.msg.asset photoWidth:1024 completion:^(UIImage *photo, NSDictionary *info, BOOL isDegraded) {
             if (isDegraded) return;
             NSData* data = UIImageJPEGRepresentation(photo, 0.7);
-            [self.loop performSelector:@selector(save:) target:self argument:data order:0 modes:@[UITrackingRunLoopMode]];
-            complete(data);
+            if (self.thread) [self performSelector:@selector(save:) onThread:self.thread withObject:data waitUntilDone:NO];else [self save:data];
+            if (complete) complete(data);
         }];
     }
 }
@@ -174,10 +193,11 @@
     [[FlyImageCache sharedInstance] changeImageKey:oldKey newKey:newKey];
 }
 
--(void)processData:(NSData*)imageData complete:(void(^)(NSString* completeKey))complete {
+-(id<XYOperateProtocol>)processData:(NSData*)imageData complete:(void(^)(NSString* completeKey))complete {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         complete(@"http://www.baidu.com");
     });
+    return nil;
 }
 
 -(void)dealloc{
