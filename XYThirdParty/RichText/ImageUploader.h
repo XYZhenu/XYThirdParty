@@ -15,7 +15,7 @@
 -(void)uploaderComplete:(ImageUploader*)uploader error:(BOOL)error;
 @end
 @class XYRichTextImage;
-@interface ImageUploader : NSOperation <NSCoding,XYOperateProtocol>
+@interface ImageUploader : NSOperation <XYOperateProtocol>
 @property (nonatomic,strong)NSString* group;
 @property (nonatomic,strong)NSString* identifier;
 

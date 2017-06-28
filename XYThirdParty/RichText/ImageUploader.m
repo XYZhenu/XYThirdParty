@@ -15,9 +15,6 @@
     BOOL executing;
     BOOL finished;
 }
-@property (nonatomic,strong)NSString* cachePathImage;
-@property (nonatomic,strong)NSString* uploadedUrl;
-
 @property (nonatomic,strong)NSPort* port;
 @property (nonatomic,strong)NSRunLoop* loop;
 @property (nonatomic,strong)NSThread* thread;
@@ -25,25 +22,15 @@
 @end
 @implementation ImageUploader
 #pragma mark -- archive & unarchive
-- (instancetype)initWithCoder:(NSCoder *)coder
-{
-    self = [super init];
-    if (self) {
-        self.cachePathImage = [coder decodeObjectForKey:@"cachePathImage"];
-        self.msg = [XYRichTextImage new];
-        self.msg.uploadedUrl = [coder decodeObjectForKey:@"uploadedUrl"];
-        self.msg.identifier = [coder decodeObjectForKey:@"identifier"];
-    }
-    return self;
-}
--(void)encodeWithCoder:(NSCoder *)aCoder {
-    [aCoder encodeObject:self.cachePathImage forKey:@"cachePathImage"];
-    [aCoder encodeObject:self.identifier forKey:@"identifier"];
-    [aCoder encodeObject:self.uploadedUrl forKey:@"uploadedUrl"];
-}
 -(void)saveArchive {
-    self.cachePathImage = [self imagePath:self.msg.identifier];
-    [NSKeyedArchiver archiveRootObject:self toFile:[self pathOfArchive]];
+    NSDictionary* dic = @{@"identifier":self.identifier,
+                          @"uploadedUrl":self.msg.uploadedUrl ? self.msg.uploadedUrl : @""
+                          };
+    if ([[NSFileManager defaultManager] fileExistsAtPath:[self pathOfArchive]])
+        [[NSFileManager defaultManager] removeItemAtPath:[self pathOfArchive] error:nil];
+    [dic writeToFile:[self pathOfArchive] atomically:NO];
+    NSDictionary* dic2 = [NSDictionary dictionaryWithContentsOfFile:[self pathOfArchive]];
+    NSLog(@"saveArchive %@  path %@",dic2,[self pathOfArchive]);
 }
 +(NSArray<ImageUploader*>*)instancesOfGroup:(NSString*)group{
     BOOL isdir = NO;
@@ -53,7 +40,14 @@
         NSArray* contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:groupPath error:nil];
         for (NSString* item in contents) {
             if ([item hasSuffix:@".archive"]) {
-                [instances addObject:[NSKeyedUnarchiver unarchiveObjectWithFile:[groupPath stringByAppendingPathComponent:item]]];
+                NSDictionary* dic = [NSDictionary dictionaryWithContentsOfFile:[groupPath stringByAppendingPathComponent:item]];
+                ImageUploader* loader = [ImageUploader new];
+                loader.group = group;
+                loader.msg = [XYRichTextImage new];
+                loader.msg.uploadedUrl = dic[@"uploadedUrl"];
+                if (loader.msg.uploadedUrl.length==0) loader.msg.uploadedUrl = nil;
+                loader.msg.identifier = dic[@"identifier"];
+                [instances addObject:loader];
             }
         }
         return instances;
@@ -67,34 +61,25 @@
 }
 #pragma mark -- operation
 - (id)init {
-    if(self = [super init])
-    {
+    if(self = [super init]) {
         executing = NO;
         finished = NO;
     }
     return self;
 }
-- (BOOL)isConcurrent {
-    return YES;
-}
-- (BOOL)isExecuting {
-    return executing;
-}
-- (BOOL)isFinished {
-    return finished;
-}
+- (BOOL)isConcurrent { return YES; }
+- (BOOL)isExecuting { return executing; }
+- (BOOL)isFinished { return finished; }
 - (void)start {
     
     NSLog(@"start process %@",self.identifier);
-    //第一步就要检测是否被取消了，如果取消了，要实现相应的KVO
-    if ([self isCancelled]) {
+    if ([self isCancelled])
+    {
         [self willChangeValueForKey:@"isFinished"];
         finished = YES;
         [self didChangeValueForKey:@"isFinished"];
         return;
     }
-
-    //如果没被取消，开始执行任务
     [self willChangeValueForKey:@"isExecuting"];
     executing = YES;
     [self didChangeValueForKey:@"isExecuting"];
@@ -109,10 +94,6 @@
     }else{
         NSLog(@"no self.msg.uploadedUrl");
     }
-
-//    BOOL shouldKeepRunning = YES; // global
-//    NSRunLoop *theRL = [NSRunLoop currentRunLoop];
-//    while (shouldKeepRunning && [theRL runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]]);
     dispatch_sync(dispatch_get_main_queue(), ^{
         if (self.msg.uploadedUrl) {
             [self.operDelegate uploaderComplete:self error:NO];
@@ -138,9 +119,7 @@
 }
 -(void)cancel {
     [super cancel];
-    if (self.operation) {
-        [self.operation cancel];
-    }
+    if (self.operation)  [self.operation cancel];
     [[FlyImageCache sharedInstance] removeImageWithKey:self.identifier];
     if (self.msg.uploadedUrl) [[FlyImageCache sharedInstance] removeImageWithKey:self.msg.uploadedUrl];
     [[NSFileManager defaultManager] removeItemAtPath:[self pathOfArchive] error:nil];
@@ -167,8 +146,9 @@
 }
 -(void)convert:(void(^)(NSData* newMsg))complete {
     NSLog(@"convert begain %@",self.identifier);
-    if (self.cachePathImage) {
-        if (complete) complete([NSData dataWithContentsOfFile:self.cachePathImage]);
+    
+    if ([[FlyImageCache sharedInstance] isImageExistWithKey:self.identifier]) {
+        if (complete) complete([NSData dataWithContentsOfFile:[self imagePath:self.identifier]]);
         return;
     }
     if (!self.msg.asset && self.msg.image) {
@@ -197,10 +177,9 @@
     }
 }
 -(void)save:(NSData*)imageData{
-    self.cachePathImage = [self imagePath:self.msg.identifier];
-    [imageData writeToFile:self.cachePathImage atomically:YES];
-    [[FlyImageCache sharedInstance] addImageWithKey:self.msg.identifier filename:self.msg.identifier completed:nil];
-    [[FlyImageCache sharedInstance] protectFileWithKey:self.msg.identifier];
+    [imageData writeToFile:[self imagePath:self.identifier] atomically:YES];
+    [[FlyImageCache sharedInstance] addImageWithKey:self.identifier filename:self.identifier completed:nil];
+    [[FlyImageCache sharedInstance] protectFileWithKey:self.identifier];
 }
 -(void)changeMsgKey:(NSString*)oldKey newKey:(NSString*)newKey {
     [[FlyImageCache sharedInstance] unProtectFileWithKey:oldKey];
@@ -219,9 +198,7 @@
 }
 
 #pragma mark -- pathes
--(NSString*)imagePath:(NSString*)name{
-    return [[NSSearchPathForDirectoriesInDomains (NSCachesDirectory , NSUserDomainMask , YES) firstObject] stringByAppendingFormat:@"/flyImage/files/%@",name];
-}
+-(NSString*)imagePath:(NSString*)name{ return [[NSSearchPathForDirectoriesInDomains (NSCachesDirectory , NSUserDomainMask , YES) firstObject] stringByAppendingFormat:@"/flyImage/files/%@",name]; }
 +(NSString*)cachePath{
     NSString* path = [[NSSearchPathForDirectoriesInDomains (NSCachesDirectory , NSUserDomainMask , YES) firstObject] stringByAppendingString:@"/imageuploader"];
     if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
@@ -236,13 +213,6 @@
     }
     return path;
 }
--(NSString*)pathOfArchive{
-    return [[ImageUploader pathOfGroup:self.group] stringByAppendingFormat:@"/%@.archive",[self.identifier stringByReplacingOccurrencesOfString:@"." withString:@""]];
-}
--(NSString *)identifier{
-    return self.msg.identifier;
-}
--(NSString *)uploadedUrl{
-    return self.msg.uploadedUrl;
-}
+-(NSString*)pathOfArchive { return [[ImageUploader pathOfGroup:self.group] stringByAppendingFormat:@"/%@.archive",[self.identifier stringByReplacingOccurrencesOfString:@"." withString:@""]]; }
+-(NSString *)identifier { return self.msg.identifier; }
 @end
