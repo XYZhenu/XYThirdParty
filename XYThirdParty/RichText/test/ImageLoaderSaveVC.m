@@ -9,7 +9,8 @@
 #import "ImageLoaderSaveVC.h"
 #import "ImageUploader.h"
 #import "XYRichTextVC.h"
-@interface ImageLoaderSaveVC ()
+@interface ImageLoaderSaveVC ()<XYOperateDelegate>
+@property(nonatomic,strong)NSOperationQueue* operqueue;
 @property(nonatomic,strong)NSArray<ImageUploader*>*loaders;
 @end
 
@@ -21,13 +22,18 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(startAll)];
     
     
-    
+    self.operqueue = [[NSOperationQueue alloc] init];
+    self.operqueue.maxConcurrentOperationCount = 2;
+    self.operqueue.name = @"rich_text_uploader";
     self.loaders = [ImageUploader instancesOfGroup:@"test"];
     [self.tableView reloadData];
     
 }
 -(void)startAll{
-    
+    [self.operqueue addOperations:self.loaders waitUntilFinished:NO];
+}
+-(void)uploaderComplete:(ImageUploader *)uploader error:(BOOL)error{
+    [self.tableView reloadData];
 }
 #pragma mark - Table view data source
 
@@ -52,7 +58,7 @@
 }
 
 -(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath{
-    
+    [self.operqueue addOperation:self.loaders[indexPath.row]];
 }
 /*
 // Override to support conditional editing of the table view.

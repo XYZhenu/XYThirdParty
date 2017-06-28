@@ -49,10 +49,7 @@
         [self.imagesDic setValue:lo forKey:obj];
     }];
     if (complete) {
-        [self.imagesDic.allValues enumerateObjectsUsingBlock:^(ImageUploader * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            [self.operqueue addOperation:obj];
-        }];
-//        [self.operqueue addOperations:self.imagesDic.allValues waitUntilFinished:NO];
+        [self.operqueue addOperations:self.imagesDic.allValues waitUntilFinished:NO];
     }else{
         [added enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, BOOL * _Nonnull stop) {
             [self.imagesDic[obj] save]; 

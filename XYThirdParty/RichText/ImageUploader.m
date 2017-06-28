@@ -40,6 +40,7 @@
     [aCoder encodeObject:self.msg.uploadedUrl forKey:@"uploadedUrl"];
 }
 -(void)saveArchive {
+    self.cachePathImage = [self imagePath:self.msg.identifier];
     [NSKeyedArchiver archiveRootObject:self toFile:[self pathOfArchive]];
 }
 +(NSArray<ImageUploader*>*)instancesOfGroup:(NSString*)group{
@@ -138,6 +139,9 @@
     if (self.operation) {
         [self.operation cancel];
     }
+    [[FlyImageCache sharedInstance] removeImageWithKey:self.identifier];
+    if (self.msg.uploadedUrl) [[FlyImageCache sharedInstance] removeImageWithKey:self.msg.uploadedUrl];
+    [[NSFileManager defaultManager] removeItemAtPath:[self pathOfArchive] error:nil];
     [self completeWithKey:nil];
 }
 
@@ -148,7 +152,8 @@
     NSLog(@"complete with key %@ self.identifier  %@",completeKey,self.identifier);
     if (completeKey) {
         self.msg.uploadedUrl = completeKey;
-        [self changeMsgKey:self.msg.identifier newKey:completeKey];
+        [self changeMsgKey:self.identifier newKey:completeKey];
+        [self saveArchive];
     }
     [self.port invalidate];
     [self.loop removePort:self.port forMode:NSDefaultRunLoopMode];
