@@ -44,12 +44,13 @@
 }
 +(NSArray<ImageUploader*>*)instancesOfGroup:(NSString*)group{
     BOOL isdir = NO;
-    if ([[NSFileManager defaultManager] fileExistsAtPath:[self pathOfGroup:group] isDirectory:&isdir] && isdir) {
+    NSString* groupPath = [self pathOfGroup:group];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:groupPath isDirectory:&isdir] && isdir) {
         NSMutableArray* instances = [NSMutableArray array];
-        NSArray* contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[self pathOfGroup:group] error:nil];
+        NSArray* contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:groupPath error:nil];
         for (NSString* item in contents) {
             if ([item hasSuffix:@".archive"]) {
-                [instances addObject:[NSKeyedUnarchiver unarchiveObjectWithFile:item]];
+                [instances addObject:[NSKeyedUnarchiver unarchiveObjectWithFile:[groupPath stringByAppendingPathComponent:item]]];
             }
         }
         return instances;
@@ -102,6 +103,8 @@
         [self.loop addPort:self.port forMode:NSDefaultRunLoopMode];
         [self.loop performSelector:@selector(main) target:self argument:nil order:0 modes:@[NSDefaultRunLoopMode]];
         [self.loop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+    }else{
+        NSLog(@"no self.msg.uploadedUrl");
     }
 
 //    BOOL shouldKeepRunning = YES; // global
@@ -142,6 +145,7 @@
 
 #pragma mark -- process
 -(void)completeWithKey:(NSString*)completeKey{
+    NSLog(@"complete with key %@ self.identifier  %@",completeKey,self.identifier);
     if (completeKey) {
         self.msg.uploadedUrl = completeKey;
         [self changeMsgKey:self.msg.identifier newKey:completeKey];
@@ -155,6 +159,7 @@
     self.operation = nil;
 }
 -(void)convert:(void(^)(NSData* newMsg))complete {
+    NSLog(@"convert begain %@",self.identifier);
     if (self.cachePathImage) {
         if (complete) complete([NSData dataWithContentsOfFile:self.cachePathImage]);
         return;
@@ -168,7 +173,8 @@
     if ([[self.msg.asset valueForKey:@"filename"] hasSuffix:@"GIF"] || self.msg.isSelectOriginalPhoto){
         [[TZImageManager manager] getOriginalPhotoDataWithAsset:self.msg.asset completion:^(NSData *data, NSDictionary *info, BOOL isDegraded) {
             if (isDegraded) return;
-            if (self.thread) [self performSelector:@selector(save:) onThread:self.thread withObject:data waitUntilDone:NO];else [self save:data];
+            [self save:data];
+//            if (self.thread) [self performSelector:@selector(save:) onThread:self.thread withObject:data waitUntilDone:NO];else [self save:data];
             if (complete) complete(data);
         }];
         return;
@@ -177,7 +183,8 @@
         [[TZImageManager manager] getPhotoWithAsset:self.msg.asset photoWidth:1024 completion:^(UIImage *photo, NSDictionary *info, BOOL isDegraded) {
             if (isDegraded) return;
             NSData* data = UIImageJPEGRepresentation(photo, 0.7);
-            if (self.thread) [self performSelector:@selector(save:) onThread:self.thread withObject:data waitUntilDone:NO];else [self save:data];
+            [self save:data];
+//            if (self.thread) [self performSelector:@selector(save:) onThread:self.thread withObject:data waitUntilDone:NO];else [self save:data];
             if (complete) complete(data);
         }];
     }
@@ -209,13 +216,21 @@
     return [[NSSearchPathForDirectoriesInDomains (NSCachesDirectory , NSUserDomainMask , YES) firstObject] stringByAppendingFormat:@"/flyImage/files/%@",name];
 }
 +(NSString*)cachePath{
-    return [[NSSearchPathForDirectoriesInDomains (NSCachesDirectory , NSUserDomainMask , YES) firstObject] stringByAppendingString:@"/imageuploader"];
+    NSString* path = [[NSSearchPathForDirectoriesInDomains (NSCachesDirectory , NSUserDomainMask , YES) firstObject] stringByAppendingString:@"/imageuploader"];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    return path;
 }
 +(NSString*)pathOfGroup:(NSString*)group{
-    return [[self cachePath] stringByAppendingFormat:@"/%@",group];
+    NSString* path = [[NSSearchPathForDirectoriesInDomains (NSCachesDirectory , NSUserDomainMask , YES) firstObject] stringByAppendingFormat:@"/imageuploader/%@",group];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    return path;
 }
 -(NSString*)pathOfArchive{
-    return [[ImageUploader pathOfGroup:self.group] stringByAppendingFormat:@"%@.archive",[self.identifier stringByReplacingOccurrencesOfString:@"." withString:@""]];
+    return [[ImageUploader pathOfGroup:self.group] stringByAppendingFormat:@"/%@.archive",[self.identifier stringByReplacingOccurrencesOfString:@"." withString:@""]];
 }
 -(NSString *)identifier{
     return self.msg.identifier;

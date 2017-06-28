@@ -23,4 +23,7 @@
 
 @property (nonatomic,weak)id<XYOperateDelegate>operDelegate;
 -(void)save;
+
++(NSString*)cachePath;
++(NSArray<ImageUploader*>*)instancesOfGroup:(NSString*)group;
 @end
