@@ -16,6 +16,8 @@
     BOOL finished;
 }
 @property (nonatomic,strong)NSString* cachePathImage;
+@property (nonatomic,strong)NSString* uploadedUrl;
+
 @property (nonatomic,strong)NSPort* port;
 @property (nonatomic,strong)NSRunLoop* loop;
 @property (nonatomic,strong)NSThread* thread;
@@ -37,7 +39,7 @@
 -(void)encodeWithCoder:(NSCoder *)aCoder {
     [aCoder encodeObject:self.cachePathImage forKey:@"cachePathImage"];
     [aCoder encodeObject:self.identifier forKey:@"identifier"];
-    [aCoder encodeObject:self.msg.uploadedUrl forKey:@"uploadedUrl"];
+    [aCoder encodeObject:self.uploadedUrl forKey:@"uploadedUrl"];
 }
 -(void)saveArchive {
     self.cachePathImage = [self imagePath:self.msg.identifier];
@@ -240,5 +242,7 @@
 -(NSString *)identifier{
     return self.msg.identifier;
 }
-
+-(NSString *)uploadedUrl{
+    return self.msg.uploadedUrl;
+}
 @end

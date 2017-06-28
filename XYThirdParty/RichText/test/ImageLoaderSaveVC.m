@@ -30,7 +30,9 @@
     
 }
 -(void)startAll{
-    [self.operqueue addOperations:self.loaders waitUntilFinished:NO];
+    [self.loaders enumerateObjectsUsingBlock:^(ImageUploader * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (!obj.isFinished) [self.operqueue addOperation:obj];
+    }];
 }
 -(void)uploaderComplete:(ImageUploader *)uploader error:(BOOL)error{
     [self.tableView reloadData];
@@ -58,7 +60,8 @@
 }
 
 -(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath{
-    [self.operqueue addOperation:self.loaders[indexPath.row]];
+    ImageUploader* loader = self.loaders[indexPath.row];
+    if(!loader.isFinished) [self.operqueue addOperation:self.loaders[indexPath.row]];
 }
 /*
 // Override to support conditional editing of the table view.
