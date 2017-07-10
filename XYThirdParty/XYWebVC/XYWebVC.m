@@ -39,7 +39,7 @@
     }
     [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationPortrait animated:NO];
 }
-- (void)addReturnButton:(id _Nullable)content {
+- (void)addWebviewReturnButton:(id _Nullable)content {
     if (!self.navigationController || self.navigationController.viewControllers.firstObject == self) {
         return;
     }
@@ -63,7 +63,7 @@
 }
 -(void)viewDidLoad{
     [super viewDidLoad];
-    [self addReturnButton:nil];
+    [self addWebviewReturnButton:nil];
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.hidesBottomBarWhenPushed = YES;
     self.navigationController.navigationBar.translucent = NO;

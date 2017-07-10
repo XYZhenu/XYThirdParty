@@ -8,9 +8,18 @@
 
 #import "UIViewController+Log.h"
 #import "Log.h"
+@interface _LogFormater : NSObject <DDLogFormatter>
 
+@end
+@implementation _LogFormater
+- (NSString * __nullable)formatLogMessage:(DDLogMessage *)logMessage{
+    return [NSString stringWithFormat:@"file %@, function %@, line %ld, msg %@",logMessage.fileName,logMessage.function,logMessage.line,logMessage.message];
+}
+
+@end
 @implementation UIViewController (XYLog)
 +(void)load{
+    [DDTTYLogger sharedInstance].logFormatter = [_LogFormater new];
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
 }
 -(void)addLogGesture{

@@ -25,7 +25,6 @@
 		AC8DDE0A1EEFC3970009C5AC /* XYButton.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8DDDE41EEFC3970009C5AC /* XYButton.m */; };
 		AC8DDE0B1EEFC3970009C5AC /* UIImageView+ImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8DDDE71EEFC3970009C5AC /* UIImageView+ImageLoader.m */; };
 		AC8DDE0C1EEFC3970009C5AC /* XYLoadingPage.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8DDDEA1EEFC3970009C5AC /* XYLoadingPage.m */; };
-		AC8DDE0D1EEFC3970009C5AC /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8DDDED1EEFC3970009C5AC /* Log.swift */; };
 		AC8DDE0E1EEFC3970009C5AC /* UIViewController+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8DDDEF1EEFC3970009C5AC /* UIViewController+Log.m */; };
 		AC8DDE0F1EEFC3970009C5AC /* XYNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8DDDF21EEFC3970009C5AC /* XYNetwork.m */; };
 		AC8DDE101EEFC3970009C5AC /* XYScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8DDDF51EEFC3970009C5AC /* XYScroll.m */; };
@@ -76,7 +75,6 @@
 		AC8DDDE91EEFC3970009C5AC /* XYLoadingPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYLoadingPage.h; sourceTree = "<group>"; };
 		AC8DDDEA1EEFC3970009C5AC /* XYLoadingPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYLoadingPage.m; sourceTree = "<group>"; };
 		AC8DDDEC1EEFC3970009C5AC /* Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Log.h; sourceTree = "<group>"; };
-		AC8DDDED1EEFC3970009C5AC /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		AC8DDDEE1EEFC3970009C5AC /* UIViewController+Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Log.h"; sourceTree = "<group>"; };
 		AC8DDDEF1EEFC3970009C5AC /* UIViewController+Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Log.m"; sourceTree = "<group>"; };
 		AC8DDDF11EEFC3970009C5AC /* XYNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYNetwork.h; sourceTree = "<group>"; };
@@ -272,7 +270,6 @@
 			isa = PBXGroup;
 			children = (
 				AC8DDDEC1EEFC3970009C5AC /* Log.h */,
-				AC8DDDED1EEFC3970009C5AC /* Log.swift */,
 				AC8DDDEE1EEFC3970009C5AC /* UIViewController+Log.h */,
 				AC8DDDEF1EEFC3970009C5AC /* UIViewController+Log.m */,
 			);
@@ -476,7 +473,6 @@
 			files = (
 				AC8DDE0A1EEFC3970009C5AC /* XYButton.m in Sources */,
 				AC8DDE0B1EEFC3970009C5AC /* UIImageView+ImageLoader.m in Sources */,
-				AC8DDE0D1EEFC3970009C5AC /* Log.swift in Sources */,
 				AC00AEB71F02365E00EEDC3E /* RichTextVC.m in Sources */,
 				AC8DDE0C1EEFC3970009C5AC /* XYLoadingPage.m in Sources */,
 				AC8DDE141EEFC3970009C5AC /* XYWebVC.m in Sources */,

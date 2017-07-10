@@ -315,7 +315,7 @@ XYTableKey(ModelHeader);
     NSString* identi = data.identifier;
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:identi];
     if (!cell) {
-        DLogVerbose(@"\n没有注册这种cell， 现在通过 alloc init 创建\n%@",data);
+        DDLogVerbose(@"\n没有注册这种cell， 现在通过 alloc init 创建\n%@",data);
         cell = [[data.cls alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identi];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -355,7 +355,7 @@ XYTableKey(ModelHeader);
             }
         }
     } @catch (NSException *exception) {
-        DLogError(@"%@",exception);
+        DDLogError(@"%@",exception);
         height = 100;
     }
     return height;
@@ -374,7 +374,7 @@ XYTableKey(ModelHeader);
 -(UITableViewHeaderFooterView*)getReuseHeaderWithModel:(XYRowModel*)data tableview:(UITableView*)tableView{
     UITableViewHeaderFooterView* cell = [tableView dequeueReusableHeaderFooterViewWithIdentifier:data.identifier];
     if (!cell) {
-//        DLogVerbose(@"\n没有注册这种 header， 现在通过 alloc init 创建\n%@",data);
+//        DDLogVerbose(@"\n没有注册这种 header， 现在通过 alloc init 创建\n%@",data);
         cell                = [[data.cls alloc] initWithReuseIdentifier:data.identifier];
     }
     cell.xyModelDelegate    = self;
@@ -402,7 +402,7 @@ XYTableKey(ModelHeader);
             data.height = height;
         }
     } @catch (NSException *exception) {
-        DLogError(@"%@",exception);
+        DDLogError(@"%@",exception);
         height = 100;
     }
     if (height<0.01) {
@@ -424,7 +424,7 @@ XYTableKey(ModelHeader);
 -(UITableViewHeaderFooterView*)getReuseFooterWithModel:(XYRowModel*)data tableview:(UITableView*)tableView{
     UITableViewHeaderFooterView* cell = [tableView dequeueReusableHeaderFooterViewWithIdentifier:data.identifier];
     if (!cell) {
-//        DLogVerbose(@"\n没有注册这种 footet， 现在通过 alloc init 创建\n%@",data);
+//        DDLogVerbose(@"\n没有注册这种 footet， 现在通过 alloc init 创建\n%@",data);
         cell                = [[data.cls alloc] initWithReuseIdentifier:data.identifier];
     }
     cell.xyModelDelegate    = self;
@@ -452,7 +452,7 @@ XYTableKey(ModelHeader);
             data.height = height;
         }
     } @catch (NSException *exception) {
-        DLogError(@"%@",exception);
+        DDLogError(@"%@",exception);
         height = 100;
     }
     if (height<0.01) {
