@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		AC00AEB31F00E1FE00EEDC3E /* ImageUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = AC00AEB21F00E1FE00EEDC3E /* ImageUploader.m */; };
 		AC00AEB71F02365E00EEDC3E /* RichTextVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AC00AEB61F02365E00EEDC3E /* RichTextVC.m */; };
+		AC00AEBA1F0334C900EEDC3E /* ImageLoaderSaveVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AC00AEB91F0334C900EEDC3E /* ImageLoaderSaveVC.m */; };
 		AC1D56771EF3C86A00AF03AD /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = AC1D56761EF3C86A00AF03AD /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		AC8DDD7F1EEFC2A50009C5AC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8DDD7E1EEFC2A50009C5AC /* main.m */; };
 		AC8DDD821EEFC2A50009C5AC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8DDD811EEFC2A50009C5AC /* AppDelegate.m */; };
@@ -45,6 +46,8 @@
 		AC00AEB21F00E1FE00EEDC3E /* ImageUploader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageUploader.m; sourceTree = "<group>"; };
 		AC00AEB51F02365E00EEDC3E /* RichTextVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RichTextVC.h; sourceTree = "<group>"; };
 		AC00AEB61F02365E00EEDC3E /* RichTextVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RichTextVC.m; sourceTree = "<group>"; };
+		AC00AEB81F0334C900EEDC3E /* ImageLoaderSaveVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageLoaderSaveVC.h; sourceTree = "<group>"; };
+		AC00AEB91F0334C900EEDC3E /* ImageLoaderSaveVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageLoaderSaveVC.m; sourceTree = "<group>"; };
 		AC1D56751EF3C86A00AF03AD /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		AC1D56761EF3C86A00AF03AD /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		AC8DDD7A1EEFC2A50009C5AC /* XYThirdParty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XYThirdParty.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -130,6 +133,8 @@
 			children = (
 				AC00AEB51F02365E00EEDC3E /* RichTextVC.h */,
 				AC00AEB61F02365E00EEDC3E /* RichTextVC.m */,
+				AC00AEB81F0334C900EEDC3E /* ImageLoaderSaveVC.h */,
+				AC00AEB91F0334C900EEDC3E /* ImageLoaderSaveVC.m */,
 			);
 			path = test;
 			sourceTree = "<group>";
@@ -494,6 +499,7 @@
 				AC00AEB31F00E1FE00EEDC3E /* ImageUploader.m in Sources */,
 				AC8DDE071EEFC3970009C5AC /* ImagePickerVC.m in Sources */,
 				AC8DDD7F1EEFC2A50009C5AC /* main.m in Sources */,
+				AC00AEBA1F0334C900EEDC3E /* ImageLoaderSaveVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
