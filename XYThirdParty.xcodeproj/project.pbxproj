@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		101350131F1A60C700C18CCD /* CALayer+ImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 101350121F1A60C700C18CCD /* CALayer+ImageLoader.m */; };
 		AC00AEB31F00E1FE00EEDC3E /* ImageUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = AC00AEB21F00E1FE00EEDC3E /* ImageUploader.m */; };
 		AC00AEB71F02365E00EEDC3E /* RichTextVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AC00AEB61F02365E00EEDC3E /* RichTextVC.m */; };
 		AC00AEBA1F0334C900EEDC3E /* ImageLoaderSaveVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AC00AEB91F0334C900EEDC3E /* ImageLoaderSaveVC.m */; };
@@ -40,6 +41,8 @@
 
 /* Begin PBXFileReference section */
 		0717F8BC7866A89CF60A07EA /* Pods-XYThirdParty.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XYThirdParty.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XYThirdParty/Pods-XYThirdParty.debug.xcconfig"; sourceTree = "<group>"; };
+		101350111F1A60C700C18CCD /* CALayer+ImageLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+ImageLoader.h"; sourceTree = "<group>"; };
+		101350121F1A60C700C18CCD /* CALayer+ImageLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+ImageLoader.m"; sourceTree = "<group>"; };
 		4A5C7839696F10CE26F7C3C4 /* Pods-XYThirdParty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XYThirdParty.release.xcconfig"; path = "Pods/Target Support Files/Pods-XYThirdParty/Pods-XYThirdParty.release.xcconfig"; sourceTree = "<group>"; };
 		A76582D26C8528E28F0B7D17 /* Pods_XYThirdParty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XYThirdParty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC00AEB11F00E1FE00EEDC3E /* ImageUploader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageUploader.h; sourceTree = "<group>"; };
@@ -258,6 +261,8 @@
 			children = (
 				AC8DDDE61EEFC3970009C5AC /* UIImageView+ImageLoader.h */,
 				AC8DDDE71EEFC3970009C5AC /* UIImageView+ImageLoader.m */,
+				101350111F1A60C700C18CCD /* CALayer+ImageLoader.h */,
+				101350121F1A60C700C18CCD /* CALayer+ImageLoader.m */,
 			);
 			path = XYImageManager;
 			sourceTree = "<group>";
@@ -495,6 +500,7 @@
 				AC8DDE131EEFC3970009C5AC /* XYTableViewController.m in Sources */,
 				AC8DDE091EEFC3970009C5AC /* UIViewController+ImagePicker.m in Sources */,
 				AC8DDE111EEFC3970009C5AC /* XYSegment.m in Sources */,
+				101350131F1A60C700C18CCD /* CALayer+ImageLoader.m in Sources */,
 				AC8DDE121EEFC3970009C5AC /* XYSlider.m in Sources */,
 				AC00AEB31F00E1FE00EEDC3E /* ImageUploader.m in Sources */,
 				AC8DDE071EEFC3970009C5AC /* ImagePickerVC.m in Sources */,
