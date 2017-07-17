@@ -256,8 +256,8 @@ XYTableKey(ModelHeader);
         if (weakself.isHeaderTriggerLastToken) {
             if (modelRect) {
                 [weakself.ModelRect removeAllObjects];
-                if (weakself.ModelRect.count>0 && [weakself.ModelRect.firstObject isKindOfClass:[XYSectionModel class]]) weakself.xy_isRect = YES;
                 [weakself.ModelRect addObjectsFromArray:modelRect];
+                if (weakself.ModelRect.count>0 && [weakself.ModelRect.firstObject isKindOfClass:[XYSectionModel class]]) weakself.xy_isRect = YES;
                 [weakself.xy_tableView reloadData];
             }
             [weakself endRefreshing];
