@@ -24,6 +24,8 @@
 @property (nonatomic,weak)id<XYOperateDelegate>operDelegate;
 -(void)save;
 
+-(id<XYOperateProtocol>)processData:(NSData*)imageData complete:(void(^)(NSString* completeKey))complete;
+
 +(NSString*)cachePath;
 +(NSArray<ImageUploader*>*)instancesOfGroup:(NSString*)group;
 @end

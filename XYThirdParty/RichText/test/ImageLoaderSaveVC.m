@@ -35,7 +35,7 @@
     }];
 }
 -(void)uploaderComplete:(ImageUploader *)uploader error:(BOOL)error{
-    [self.tableView reloadData];
+    [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
 }
 #pragma mark - Table view data source
 
