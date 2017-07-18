@@ -11,6 +11,8 @@ static NSString* keyWebVCGET = @"get";
 static NSString* keyWebVCUrl = @"url";
 static NSString* keyWebVCParma = @"parma";
 @interface XYWebVC : UIViewController
+-(void)bindWebView:(UIWebView*)webView;
+-(void)loadFromParma;
 //custom load method with subclass and rewrite this method 
 -(void)loadIsGet:(BOOL)isGet url:(NSString*)url parma:(NSDictionary*)parma web:(UIWebView*)web;
 @end

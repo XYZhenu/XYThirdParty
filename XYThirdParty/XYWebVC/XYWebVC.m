@@ -61,6 +61,59 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
     self.navigationController.navigationBar.tintColor = [UIColor blackColor];
 }
+-(void)bindWebView:(UIWebView*)webView{
+    _web = webView;
+}
+-(UIWebView *)web{
+    if (!_web) {
+        _web = [[UIWebView alloc] init];
+        [self.view addSubview:_web];
+        id topGuide = self.topLayoutGuide;
+        id bottomGuide = self.bottomLayoutGuide;
+        _web.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[_web]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_web)]];
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[topGuide]-0-[_web]-0-[bottomGuide]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_web,topGuide,bottomGuide)]];
+        _web.scalesPageToFit = YES;
+    }
+    return _web;
+}
+-(NJKWebViewProgressView *)progressView{
+    if (!_progressView) {
+        _progressView = [[NJKWebViewProgressView alloc] initWithFrame:CGRectMake(0, 0, self.web.frame.size.width, 2)];
+        [self.view addSubview:_progressView];
+        _progressView.translatesAutoresizingMaskIntoConstraints = NO;
+        id topGuide = self.topLayoutGuide;
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[_progressView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_progressView)]];
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[topGuide]-0-[_progressView(2)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_progressView,topGuide)]];
+    }
+    return _progressView;
+}
+-(NJKWebViewProgress *)progress{
+    if (!_progress) {
+        _progress = [[NJKWebViewProgress alloc] init];
+        _progress.webViewProxyDelegate = self;
+        self.web.delegate = _progress;
+        __weak typeof(self) weakself = self;
+        _progress.progressBlock = ^(float progress) {
+            weakself.progressView.progress = progress;
+        };
+    }
+    return _progress;
+}
+-(void)loadFromParma{
+    if (self.parma) {
+        self.url = self.parma[keyWebVCUrl];
+        self.parmaDic = self.parma[keyWebVCParma];
+        if (self.parmaDic) {
+            [self loadIsGet:(self.parma[keyWebVCGET] && [self.parma[keyWebVCGET] boolValue]) url:self.url parma:self.parmaDic web:self.web];
+        }else{
+            if ([self.url rangeOfString:@"://"].location == NSNotFound) {
+                self.url = [@"http://" stringByAppendingString:self.url];
+            }
+            [self.web loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.url]]];
+        }
+    }
+}
 -(void)viewDidLoad{
     [super viewDidLoad];
     [self addWebviewReturnButton:nil];
@@ -68,38 +121,10 @@
     self.hidesBottomBarWhenPushed = YES;
     self.navigationController.navigationBar.translucent = NO;
     self.view.backgroundColor=[UIColor whiteColor];
-    self.web = [[UIWebView alloc] init];
-    [self.view addSubview:self.web];
-    id topGuide = self.topLayoutGuide;
-    id bottomGuide = self.bottomLayoutGuide;
-    self.web.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[_web]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_web)]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[topGuide]-0-[_web]-0-[bottomGuide]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_web,topGuide,bottomGuide)]];
-    self.web.scalesPageToFit = YES;
-    self.progressView = [[NJKWebViewProgressView alloc] initWithFrame:CGRectMake(0, 0, self.web.frame.size.width, 2)];
-    [self.view addSubview:self.progressView];
-    self.progressView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[_progressView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_progressView)]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[topGuide]-0-[_progressView(2)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_progressView,topGuide)]];
 
-    self.progress = [[NJKWebViewProgress alloc] init];
-    self.progress.webViewProxyDelegate = self;
-    self.web.delegate = self.progress;
+    [self loadFromParma];
     __weak typeof(self) weakself = self;
-    self.progress.progressBlock = ^(float progress) {
-        weakself.progressView.progress = progress;
-    };
-
-    self.url = self.parma[keyWebVCUrl];
-    self.parmaDic = self.parma[keyWebVCParma];
-    if (self.parmaDic) {
-        [self loadIsGet:(self.parma[keyWebVCGET] && [self.parma[keyWebVCGET] boolValue]) url:self.url parma:self.parmaDic web:self.web];
-    }else{
-        if ([self.url rangeOfString:@"://"].location == NSNotFound) {
-            self.url = [@"http://" stringByAppendingString:self.url];
-        }
-        [self.web loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.url]]];
-    }
+    
     XYButton* btn1 = [[XYButton new] set_customUI:^(UIView *theView) {
         theView.backgroundColor = [UIColor whiteColor];
         ImageCreate(101);
