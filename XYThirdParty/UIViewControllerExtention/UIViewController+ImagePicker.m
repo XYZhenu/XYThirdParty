@@ -10,11 +10,11 @@
 #import <TZImagePickerController/TZImagePickerController.h>
 
 @implementation UIViewController (XYImagePicker)
-- (void)pickeImagesWithCallback:(void(^)(NSArray<UIImage *> *photos, NSArray *assets))callback {
+- (void)pickeImagesWithCallback:(void(^)(NSArray<UIImage *> *photos, NSArray *assets,NSArray<NSDictionary *> *infos))callback {
     TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:6 delegate:nil];
     imagePickerVc.minImagesCount = 1;
-    [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isOrigin){
-        callback(photos,assets);
+    [imagePickerVc setDidFinishPickingPhotosWithInfosHandle:^(NSArray<UIImage *> *photos,NSArray *assets,BOOL isSelectOriginalPhoto,NSArray<NSDictionary *> *infos){
+        callback(photos,assets,infos);
     }];
     [self presentViewController:imagePickerVc animated:YES completion:nil];
 }
