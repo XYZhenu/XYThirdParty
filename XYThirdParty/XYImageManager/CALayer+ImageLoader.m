@@ -19,6 +19,8 @@
         imageurl = [NSURL URLWithString:url];
     }else if ([url isKindOfClass:[NSURL class]]){
         imageurl = url;
+    }else if (!url){
+        
     }else{
         return;
     }

@@ -258,7 +258,7 @@ XYTableKey(ModelHeader);
                 [weakself.ModelRect removeAllObjects];
                 [weakself.ModelRect addObjectsFromArray:modelRect];
                 if (weakself.ModelRect.count>0 && [weakself.ModelRect.firstObject isKindOfClass:[XYSectionModel class]]) weakself.xy_isRect = YES;
-                [weakself.xy_tableView reloadData];
+                [weakself.xy_tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
             }
             [weakself endRefreshing];
         }
@@ -282,7 +282,7 @@ XYTableKey(ModelHeader);
             if (modelRect) {
                 [weakself.ModelRect removeObjectsInRange:NSMakeRange(weakself.ModelRect.count - unCompleteNum, unCompleteNum)];
                 [weakself.ModelRect addObjectsFromArray:modelRect];
-                [weakself.xy_tableView reloadData];
+                [weakself.xy_tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
             }
             [weakself endRefreshing];
         }
