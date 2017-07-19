@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		101350131F1A60C700C18CCD /* CALayer+ImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 101350121F1A60C700C18CCD /* CALayer+ImageLoader.m */; };
+		8112CBB41F1EFE38007FBF4D /* XYScrollChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8112CBB31F1EFE38007FBF4D /* XYScrollChartView.m */; };
 		AC00AEB31F00E1FE00EEDC3E /* ImageUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = AC00AEB21F00E1FE00EEDC3E /* ImageUploader.m */; };
 		AC00AEB71F02365E00EEDC3E /* RichTextVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AC00AEB61F02365E00EEDC3E /* RichTextVC.m */; };
 		AC00AEBA1F0334C900EEDC3E /* ImageLoaderSaveVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AC00AEB91F0334C900EEDC3E /* ImageLoaderSaveVC.m */; };
@@ -44,6 +45,8 @@
 		101350111F1A60C700C18CCD /* CALayer+ImageLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+ImageLoader.h"; sourceTree = "<group>"; };
 		101350121F1A60C700C18CCD /* CALayer+ImageLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+ImageLoader.m"; sourceTree = "<group>"; };
 		4A5C7839696F10CE26F7C3C4 /* Pods-XYThirdParty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XYThirdParty.release.xcconfig"; path = "Pods/Target Support Files/Pods-XYThirdParty/Pods-XYThirdParty.release.xcconfig"; sourceTree = "<group>"; };
+		8112CBB21F1EFE38007FBF4D /* XYScrollChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYScrollChartView.h; sourceTree = "<group>"; };
+		8112CBB31F1EFE38007FBF4D /* XYScrollChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYScrollChartView.m; sourceTree = "<group>"; };
 		A76582D26C8528E28F0B7D17 /* Pods_XYThirdParty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XYThirdParty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC00AEB11F00E1FE00EEDC3E /* ImageUploader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageUploader.h; sourceTree = "<group>"; };
 		AC00AEB21F00E1FE00EEDC3E /* ImageUploader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageUploader.m; sourceTree = "<group>"; };
@@ -122,6 +125,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		8112CBB11F1EFE1E007FBF4D /* XYScrollChartView */ = {
+			isa = PBXGroup;
+			children = (
+				8112CBB21F1EFE38007FBF4D /* XYScrollChartView.h */,
+				8112CBB31F1EFE38007FBF4D /* XYScrollChartView.m */,
+			);
+			path = XYScrollChartView;
+			sourceTree = "<group>";
+		};
 		90B75613276AA6830C1B57AC /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -185,6 +197,7 @@
 		AC8DDD7C1EEFC2A50009C5AC /* XYThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				8112CBB11F1EFE1E007FBF4D /* XYScrollChartView */,
 				AC1A0A0A1EFA48B300D6E166 /* RichText */,
 				AC1D56741EF3C84E00AF03AD /* JSON */,
 				AC8DDDD51EEFC3970009C5AC /* File.swift */,
@@ -426,7 +439,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		9F64C7B462801E1F9BB2A422 /* [CP] Copy Pods Resources */ = {
@@ -488,6 +501,7 @@
 				AC8DDE141EEFC3970009C5AC /* XYWebVC.m in Sources */,
 				AC1D56771EF3C86A00AF03AD /* JSONKit.m in Sources */,
 				AC8DDE061EEFC3970009C5AC /* DatePickerVC.m in Sources */,
+				8112CBB41F1EFE38007FBF4D /* XYScrollChartView.m in Sources */,
 				AC8DDE101EEFC3970009C5AC /* XYScroll.m in Sources */,
 				AC8DDE0E1EEFC3970009C5AC /* UIViewController+Log.m in Sources */,
 				AC8DDE0F1EEFC3970009C5AC /* XYNetwork.m in Sources */,
