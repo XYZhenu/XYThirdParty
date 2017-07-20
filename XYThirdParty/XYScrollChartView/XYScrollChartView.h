@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+NS_ASSUME_NONNULL_BEGIN;
 @interface XYScrollChartView : UIView
 -(instancetype)initWithFrame:(CGRect)frame cellHeight:(CGFloat)cellheight cellWidth:(CGFloat)cellwidth topHeight:(CGFloat)topheight leftWidth:(CGFloat)leftWidth topNum:(NSInteger)topNum leftNum:(NSInteger)leftNum;
 
@@ -16,10 +16,11 @@
 -(void)resetTag;
 
 -(void)block_getFrame:(CGRect(^)(CGFloat cellWidth,CGFloat cellHeight,CGFloat totalWidth,CGFloat totalHeight,id content))getFrame 
-       buildLeftLabel:(void(^)(UIView* view,NSInteger index))buildLeftLabel 
-        buildTopLabel:(void(^)(UIView* view,NSInteger index))buildTopLabel 
+       buildLeftLabel:(nullable void(^)(UIView* view,NSInteger index))buildLeftLabel
+        buildTopLabel:(nullable void(^)(UIView* view,NSInteger index))buildTopLabel
              buildTag:(void(^)(UIView* view,id content))buildTag 
              clickTag:(void(^)(UIView* view,id content))clickTag
-            buildLeft:(UIView*(^)(CGRect frame))buildLeft 
-             buildTop:(UIView*(^)(CGRect frame))buildTop;
+            buildLeft:(nullable UIView*(^)(CGRect frame))buildLeft
+             buildTop:(nullable UIView*(^)(CGRect frame))buildTop;
 @end
+NS_ASSUME_NONNULL_END;
