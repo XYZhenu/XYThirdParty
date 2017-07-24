@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		101350131F1A60C700C18CCD /* CALayer+ImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 101350121F1A60C700C18CCD /* CALayer+ImageLoader.m */; };
 		8112CBB41F1EFE38007FBF4D /* XYScrollChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8112CBB31F1EFE38007FBF4D /* XYScrollChartView.m */; };
+		817D0B991F25914900B9956D /* RefreshTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 817D0B981F25914900B9956D /* RefreshTable.swift */; };
 		AC00AEB31F00E1FE00EEDC3E /* ImageUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = AC00AEB21F00E1FE00EEDC3E /* ImageUploader.m */; };
 		AC00AEB71F02365E00EEDC3E /* RichTextVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AC00AEB61F02365E00EEDC3E /* RichTextVC.m */; };
 		AC00AEBA1F0334C900EEDC3E /* ImageLoaderSaveVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AC00AEB91F0334C900EEDC3E /* ImageLoaderSaveVC.m */; };
@@ -47,6 +48,7 @@
 		4A5C7839696F10CE26F7C3C4 /* Pods-XYThirdParty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XYThirdParty.release.xcconfig"; path = "Pods/Target Support Files/Pods-XYThirdParty/Pods-XYThirdParty.release.xcconfig"; sourceTree = "<group>"; };
 		8112CBB21F1EFE38007FBF4D /* XYScrollChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYScrollChartView.h; sourceTree = "<group>"; };
 		8112CBB31F1EFE38007FBF4D /* XYScrollChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYScrollChartView.m; sourceTree = "<group>"; };
+		817D0B981F25914900B9956D /* RefreshTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshTable.swift; sourceTree = "<group>"; };
 		A76582D26C8528E28F0B7D17 /* Pods_XYThirdParty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XYThirdParty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC00AEB11F00E1FE00EEDC3E /* ImageUploader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageUploader.h; sourceTree = "<group>"; };
 		AC00AEB21F00E1FE00EEDC3E /* ImageUploader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageUploader.m; sourceTree = "<group>"; };
@@ -132,6 +134,14 @@
 				8112CBB31F1EFE38007FBF4D /* XYScrollChartView.m */,
 			);
 			path = XYScrollChartView;
+			sourceTree = "<group>";
+		};
+		817D0B971F25911F00B9956D /* test */ = {
+			isa = PBXGroup;
+			children = (
+				817D0B981F25914900B9956D /* RefreshTable.swift */,
+			);
+			path = test;
 			sourceTree = "<group>";
 		};
 		90B75613276AA6830C1B57AC /* Pods */ = {
@@ -338,6 +348,7 @@
 		AC8DDDFC1EEFC3970009C5AC /* XYTableViewController */ = {
 			isa = PBXGroup;
 			children = (
+				817D0B971F25911F00B9956D /* test */,
 				AC8DDDFD1EEFC3970009C5AC /* XYTableViewController.h */,
 				AC8DDDFE1EEFC3970009C5AC /* XYTableViewController.m */,
 			);
@@ -496,6 +507,7 @@
 			files = (
 				AC8DDE0A1EEFC3970009C5AC /* XYButton.m in Sources */,
 				AC8DDE0B1EEFC3970009C5AC /* UIImageView+ImageLoader.m in Sources */,
+				817D0B991F25914900B9956D /* RefreshTable.swift in Sources */,
 				AC00AEB71F02365E00EEDC3E /* RichTextVC.m in Sources */,
 				AC8DDE0C1EEFC3970009C5AC /* XYLoadingPage.m in Sources */,
 				AC8DDE141EEFC3970009C5AC /* XYWebVC.m in Sources */,

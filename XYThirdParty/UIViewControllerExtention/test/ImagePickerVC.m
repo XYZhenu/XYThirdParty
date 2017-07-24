@@ -21,7 +21,7 @@
 }
 
 - (IBAction)pickerClick:(id)sender {
-    [self pickeImagesWithCallback:^(NSArray<UIImage *> * _Nonnull photos, NSArray * _Nonnull assets) {
+    [self pickeImagesWithCallback:^(NSArray<UIImage *> * _Nonnull photos, NSArray * _Nonnull assets, NSArray* infos) {
 
     }];
 }
