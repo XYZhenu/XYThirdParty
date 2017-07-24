@@ -112,7 +112,9 @@
 
     if (self.createUI) {
         for (int i=0;i<number; i++) {
-            self.createUI(_cellArray[i],i);
+            UIView* cell = _cellArray[i];
+            self.createUI(cell,i);
+            [cell bringSubviewToFront:[cell viewWithTag:ButtonTag+i]];
         }
     }
 

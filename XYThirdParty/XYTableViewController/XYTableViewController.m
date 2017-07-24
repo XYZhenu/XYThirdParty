@@ -191,8 +191,10 @@ XYTableKey(ModelHeader);
     }
     return _xy_tableView;
 }
-
 -(void)bindTableView:(UITableView*)tableview {
+    [self bindTableView:tableview isRect:NO];
+}
+-(void)bindTableView:(UITableView*)tableview isRect:(BOOL)isrect{
     if (!tableview.tableFooterView) {
         tableview.tableFooterView = [[UIView alloc] init];
     }
@@ -208,6 +210,7 @@ XYTableKey(ModelHeader);
     }
     _xy_tableView.backgroundView = nil;
     _xy_tableView.backgroundColor = [UIColor clearColor];
+    self.xy_isRect = isrect;
 }
 -(void)bindRefreshHeader:(UITableView*)tableview withText:(BOOL)withText {
     if (tableview) {

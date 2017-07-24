@@ -53,6 +53,7 @@ NS_ASSUME_NONNULL_BEGIN;
 @property(nonatomic,assign)NSUInteger rowsPerPage;//default 10
 @property(nonatomic,assign,readonly)NSUInteger currentPage;
 
+-(void)bindTableView:(UITableView*)tableview isRect:(BOOL)isrect;
 -(void)bindTableView:(UITableView*)tableview;
 -(void)bindRefreshHeader:(UITableView*)tableview withText:(BOOL)withText;
 -(void)bindRefreshFooter:(UITableView*)tableview;
