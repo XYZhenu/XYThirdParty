@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		101350131F1A60C700C18CCD /* CALayer+ImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 101350121F1A60C700C18CCD /* CALayer+ImageLoader.m */; };
 		10DCC5C61F23A0D000A4B7CA /* XYMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 10DCC5C51F23A0D000A4B7CA /* XYMenu.m */; };
+		10DF557F1F26299F009F4999 /* XYImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 10DF557E1F26299F009F4999 /* XYImageLoader.m */; };
 		8112CBB41F1EFE38007FBF4D /* XYScrollChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8112CBB31F1EFE38007FBF4D /* XYScrollChartView.m */; };
 		817D0B991F25914900B9956D /* RefreshTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 817D0B981F25914900B9956D /* RefreshTable.swift */; };
 		AC00AEB31F00E1FE00EEDC3E /* ImageUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = AC00AEB21F00E1FE00EEDC3E /* ImageUploader.m */; };
@@ -48,6 +49,8 @@
 		101350121F1A60C700C18CCD /* CALayer+ImageLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+ImageLoader.m"; sourceTree = "<group>"; };
 		10DCC5C41F23A0D000A4B7CA /* XYMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYMenu.h; sourceTree = "<group>"; };
 		10DCC5C51F23A0D000A4B7CA /* XYMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYMenu.m; sourceTree = "<group>"; };
+		10DF557D1F26299F009F4999 /* XYImageLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYImageLoader.h; sourceTree = "<group>"; };
+		10DF557E1F26299F009F4999 /* XYImageLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYImageLoader.m; sourceTree = "<group>"; };
 		4A5C7839696F10CE26F7C3C4 /* Pods-XYThirdParty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XYThirdParty.release.xcconfig"; path = "Pods/Target Support Files/Pods-XYThirdParty/Pods-XYThirdParty.release.xcconfig"; sourceTree = "<group>"; };
 		8112CBB21F1EFE38007FBF4D /* XYScrollChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYScrollChartView.h; sourceTree = "<group>"; };
 		8112CBB31F1EFE38007FBF4D /* XYScrollChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYScrollChartView.m; sourceTree = "<group>"; };
@@ -299,6 +302,8 @@
 				AC8DDDE71EEFC3970009C5AC /* UIImageView+ImageLoader.m */,
 				101350111F1A60C700C18CCD /* CALayer+ImageLoader.h */,
 				101350121F1A60C700C18CCD /* CALayer+ImageLoader.m */,
+				10DF557D1F26299F009F4999 /* XYImageLoader.h */,
+				10DF557E1F26299F009F4999 /* XYImageLoader.m */,
 			);
 			path = XYImageManager;
 			sourceTree = "<group>";
@@ -533,6 +538,7 @@
 				AC8DDD851EEFC2A50009C5AC /* ViewController.m in Sources */,
 				AC8DDE041EEFC3970009C5AC /* File.swift in Sources */,
 				ACBCD22A1EFD1CE500D654A7 /* XYRichTextVC.m in Sources */,
+				10DF557F1F26299F009F4999 /* XYImageLoader.m in Sources */,
 				AC8DDD821EEFC2A50009C5AC /* AppDelegate.m in Sources */,
 				AC8DDE081EEFC3970009C5AC /* UIViewController+DatePicker.m in Sources */,
 				AC8DDE051EEFC3970009C5AC /* TableViewController.m in Sources */,
