@@ -33,7 +33,6 @@ Pod::Spec.new do |s|
         c.dependency 'NJKWebViewProgress'
         c.dependency 'MBProgressHUD'
         c.dependency 'MJRefresh'
-        c.dependency 'FlyImage'
         c.dependency 'MZTimerLabel'
         c.dependency 'GVUserDefaults'
     end
@@ -47,5 +46,10 @@ Pod::Spec.new do |s|
         r.dependency 'YYText'
         r.dependency 'YYImage'
         r.dependency 'TZImagePickerController'
+    end
+    s.subspec 'FlyImage' do |f|
+        f.source_files = 'XYThirdParty/FlyImageManager/*.{h,m}'
+        f.requires_arc = true
+        f.dependency 'FlyImage'
     end
 end

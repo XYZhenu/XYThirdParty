@@ -12,4 +12,6 @@
 -(void)finish;
 -(void)indexClick:(int)index;
 -(void)loadReq:(void(^)(NSArray<NSString*>* images))complete;
+
+-(void)imageView:(UIImageView*)imageview loadImage:(NSString*)url placeHolder:(UIImage*)image;
 @end

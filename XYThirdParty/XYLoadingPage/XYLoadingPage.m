@@ -10,7 +10,6 @@
 #import "XYThirdParty.h"
 #import "XYScroll.h"
 #import <MZTimerLabel/MZTimerLabel.h>
-#import "../XYImageManager/UIImageView+ImageLoader.h"
 
 @interface XYLoadingPage ()<MZTimerLabelDelegate>
 @property (nonatomic, strong)XYScroll* scroll;
@@ -49,7 +48,7 @@
     } indicatorRect:nil callBack:^(NSInteger index, UIView * _Nonnull theView, id  _Nonnull message) {
         [weakself indexClick:(int)index];
     } messgaeSet:^(NSInteger index, UIView * _Nonnull theView, id  _Nonnull message) {
-        [Image(100) xy_load:message placeHolder:[self lanuchImage]];
+        [self imageView:Image(100) loadImage:message placeHolder:[self lanuchImage]];
     }];
     // Do any additional setup after loading the view.
     [self.view addSubview:self.scroll];
@@ -91,6 +90,9 @@
         }
     }];
 
+}
+-(void)imageView:(UIImageView*)imageview loadImage:(NSString*)url placeHolder:(UIImage*)image{
+    
 }
 -(NSString*)timerLabel:(MZTimerLabel*)timerLabel customTextToDisplayAtTime:(NSTimeInterval)time {
     if (((long)time) > 10 || ((long)time) <= 0) return @"跳过";
