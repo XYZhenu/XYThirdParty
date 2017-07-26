@@ -52,7 +52,9 @@
 - (CGFloat)autoLayoutHeightWithWidth:(CGFloat)width{
 
     self.translatesAutoresizingMaskIntoConstraints = NO;
+
     NSLayoutConstraint *widthFenceConstraint = [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:width];
+    widthFenceConstraint.priority = 999;
     [self addConstraint:widthFenceConstraint];
     CGFloat height = [self systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
     [self removeConstraint:widthFenceConstraint];
@@ -353,6 +355,8 @@ XYTableKey(ModelHeader);
                 }
                 height = [cell.contentView autoLayoutHeightWithWidth:tableView.frame.size.width];
                 data.height = height;
+//                DDLogInfo(@"section %ld  row %ld   height %f",index.section,index.row,height);
+                
             }else if (height == -1){
                 height = UITableViewAutomaticDimension;
             }
