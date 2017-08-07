@@ -35,6 +35,7 @@ Pod::Spec.new do |s|
         c.dependency 'MJRefresh'
         c.dependency 'MZTimerLabel'
         c.dependency 'GVUserDefaults'
+        c.dependency 'Toast'
     end
     s.subspec 'JSON' do |json|
         json.source_files = 'XYThirdParty/JSON/*.{h,m}'
