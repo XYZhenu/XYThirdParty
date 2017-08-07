@@ -17,5 +17,5 @@ target 'XYThirdParty' do
     
     pod 'YYText'
     pod 'YYImage'
-    
+    pod 'Toast'
 end
