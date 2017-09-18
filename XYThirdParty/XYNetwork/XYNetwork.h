@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN;
 typedef NS_ENUM(NSUInteger, XYSerializerType) {
     XYSerializerType_Origin,
     XYSerializerType_Json,
+    XYSerializerType_Xml,
 };
 @interface XYNetwork : AFHTTPSessionManager
 +(instancetype)instance;

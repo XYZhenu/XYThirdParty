@@ -12,6 +12,7 @@
 @interface XYResponSerializer : AFHTTPResponseSerializer
 @property (strong, nonatomic) NSMutableDictionary *serializerTypeMap;
 @property (strong, nonatomic) AFJSONResponseSerializer *jsonSerializer;
+@property (strong, nonatomic) AFXMLParserResponseSerializer *xmlSerializer;
 -(void)setAcceptableContentTypes:(NSSet <NSString *> *)acceptableContentTypes for:(XYSerializerType)type;
 @end
 
@@ -27,13 +28,24 @@
     }
     return _jsonSerializer;
 }
+
+-(AFXMLParserResponseSerializer *)xmlSerializer {
+    if (!_xmlSerializer) {
+        _xmlSerializer = [AFXMLParserResponseSerializer serializer];
+    }
+    return _xmlSerializer;
+}
 -(void)setAcceptableContentTypes:(NSSet <NSString *> *)acceptableContentTypes for:(XYSerializerType)type {
     switch (type) {
         case XYSerializerType_Json:
-        self.jsonSerializer.acceptableContentTypes = acceptableContentTypes;
+            self.jsonSerializer.acceptableContentTypes = acceptableContentTypes;
+            break;
+        case XYSerializerType_Xml:
+            self.xmlSerializer.acceptableContentTypes = acceptableContentTypes;
+            break;
         default:
-        self.acceptableContentTypes = acceptableContentTypes;
-        break;
+            self.acceptableContentTypes = acceptableContentTypes;
+            break;
     }
 }
 -(id)responseObjectForResponse:(NSURLResponse *)response
@@ -42,15 +54,15 @@
 {
     XYSerializerType type = XYSerializerType_Json;
     if (self.serializerTypeMap[response.URL.absoluteString]) {
-        type = [self.serializerTypeMap[response.URL] integerValue];
+        type = [self.serializerTypeMap[response.URL.absoluteString] integerValue];
     }
     switch (type) {
         case XYSerializerType_Json:
             return [self.jsonSerializer responseObjectForResponse:response data:data error:error];
-            break;
+        case XYSerializerType_Xml:
+            return [self.xmlSerializer responseObjectForResponse:response data:data error:error];
         default:
             return [super responseObjectForResponse:response data:data error:error];
-            break;
     }
 }
 
