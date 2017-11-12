@@ -37,7 +37,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    __weak typeof(self) weakself = self;
+    __weak typeof(self) weak_self = self;
     self.scroll = [[XYScroll new] set_createUI:^(UIView * _Nonnull theView) {
         ImageCreate(100);
         image_100.contentMode = UIViewContentModeScaleToFill;
@@ -46,7 +46,7 @@
     } layOut:^(UIView * _Nonnull theView) {
         Image(100).frame = theView.bounds;
     } indicatorRect:nil callBack:^(NSInteger index, UIView * _Nonnull theView, id  _Nonnull message) {
-        [weakself indexClick:(int)index];
+        [weak_self indexClick:(int)index];
     } messgaeSet:^(NSInteger index, UIView * _Nonnull theView, id  _Nonnull message) {
         [self imageView:Image(100) loadImage:message placeHolder:[self lanuchImage]];
     }];
@@ -84,9 +84,9 @@
     label.hidden = YES;
     [self loadReq:^(NSArray<NSString *> *images) {
         if (images.count==0) {
-            [weakself finish];
+            [weak_self finish];
         }else{
-            weakself.scroll.messageArray = images;
+            weak_self.scroll.messageArray = images;
         }
     }];
 

@@ -11,7 +11,7 @@
 @property(nonatomic,strong) void (^callBack) (BOOL isSelected,UIView* theView);
 @property(nonatomic,strong) void (^layOut) (UIView* theView);
 @property(nonatomic,strong) void (^touched) (BOOL isTouched,UIView* theView);
-@property(nonatomic,strong) void (^messageSet) (BOOL isSelected,UIView* theView,id message);
+@property(nonatomic,strong) void (^messageSet) (BOOL isSelected,UIView* theView,NSDictionary* message);
 @property(nonatomic,strong) void(^selectState)(BOOL isSelected,UIView* theView);
 @end
 @implementation XYButton
@@ -76,12 +76,11 @@
         self.layOut(self);
     }
 }
--(void)xyzMessageSet:(id)message{
+-(void)xyMessageSet:(NSDictionary*)message{
     if (self.messageSet) {
         self.messageSet(_isSelected,self,message);
     }
 }
-
 
 +(instancetype)new{
     return [[self alloc] init];
@@ -90,7 +89,7 @@
                      layOut:(void(^)(UIView* theView))layOut
                    callBack:(void(^)(BOOL isSelected,UIView* theView))callBack
                     touched:(void(^)(BOOL isTouched, UIView* theView))touched
-                 messgaeSet:(void(^)(BOOL isSelected,UIView* theView,id message))messageSet{
+                 messgaeSet:(void(^)(BOOL isSelected,UIView* theView,NSDictionary* message))messageSet{
     self.callBack = callBack;
     self.layOut = layOut;
     self.touched = touched;
@@ -104,7 +103,7 @@
                      layOut:(void(^)(UIView* theView))layOut
                    callBack:(void(^)(BOOL isSelected,UIView* theView))callBack
                     touched:(void(^)(BOOL isTouched, UIView* theView))touched
-                 messgaeSet:(void(^)(BOOL isSelected,UIView* theView,id message))messageSet
+                 messgaeSet:(void(^)(BOOL isSelected,UIView* theView,NSDictionary* message))messageSet
                selecteState:(void(^)(BOOL isSelected,UIView* theView))selectState{
     self.callBack = callBack;
     self.layOut = layOut;

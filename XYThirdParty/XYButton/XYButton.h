@@ -34,13 +34,13 @@ IB_DESIGNABLE;
                      layOut:(nullable void(^)(UIView* theView))layOut
                    callBack:(nullable void(^)(BOOL isSelected,UIView* theView))callBack
                     touched:(nullable void(^)(BOOL isTouched, UIView* theView))touched
-                 messgaeSet:(nullable void(^)(BOOL isSelected,UIView* theView,id message))messageSet
+                 messgaeSet:(nullable void(^)(BOOL isSelected,UIView* theView,NSDictionary* message))messageSet
                selecteState:(nullable void(^)(BOOL isSelected,UIView* theView))selectState;
 
 -(instancetype)set_customUI:(nullable void(^)(UIView* theView))customUI
                      layOut:(nullable void(^)(UIView* theView))layOut
                    callBack:(nullable void(^)(BOOL isSelected,UIView* theView))callBack
                     touched:(nullable void(^)(BOOL isTouched, UIView* theView))touched
-                 messgaeSet:(nullable void(^)(BOOL isSelected,UIView* theView,id message))messageSet;
+                 messgaeSet:(nullable void(^)(BOOL isSelected,UIView* theView,NSDictionary* message))messageSet;
 @end
 NS_ASSUME_NONNULL_END;

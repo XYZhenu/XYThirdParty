@@ -93,9 +93,9 @@
         _progress = [[NJKWebViewProgress alloc] init];
         _progress.webViewProxyDelegate = self;
         self.web.delegate = _progress;
-        __weak typeof(self) weakself = self;
+        __weak typeof(self) weak_self = self;
         _progress.progressBlock = ^(float progress) {
-            weakself.progressView.progress = progress;
+            weak_self.progressView.progress = progress;
         };
     }
     return _progress;
@@ -123,7 +123,7 @@
     self.view.backgroundColor=[UIColor whiteColor];
 
     [self loadFromParma];
-    __weak typeof(self) weakself = self;
+    __weak typeof(self) weak_self = self;
     
     XYButton* btn1 = [[XYButton new] set_customUI:^(UIView *theView) {
         theView.backgroundColor = [UIColor whiteColor];
@@ -138,7 +138,7 @@
         Image(101).frame = CGRectMake(0, 0, 10, theView.frame.size.height);
         Label(102).frame = CGRectMake(10, 0, theView.frame.size.width-10, theView.frame.size.height);
     } callBack:^(BOOL isSelected, UIView *theView) {
-        [weakself back];
+        [weak_self back];
     } touched:nil messgaeSet:nil];
     btn1.frame = CGRectMake(0, 0, 50, 40);
     UIBarButtonItem* item1 = [[UIBarButtonItem alloc] initWithCustomView:btn1];
@@ -152,7 +152,7 @@
     } layOut:^(UIView *theView) {
         Label(102).frame = CGRectMake(0, 0, theView.frame.size.width, theView.frame.size.height);
     } callBack:^(BOOL isSelected, UIView *theView) {
-        [weakself.navigationController popViewControllerAnimated:YES];
+        [weak_self.navigationController popViewControllerAnimated:YES];
     } touched:nil messgaeSet:nil];
     btn2.frame = CGRectMake(0, 0, 40, 40);
     UIBarButtonItem* item2 = [[UIBarButtonItem alloc] initWithCustomView:btn2];

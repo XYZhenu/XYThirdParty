@@ -256,18 +256,18 @@ XYTableKey(ModelHeader);
         return;
     }
     self.isHeaderTriggerLastToken = YES;
-    __weak typeof(self) weakself = self;
+    __weak typeof(self) weak_self = self;
     [self refresh:self.xy_tableView page:0 complete:^(NSArray * _Nullable modelRect) {
-        if (weakself.isHeaderTriggerLastToken) {
+        if (weak_self.isHeaderTriggerLastToken) {
             if (modelRect) {
-                [weakself.ModelRect removeAllObjects];
-                [weakself.ModelRect addObjectsFromArray:modelRect];
-                if (weakself.ModelRect.count>0 && [weakself.ModelRect.firstObject isKindOfClass:[XYSectionModel class]]) weakself.xy_isRect = YES;
-                [weakself.xy_tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+                [weak_self.ModelRect removeAllObjects];
+                [weak_self.ModelRect addObjectsFromArray:modelRect];
+                if (weak_self.ModelRect.count>0 && [weak_self.ModelRect.firstObject isKindOfClass:[XYSectionModel class]]) weak_self.xy_isRect = YES;
+                [weak_self.xy_tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
             }
-            [weakself endRefreshing];
+            [weak_self endRefreshing];
         }
-        [weakself.xy_tableView.mj_header endRefreshing];
+        [weak_self.xy_tableView.mj_header endRefreshing];
     }];
 }
 -(void)xy_refreshFooter {
@@ -281,17 +281,17 @@ XYTableKey(ModelHeader);
     NSUInteger completePage = self.ModelRect.count / self.rowsPerPage;
     NSUInteger unCompleteNum = self.ModelRect.count % self.rowsPerPage;
     self.isHeaderTriggerLastToken = NO;
-    __weak typeof(self) weakself = self;
+    __weak typeof(self) weak_self = self;
     [self refresh:self.xy_tableView page:completePage complete:^(NSArray<NSDictionary *> * _Nullable modelRect) {
-        if (!weakself.isHeaderTriggerLastToken) {
+        if (!weak_self.isHeaderTriggerLastToken) {
             if (modelRect) {
-                [weakself.ModelRect removeObjectsInRange:NSMakeRange(weakself.ModelRect.count - unCompleteNum, unCompleteNum)];
-                [weakself.ModelRect addObjectsFromArray:modelRect];
-                [weakself.xy_tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+                [weak_self.ModelRect removeObjectsInRange:NSMakeRange(weak_self.ModelRect.count - unCompleteNum, unCompleteNum)];
+                [weak_self.ModelRect addObjectsFromArray:modelRect];
+                [weak_self.xy_tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
             }
-            [weakself endRefreshing];
+            [weak_self endRefreshing];
         }
-        [weakself.xy_tableView.mj_footer endRefreshing];
+        [weak_self.xy_tableView.mj_footer endRefreshing];
     }];
 }
 -(void)refresh:(UITableView*)tableView page:(NSUInteger)page complete:(void (^)(NSArray* _Nullable))complete {
