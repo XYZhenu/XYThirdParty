@@ -31,7 +31,7 @@ class RefreshTableVC: XYTableViewController {
         modelRect.add(mo1)
         
         
-        let mo2 = XYRowModel(cls: TwoLabelCell.classForCoder(), msg: ["1":"qwertyuioplkjhgfdsazxcvbnmqwerty\nuioplkjhgfdsazxcvbnm","2":"我的意思\n是说你要\n的吗啊你不在家吃饭吗的逼里是没有任何副作用大呢石头辅助吗在的时候都没有人接听无明显的变化的时候是这样说就好哦我不想你的人"])
+        let mo2 = XYRowModel(cls: TwoLabelCell.classForCoder(), msg: ["1":"qwertyuioplkjhgfdsazxcvbnmqwerty\nuioplkjhgfdsazxcvbnm","2":"我的意思是说你要的吗啊你不在家吃饭吗的逼里是没有任何副作用大呢石头辅助吗在的时候都没有人接听无明显的变化的时候是这样说就好哦我不想你的人azxcvbnm时候都没有人接听无明显的变化的时候"])
         modelRect.add(mo2)
         
         tableviewIB.reloadData()

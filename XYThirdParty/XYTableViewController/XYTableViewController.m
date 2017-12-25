@@ -22,6 +22,7 @@
         self.cls = cls;
         self.message = msg;
         self.height = -1;
+        self._width = 320;
         self.model = nil;
     }
     return self;
@@ -44,21 +45,61 @@
 
 @end
 
-@interface UIView (_XYTableLayout)
+@interface UITableViewCell (_XYTableLayout)
 - (CGFloat)autoLayoutHeightWithWidth:(CGFloat)width;
 @end
-@implementation UIView (_XYTableLayout)
+@implementation UITableViewCell (_XYTableLayout)
 
-- (CGFloat)autoLayoutHeightWithWidth:(CGFloat)width{
+- (CGFloat)autoLayoutHeightWithWidth:(CGFloat)contentViewWidth{
 
-    self.translatesAutoresizingMaskIntoConstraints = NO;
+    CGFloat fittingHeight = 0;
+    NSLayoutConstraint *widthFenceConstraint = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:contentViewWidth];
 
-    NSLayoutConstraint *widthFenceConstraint = [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:width];
-    widthFenceConstraint.priority = 999;
-    [self addConstraint:widthFenceConstraint];
-    CGFloat height = [self systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-    [self removeConstraint:widthFenceConstraint];
-    return height+1;
+    // [bug fix] after iOS 10.3, Auto Layout engine will add an additional 0 width constraint onto cell's content view, to avoid that, we add constraints to content view's left, right, top and bottom.
+    static BOOL isSystemVersionEqualOrGreaterThen10_2 = NO;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        isSystemVersionEqualOrGreaterThen10_2 = [UIDevice.currentDevice.systemVersion compare:@"10.2" options:NSNumericSearch] != NSOrderedAscending;
+    });
+    NSArray<NSLayoutConstraint *> *edgeConstraints;
+    if (isSystemVersionEqualOrGreaterThen10_2) {
+        // To avoid confilicts, make width constraint softer than required (1000)
+        widthFenceConstraint.priority = UILayoutPriorityRequired - 1;
+
+        // Build edge constraints
+        NSLayoutConstraint *leftConstraint = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0];
+        NSLayoutConstraint *rightConstraint = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1.0 constant:0];
+        NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0 constant:0];
+//        NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0];
+        edgeConstraints = @[leftConstraint, rightConstraint, topConstraint];
+        [self addConstraints:edgeConstraints];
+    }
+
+    [self.contentView addConstraint:widthFenceConstraint];
+
+    // Auto layout engine does its math
+    fittingHeight = [self.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+
+    // Clean-ups
+    [self.contentView removeConstraint:widthFenceConstraint];
+    if (isSystemVersionEqualOrGreaterThen10_2) {
+        [self removeConstraints:edgeConstraints];
+    }
+
+    if (fittingHeight == 0) {
+#if DEBUG
+        // Warn if using AutoLayout but get zero height.
+        if (self.contentView.constraints.count > 0) {
+            if (!objc_getAssociatedObject(self, _cmd)) {
+                NSLog(@"[FDTemplateLayoutCell] Warning once only: Cannot get a proper cell height (now 0) from '- systemFittingSize:'(AutoLayout). You should check how constraints are built in cell, making it into 'self-sizing' cell.");
+                objc_setAssociatedObject(self, _cmd, @YES, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+            }
+        }
+#endif
+        fittingHeight = [self sizeThatFits:CGSizeMake(contentViewWidth, 0)].height;
+    }
+
+    return fittingHeight+1;
 }
 
 @end
@@ -340,26 +381,23 @@ XYTableKey(ModelHeader);
 
 -(CGFloat)getReuseCellHeightWithModel:(XYRowModel*)data tableview:(UITableView*)tableView index:(NSIndexPath*)index{
     __block CGFloat height = 0;
+//    DDLogInfo(@"normal section %ld  row %ld   width %f",index.section,index.row,tableView.bounds.size.width);
     @try {
-        if (data.height >= 0 && data.height != UITableViewAutomaticDimension) {
+        if (data.height >= 0 && fabs(data._width - tableView.bounds.size.width) < 0.0001) {
             height = data.height;
         }else{
             height=[data.cls xyHeightWithModel:data width:tableView.frame.size.width];
-            if (height == -2) {
-                UITableViewCell* cell = self.cellForCaculating[data.identifier];
-                if (!cell) {
-                    cell = [self getReuseCellWithModel:data tableview:tableView];
-                    self.cellForCaculating[data.identifier] = cell;
-                }else{
-                    cell.xyModel = data;
-                }
-                height = [cell.contentView autoLayoutHeightWithWidth:tableView.frame.size.width];
-                data.height = height;
-//                DDLogInfo(@"section %ld  row %ld   height %f",index.section,index.row,height);
-                
-            }else if (height == -1){
-                height = UITableViewAutomaticDimension;
+            UITableViewCell* cell = self.cellForCaculating[data.identifier];
+            if (!cell) {
+                cell = [self getReuseCellWithModel:data tableview:tableView];
+                self.cellForCaculating[data.identifier] = cell;
+            }else{
+                cell.xyModel = data;
             }
+            data._width = tableView.bounds.size.width;
+            height = [cell autoLayoutHeightWithWidth:data._width];
+            data.height = height;
+//                DDLogInfo(@"caculate section %ld  row %ld   width %f",index.section,index.row,tableView.bounds.size.width);
         }
     } @catch (NSException *exception) {
         DDLogError(@"%@",exception);
