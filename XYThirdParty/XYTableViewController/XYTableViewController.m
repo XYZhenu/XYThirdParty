@@ -279,7 +279,7 @@ XYTableKey(ModelHeader);
         [footer setTitle:@"" forState:MJRefreshStatePulling];
 //        [footer setTitle:@"" forState:MJRefreshStateRefreshing];
         [footer setTitle:@"" forState:MJRefreshStateWillRefresh];
-        footer.stateLabel.hidden = YES;
+//        footer.stateLabel.hidden = YES;
         _xy_tableView = tableview;
     }else{
         _xy_tableView.mj_footer = nil;
