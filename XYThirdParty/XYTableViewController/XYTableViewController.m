@@ -221,6 +221,7 @@ XYTableKey(ModelHeader);
         _xy_tableView.delegate=self;
         _xy_tableView.dataSource=self;
         _xy_tableView.backgroundColor = [UIColor clearColor];
+        _xy_tableView.estimatedRowHeight = 0;
         [self bindRefreshHeader:_xy_tableView withText:NO];
         [self bindRefreshFooter:_xy_tableView];
         if ([_xy_tableView respondsToSelector:@selector(setSeparatorInset:)]) {
@@ -244,6 +245,7 @@ XYTableKey(ModelHeader);
     tableview.delegate=self;
     tableview.dataSource=self;
     _xy_tableView = tableview;
+    _xy_tableView.estimatedRowHeight = 0;
     _xy_tableView.backgroundColor = [UIColor clearColor];
     if ([_xy_tableView respondsToSelector:@selector(setSeparatorInset:)]) {
         [_xy_tableView setSeparatorInset: UIEdgeInsetsZero];
