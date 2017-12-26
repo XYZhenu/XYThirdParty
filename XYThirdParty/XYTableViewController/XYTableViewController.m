@@ -296,6 +296,7 @@ XYTableKey(ModelHeader);
 -(void)refreshHeaderSilently:(BOOL)silently {
     if (!silently) {
         [self.xy_tableView.mj_header beginRefreshing];
+        [self.xy_tableView.mj_footer setHidden:true];
         return;
     }
     self.isHeaderTriggerLastToken = YES;
@@ -311,6 +312,7 @@ XYTableKey(ModelHeader);
             [weak_self endRefreshing];
         }
         [weak_self.xy_tableView.mj_header endRefreshing];
+        [self.xy_tableView.mj_footer setHidden:false];
     }];
 }
 -(void)xy_refreshFooter {
