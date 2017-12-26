@@ -272,12 +272,12 @@ XYTableKey(ModelHeader);
 }
 -(void)bindRefreshFooter:(UITableView*)tableview {
     if (tableview) {
-        MJRefreshBackNormalFooter* footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(xy_refreshFooter)];
+        MJRefreshAutoNormalFooter* footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(xy_refreshFooter)];
         tableview.mj_footer = footer;
-        [footer setTitle:@"" forState:MJRefreshStateIdle];
-        [footer setTitle:@"" forState:MJRefreshStateNoMoreData];
+//        [footer setTitle:@"" forState:MJRefreshStateIdle];
+//        [footer setTitle:@"" forState:MJRefreshStateNoMoreData];
         [footer setTitle:@"" forState:MJRefreshStatePulling];
-        [footer setTitle:@"" forState:MJRefreshStateRefreshing];
+//        [footer setTitle:@"" forState:MJRefreshStateRefreshing];
         [footer setTitle:@"" forState:MJRefreshStateWillRefresh];
         footer.stateLabel.hidden = YES;
         _xy_tableView = tableview;
