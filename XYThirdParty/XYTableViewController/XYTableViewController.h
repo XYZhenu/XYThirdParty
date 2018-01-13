@@ -28,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN;
 @property (nonatomic,strong)XYRowModel*header;
 @property (nonatomic,strong)XYRowModel*footer;
 -(instancetype)initRows:(NSArray<XYRowModel*>*)rows msg:(nullable NSDictionary<NSString*,id>*)msg;
+-(instancetype)initOCRows:(NSMutableArray*)rows msg:(nullable NSDictionary<NSString*,id>*)msg;
 @end
 
 @protocol XYModelDelegate <NSObject>

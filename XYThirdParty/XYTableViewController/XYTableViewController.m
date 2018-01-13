@@ -42,7 +42,14 @@
     }
     return self;
 }
-
+-(instancetype)initOCRows:(NSMutableArray*)rows msg:(nullable NSDictionary*)msg{
+    self = [super init];
+    if (self) {
+        self.rows = rows;
+        self.message = msg;
+    }
+    return self;
+}
 @end
 
 @interface UITableViewCell (_XYTableLayout)
