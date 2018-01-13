@@ -53,6 +53,7 @@ NS_ASSUME_NONNULL_BEGIN;
 
 @property(nonatomic,strong)NSMutableArray*ModelRect;
 @property(nonatomic,strong)NSMutableArray*operateRect;
+-(NSUInteger)currentItemCount;
 @property(nonatomic,assign)NSUInteger rowsPerPage;//default 10
 @property(nonatomic,assign,readonly)NSUInteger currentPage;
 

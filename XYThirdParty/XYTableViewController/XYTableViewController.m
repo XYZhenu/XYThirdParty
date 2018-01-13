@@ -217,9 +217,12 @@ XYTableKey(ModelHeader);
         _rowsPerPage = rowsPerPage;
     }
 }
+-(NSUInteger)currentItemCount {
+    return self.operateRect.count;
+}
 -(NSUInteger)currentPage {
-    NSUInteger page = (NSUInteger)(self.operateRect.count / self.rowsPerPage);
-    if (self.operateRect.count % self.rowsPerPage > 0 && self.operateRect.count > self.rowsPerPage) {
+    NSUInteger page = (NSUInteger)([self currentItemCount] / self.rowsPerPage);
+    if ([self currentItemCount] % self.rowsPerPage > 0 && [self currentItemCount] > self.rowsPerPage) {
         page ++;
     }
     return page;
@@ -332,8 +335,8 @@ XYTableKey(ModelHeader);
         [self.xy_tableView.mj_footer beginRefreshing];
         return;
     }
-    NSUInteger completePage = self.operateRect.count / self.rowsPerPage;
-    NSUInteger unCompleteNum = self.operateRect.count % self.rowsPerPage;
+    NSUInteger completePage = [self currentItemCount] / self.rowsPerPage;
+    NSUInteger unCompleteNum = [self currentItemCount] % self.rowsPerPage;
     self.isHeaderTriggerLastToken = NO;
     __weak typeof(self) weak_self = self;
     [self refresh:self.xy_tableView page:completePage complete:^(NSArray<NSDictionary *> * _Nullable modelRect) {
