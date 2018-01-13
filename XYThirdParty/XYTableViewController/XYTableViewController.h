@@ -51,6 +51,7 @@ NS_ASSUME_NONNULL_BEGIN;
 @interface XYTableViewController : UIViewController <UITableViewDataSource,UITableViewDelegate,XYModelDelegate>
 
 @property(nonatomic,strong)NSMutableArray*ModelRect;
+@property(nonatomic,strong)NSMutableArray*operateRect;
 @property(nonatomic,assign)NSUInteger rowsPerPage;//default 10
 @property(nonatomic,assign,readonly)NSUInteger currentPage;
 

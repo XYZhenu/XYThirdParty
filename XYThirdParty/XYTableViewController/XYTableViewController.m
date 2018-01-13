@@ -169,6 +169,7 @@ XYTableKey(ModelHeader);
         self.rowsPerPage = 10;
         self.xy_isRect = NO;
         self.ModelRect = [NSMutableArray array];
+        self.operateRect = self.ModelRect;
         self.cellForCaculating = [NSMutableDictionary dictionary];
     }
     return self;
@@ -178,6 +179,7 @@ XYTableKey(ModelHeader);
     self.rowsPerPage = 10;
     self.xy_isRect = NO;
     self.ModelRect = [NSMutableArray array];
+    self.operateRect = self.ModelRect;
     self.cellForCaculating = [NSMutableDictionary dictionary];
 }
 -(BOOL)shouldAutorotate{
@@ -209,8 +211,8 @@ XYTableKey(ModelHeader);
     }
 }
 -(NSUInteger)currentPage {
-    NSUInteger page = (NSUInteger)(self.ModelRect.count / self.rowsPerPage);
-    if (self.ModelRect.count % self.rowsPerPage > 0 && self.ModelRect.count > self.rowsPerPage) {
+    NSUInteger page = (NSUInteger)(self.operateRect.count / self.rowsPerPage);
+    if (self.operateRect.count % self.rowsPerPage > 0 && self.operateRect.count > self.rowsPerPage) {
         page ++;
     }
     return page;
@@ -304,8 +306,8 @@ XYTableKey(ModelHeader);
     [self refresh:self.xy_tableView page:0 complete:^(NSArray * _Nullable modelRect) {
         if (weak_self.isHeaderTriggerLastToken) {
             if (modelRect) {
-                [weak_self.ModelRect removeAllObjects];
-                [weak_self.ModelRect addObjectsFromArray:modelRect];
+                [weak_self.operateRect removeAllObjects];
+                [weak_self.operateRect addObjectsFromArray:modelRect];
                 if (weak_self.ModelRect.count>0 && [weak_self.ModelRect.firstObject isKindOfClass:[XYSectionModel class]]) weak_self.xy_isRect = YES;
                 [weak_self.xy_tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
             }
@@ -323,15 +325,15 @@ XYTableKey(ModelHeader);
         [self.xy_tableView.mj_footer beginRefreshing];
         return;
     }
-    NSUInteger completePage = self.ModelRect.count / self.rowsPerPage;
-    NSUInteger unCompleteNum = self.ModelRect.count % self.rowsPerPage;
+    NSUInteger completePage = self.operateRect.count / self.rowsPerPage;
+    NSUInteger unCompleteNum = self.operateRect.count % self.rowsPerPage;
     self.isHeaderTriggerLastToken = NO;
     __weak typeof(self) weak_self = self;
     [self refresh:self.xy_tableView page:completePage complete:^(NSArray<NSDictionary *> * _Nullable modelRect) {
         if (!weak_self.isHeaderTriggerLastToken) {
             if (modelRect) {
-                [weak_self.ModelRect removeObjectsInRange:NSMakeRange(weak_self.ModelRect.count - unCompleteNum, unCompleteNum)];
-                [weak_self.ModelRect addObjectsFromArray:modelRect];
+                [weak_self.operateRect removeObjectsInRange:NSMakeRange(weak_self.operateRect.count - unCompleteNum, unCompleteNum)];
+                [weak_self.operateRect addObjectsFromArray:modelRect];
                 [weak_self.xy_tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
             }
             [weak_self endRefreshing];
@@ -391,16 +393,18 @@ XYTableKey(ModelHeader);
             height = data.height;
         }else{
             height=[data.cls xyHeightWithModel:data width:tableView.frame.size.width];
-            UITableViewCell* cell = self.cellForCaculating[data.identifier];
-            if (!cell) {
-                cell = [self getReuseCellWithModel:data tableview:tableView];
-                self.cellForCaculating[data.identifier] = cell;
-            }else{
-                cell.xyModel = data;
+            if (height<=0) {
+                UITableViewCell* cell = self.cellForCaculating[data.identifier];
+                if (!cell) {
+                    cell = [self getReuseCellWithModel:data tableview:tableView];
+                    self.cellForCaculating[data.identifier] = cell;
+                }else{
+                    cell.xyModel = data;
+                }
+                data._width = tableView.bounds.size.width;
+                height = [cell autoLayoutHeightWithWidth:data._width];
+                data.height = height;
             }
-            data._width = tableView.bounds.size.width;
-            height = [cell autoLayoutHeightWithWidth:data._width];
-            data.height = height;
 //                DDLogInfo(@"caculate section %ld  row %ld   width %f",index.section,index.row,tableView.bounds.size.width);
         }
     } @catch (NSException *exception) {
