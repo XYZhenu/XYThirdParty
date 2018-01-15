@@ -388,8 +388,8 @@ XYTableKey(ModelHeader);
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     XYRowModel*data = self.xy_isRect?((XYSectionModel*)self.ModelRect[indexPath.section]).rows[indexPath.row]:self.ModelRect[indexPath.row];
-    UITableViewCell* cell = [self getReuseCellWithModel:data tableview:tableView];
     data.index = indexPath;
+    UITableViewCell* cell = [self getReuseCellWithModel:data tableview:tableView];
     return cell;
 }
 
@@ -426,6 +426,7 @@ XYTableKey(ModelHeader);
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     XYRowModel*data = self.xy_isRect?((XYSectionModel*)self.ModelRect[indexPath.section]).rows[indexPath.row]:self.ModelRect[indexPath.row];
+    data.index = indexPath;
     if (data) {
         return [self getReuseCellHeightWithModel:data tableview:tableView index:indexPath];
     }
