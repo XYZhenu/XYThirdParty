@@ -316,7 +316,8 @@ XYTableKey(ModelHeader);
     [self refresh:self.xy_tableView page:0 complete:^(NSArray * _Nullable modelRect) {
         if (weak_self.isHeaderTriggerLastToken) {
             if (modelRect) {
-                [weak_self.operateRect removeAllObjects];
+                NSUInteger currentCount = [self currentItemCount];
+                [weak_self.operateRect removeObjectsInRange:NSMakeRange(weak_self.operateRect.count - currentCount, currentCount)];
                 [weak_self.operateRect addObjectsFromArray:modelRect];
                 if (weak_self.ModelRect.count>0 && [weak_self.ModelRect.firstObject isKindOfClass:[XYSectionModel class]]) weak_self.xy_isRect = YES;
                 [weak_self.xy_tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
