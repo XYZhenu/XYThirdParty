@@ -628,11 +628,14 @@ typedef enum {
     CGFloat R0 = 0.040, G0 = 0.040, B0 = 0.040;
     CGFloat R1 = 0.040, G1 = 0.040, B1 = 0.040;
     
-    UIColor *tintColor = [XYMenu tintColor];
-    CGFloat a = 0.8;
-    if (tintColor) {
-        
-        [tintColor getRed:&R0 green:&G0 blue:&B0 alpha:&a];
+    UIColor *leadingColor = [XYMenu leadingColor];
+    UIColor *trailingColor = [XYMenu trailingColor];
+    CGFloat a = 0.9;
+    if (leadingColor) {
+        [leadingColor getRed:&R0 green:&G0 blue:&B0 alpha:&a];
+    }
+    if (trailingColor) {
+        [trailingColor getRed:&R1 green:&G1 blue:&B1 alpha:&a];
     }
     
     CGFloat X0 = frame.origin.x;
@@ -766,7 +769,8 @@ typedef enum {
 ////////////////////////////////////////////////////////////////////////////////
 
 static XYMenu *gMenu;
-static UIColor *gTintColor;
+static UIColor *gLeadingColor;
+static UIColor *gTrailingColor;
 static UIFont *gTitleFont;
 
 @implementation XYMenu {
@@ -862,15 +866,24 @@ static UIFont *gTitleFont;
     [[self sharedMenu] dismissMenu];
 }
 
-+ (UIColor *) tintColor
++ (UIColor *) leadingColor
 {
-    return gTintColor;
+    return gLeadingColor;
 }
 
-+ (void) setTintColor: (UIColor *) tintColor
++ (void) setLeadingColor: (UIColor *) leadingColor
 {
-    if (tintColor != gTintColor) {
-        gTintColor = tintColor;
+    if (leadingColor != gLeadingColor) {
+        gLeadingColor = leadingColor;
+    }
+}
+
++(UIColor *)trailingColor{
+    return gTrailingColor;
+}
++(void)setTrailingColor:(UIColor *)trailingColor{
+    if (gTrailingColor != trailingColor) {
+        gTrailingColor = trailingColor;
     }
 }
 

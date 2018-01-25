@@ -58,8 +58,10 @@
 
 + (void) dismissMenu;
 
-+ (UIColor *) tintColor;
-+ (void) setTintColor: (UIColor *) tintColor;
++ (UIColor *) leadingColor;
++ (void) setLeadingColor: (UIColor *) leadingColor;
++ (UIColor *) trailingColor;
++ (void) setTrailingColor: (UIColor *) trailingColor;
 
 + (UIFont *) titleFont;
 + (void) setTitleFont: (UIFont *) titleFont;
