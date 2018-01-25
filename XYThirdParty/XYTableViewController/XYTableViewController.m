@@ -254,6 +254,7 @@ XYTableKey(ModelHeader);
     if (!tableview.tableFooterView) {
         tableview.tableFooterView = [[UIView alloc] init];
     }
+    self.xy_isRect = isrect;
     tableview.delegate=self;
     tableview.dataSource=self;
     _xy_tableView = tableview;
@@ -267,7 +268,6 @@ XYTableKey(ModelHeader);
     }
     _xy_tableView.backgroundView = nil;
     _xy_tableView.backgroundColor = [UIColor clearColor];
-    self.xy_isRect = isrect;
 }
 -(void)bindRefreshHeader:(UITableView*)tableview withText:(BOOL)withText {
     if (tableview) {
