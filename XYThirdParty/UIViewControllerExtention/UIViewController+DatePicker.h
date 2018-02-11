@@ -19,6 +19,6 @@ typedef  NS_ENUM(NSInteger, XYDatePickerType){
               start:(nullable id)startTime
                 end:(nullable id)endTime
             formate:(nullable NSString*)formate
-           callBack:(void(^)(NSString* dateString,NSDate* date))callBack;
+           callBack:(void(^)(NSString* _Nullable dateString,NSDate* _Nullable date))callBack;
 @end
 NS_ASSUME_NONNULL_END;
