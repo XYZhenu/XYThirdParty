@@ -62,9 +62,10 @@ NS_ASSUME_NONNULL_BEGIN;
 -(void)bindRefreshHeader:(UITableView*)tableview withText:(BOOL)withText;
 -(void)bindRefreshFooter:(UITableView*)tableview;
 
-
+@property(nonatomic,assign)BOOL isRefreshing;
 -(void)refreshHeaderSilently:(BOOL)silently;
 -(void)refreshFooterSilently:(BOOL)silently;
+@property(nonatomic,assign)BOOL shouldAutoLoadMore;
 -(void)refresh:(UITableView*)tableView page:(NSUInteger)page complete:(void(^)(NSArray* _Nullable modelRect))complete;
 
 -(void)XYModelResponse:(XYRowModel* )model;
@@ -72,3 +73,4 @@ NS_ASSUME_NONNULL_BEGIN;
 @end
 
 NS_ASSUME_NONNULL_END;
+

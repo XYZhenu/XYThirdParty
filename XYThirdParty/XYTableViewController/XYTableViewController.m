@@ -58,10 +58,10 @@
 @implementation UITableViewCell (_XYTableLayout)
 
 - (CGFloat)autoLayoutHeightWithWidth:(CGFloat)contentViewWidth{
-
+    
     CGFloat fittingHeight = 0;
     NSLayoutConstraint *widthFenceConstraint = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:contentViewWidth];
-
+    
     // [bug fix] after iOS 10.3, Auto Layout engine will add an additional 0 width constraint onto cell's content view, to avoid that, we add constraints to content view's left, right, top and bottom.
     static BOOL isSystemVersionEqualOrGreaterThen10_2 = NO;
     static dispatch_once_t onceToken;
@@ -72,27 +72,27 @@
     if (isSystemVersionEqualOrGreaterThen10_2) {
         // To avoid confilicts, make width constraint softer than required (1000)
         widthFenceConstraint.priority = UILayoutPriorityRequired - 1;
-
+        
         // Build edge constraints
         NSLayoutConstraint *leftConstraint = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0];
         NSLayoutConstraint *rightConstraint = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1.0 constant:0];
         NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0 constant:0];
-//        NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0];
+        //        NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0];
         edgeConstraints = @[leftConstraint, rightConstraint, topConstraint];
         [self addConstraints:edgeConstraints];
     }
-
+    
     [self.contentView addConstraint:widthFenceConstraint];
-
+    
     // Auto layout engine does its math
     fittingHeight = [self.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-
+    
     // Clean-ups
     [self.contentView removeConstraint:widthFenceConstraint];
     if (isSystemVersionEqualOrGreaterThen10_2) {
         [self removeConstraints:edgeConstraints];
     }
-
+    
     if (fittingHeight == 0) {
 #if DEBUG
         // Warn if using AutoLayout but get zero height.
@@ -105,7 +105,7 @@
 #endif
         fittingHeight = [self sizeThatFits:CGSizeMake(contentViewWidth, 0)].height;
     }
-
+    
     return fittingHeight+1;
 }
 
@@ -178,6 +178,8 @@ XYTableKey(ModelHeader);
         self.ModelRect = [NSMutableArray array];
         self.operateRect = self.ModelRect;
         self.cellForCaculating = [NSMutableDictionary dictionary];
+        self.shouldAutoLoadMore = YES;
+        self.isRefreshing = NO;
     }
     return self;
 }
@@ -188,6 +190,8 @@ XYTableKey(ModelHeader);
     self.ModelRect = [NSMutableArray array];
     self.operateRect = self.ModelRect;
     self.cellForCaculating = [NSMutableDictionary dictionary];
+    self.shouldAutoLoadMore = YES;
+    self.isRefreshing = NO;
 }
 -(BOOL)shouldAutorotate{
     return YES;
@@ -286,16 +290,19 @@ XYTableKey(ModelHeader);
     if (tableview) {
         MJRefreshAutoNormalFooter* footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(xy_refreshFooter)];
         tableview.mj_footer = footer;
-//        [footer setTitle:@"" forState:MJRefreshStateIdle];
-//        [footer setTitle:@"" forState:MJRefreshStateNoMoreData];
+        //        [footer setTitle:@"" forState:MJRefreshStateIdle];
+        //        [footer setTitle:@"" forState:MJRefreshStateNoMoreData];
         [footer setTitle:@"" forState:MJRefreshStatePulling];
-//        [footer setTitle:@"" forState:MJRefreshStateRefreshing];
+        //        [footer setTitle:@"" forState:MJRefreshStateRefreshing];
         [footer setTitle:@"" forState:MJRefreshStateWillRefresh];
-//        footer.stateLabel.hidden = YES;
+        //        footer.stateLabel.hidden = YES;
         _xy_tableView = tableview;
     }else{
         _xy_tableView.mj_footer = nil;
     }
+}
+-(void)showNoMoreData:(BOOL)show{
+    [(MJRefreshAutoNormalFooter*)self.xy_tableView.mj_footer setTitle:show ? @"没有更多数据啦" : @"点击或上拉加载更多" forState:MJRefreshStateIdle];
 }
 
 -(void)endRefreshing {
@@ -312,6 +319,7 @@ XYTableKey(ModelHeader);
         return;
     }
     self.isHeaderTriggerLastToken = YES;
+    self.isRefreshing = YES;
     __weak typeof(self) weak_self = self;
     [self refresh:self.xy_tableView page:0 complete:^(NSArray * _Nullable modelRect) {
         if (weak_self.isHeaderTriggerLastToken) {
@@ -323,6 +331,7 @@ XYTableKey(ModelHeader);
                 [weak_self.xy_tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
             }
             [weak_self endRefreshing];
+            weak_self.isRefreshing = NO;
         }
         [weak_self.xy_tableView.mj_header endRefreshing];
         [self.xy_tableView.mj_footer setHidden:false];
@@ -339,6 +348,7 @@ XYTableKey(ModelHeader);
     NSUInteger completePage = [self currentItemCount] / self.rowsPerPage;
     NSUInteger unCompleteNum = [self currentItemCount] % self.rowsPerPage;
     self.isHeaderTriggerLastToken = NO;
+    self.isRefreshing = YES;
     __weak typeof(self) weak_self = self;
     [self refresh:self.xy_tableView page:completePage complete:^(NSArray<NSDictionary *> * _Nullable modelRect) {
         if (!weak_self.isHeaderTriggerLastToken) {
@@ -348,6 +358,11 @@ XYTableKey(ModelHeader);
                 [weak_self.xy_tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
             }
             [weak_self endRefreshing];
+            weak_self.isRefreshing = NO;
+            if (weak_self.shouldAutoLoadMore) {
+                if (!modelRect || modelRect.count==0 || modelRect.count%weak_self.rowsPerPage>0) [weak_self showNoMoreData:YES];
+                else [weak_self showNoMoreData:NO];
+            }
         }
         [weak_self.xy_tableView.mj_footer endRefreshing];
     }];
@@ -398,7 +413,7 @@ XYTableKey(ModelHeader);
 
 -(CGFloat)getReuseCellHeightWithModel:(XYRowModel*)data tableview:(UITableView*)tableView index:(NSIndexPath*)index{
     __block CGFloat height = 0;
-//    DDLogInfo(@"normal section %ld  row %ld   width %f",index.section,index.row,tableView.bounds.size.width);
+    //    DDLogInfo(@"normal section %ld  row %ld   width %f",index.section,index.row,tableView.bounds.size.width);
     @try {
         if (data.height >= 0 && fabs(data._width - tableView.bounds.size.width) < 0.0001) {
             height = data.height;
@@ -416,7 +431,7 @@ XYTableKey(ModelHeader);
                 height = [cell autoLayoutHeightWithWidth:data._width];
                 data.height = height;
             }
-//                DDLogInfo(@"caculate section %ld  row %ld   width %f",index.section,index.row,tableView.bounds.size.width);
+            //                DDLogInfo(@"caculate section %ld  row %ld   width %f",index.section,index.row,tableView.bounds.size.width);
         }
     } @catch (NSException *exception) {
         DDLogError(@"%@",exception);
@@ -439,7 +454,7 @@ XYTableKey(ModelHeader);
 -(UITableViewHeaderFooterView*)getReuseHeaderWithModel:(XYRowModel*)data tableview:(UITableView*)tableView{
     UITableViewHeaderFooterView* cell = [tableView dequeueReusableHeaderFooterViewWithIdentifier:data.identifier];
     if (!cell) {
-//        DDLogVerbose(@"\n没有注册这种 header， 现在通过 alloc init 创建\n%@",data);
+        //        DDLogVerbose(@"\n没有注册这种 header， 现在通过 alloc init 创建\n%@",data);
         cell                = [[data.cls alloc] initWithReuseIdentifier:data.identifier];
     }
     cell.xyModelDelegate    = self;
@@ -489,7 +504,7 @@ XYTableKey(ModelHeader);
 -(UITableViewHeaderFooterView*)getReuseFooterWithModel:(XYRowModel*)data tableview:(UITableView*)tableView{
     UITableViewHeaderFooterView* cell = [tableView dequeueReusableHeaderFooterViewWithIdentifier:data.identifier];
     if (!cell) {
-//        DDLogVerbose(@"\n没有注册这种 footet， 现在通过 alloc init 创建\n%@",data);
+        //        DDLogVerbose(@"\n没有注册这种 footet， 现在通过 alloc init 创建\n%@",data);
         cell                = [[data.cls alloc] initWithReuseIdentifier:data.identifier];
     }
     cell.xyModelDelegate    = self;
@@ -533,4 +548,16 @@ XYTableKey(ModelHeader);
     }
     return 0.01;
 }
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    if (!self.shouldAutoLoadMore) return;
+    if (!self.xy_tableView.mj_footer) return;
+    if (self.isRefreshing) return;
+    NSInteger currentCount = [self currentItemCount];
+    if (currentCount == 0) return;
+    if (currentCount % self.rowsPerPage > 0) return;
+    if (scrollView.contentSize.height - scrollView.contentOffset.y - scrollView.frame.size.height > self.view.frame.size.height / 2) return;
+    [self refreshFooterSilently:true];
+}
 @end
+
