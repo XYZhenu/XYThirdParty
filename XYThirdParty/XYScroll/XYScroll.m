@@ -465,7 +465,7 @@
 
 //点击有关
 -(void)didTap:(UITapGestureRecognizer*)tap{
-    if (self.callBack) {
+    if (self.callBack && self.messageArray.count > 0) {
         NSException *callException = nil;
         @try {
             self.callBack(self.currentPage,tap.view,self.messageArray[self.currentPage]);
