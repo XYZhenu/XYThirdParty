@@ -166,6 +166,8 @@ XYTableKey(ModelHeader);
 
 @property (nonatomic,strong)NSMutableDictionary* cellForCaculating;
 @property (atomic, assign)BOOL isHeaderTriggerLastToken;
+@property (atomic, assign)BOOL isFooterRefreshToken;
+
 @end
 
 @implementation XYTableViewController
@@ -180,6 +182,7 @@ XYTableKey(ModelHeader);
         self.cellForCaculating = [NSMutableDictionary dictionary];
         self.shouldAutoLoadMore = YES;
         self.isRefreshing = NO;
+        self.isFooterRefreshToken = NO;
     }
     return self;
 }
@@ -192,6 +195,7 @@ XYTableKey(ModelHeader);
     self.cellForCaculating = [NSMutableDictionary dictionary];
     self.shouldAutoLoadMore = YES;
     self.isRefreshing = NO;
+    self.isFooterRefreshToken = NO;
 }
 -(BOOL)shouldAutorotate{
     return YES;
@@ -304,7 +308,10 @@ XYTableKey(ModelHeader);
 -(void)showNoMoreData:(BOOL)show{
     [(MJRefreshAutoNormalFooter*)self.xy_tableView.mj_footer setTitle:show ? @"没有更多数据啦" : @"点击或上拉加载更多" forState:MJRefreshStateIdle];
 }
-
+-(void)adjustFooterLabel{
+    BOOL hidden = [self currentItemCount]==0;
+    [(MJRefreshAutoNormalFooter*)self.xy_tableView.mj_footer setTitle:hidden ? @"" : @"没有更多数据啦" forState:MJRefreshStateIdle];
+}
 -(void)endRefreshing {
     [_xy_tableView.mj_header endRefreshing];
     [_xy_tableView.mj_footer endRefreshing];
@@ -332,9 +339,10 @@ XYTableKey(ModelHeader);
             }
             [weak_self endRefreshing];
             weak_self.isRefreshing = NO;
+            [weak_self adjustFooterLabel];
         }
         [weak_self.xy_tableView.mj_header endRefreshing];
-        [self.xy_tableView.mj_footer setHidden:false];
+        [weak_self.xy_tableView.mj_footer setHidden:false];
     }];
 }
 -(void)xy_refreshFooter {
@@ -345,6 +353,8 @@ XYTableKey(ModelHeader);
         [self.xy_tableView.mj_footer beginRefreshing];
         return;
     }
+    if (self.isFooterRefreshToken) return;
+    self.isFooterRefreshToken = YES;
     NSUInteger completePage = [self currentItemCount] / self.rowsPerPage;
     NSUInteger unCompleteNum = [self currentItemCount] % self.rowsPerPage;
     self.isHeaderTriggerLastToken = NO;
@@ -363,8 +373,10 @@ XYTableKey(ModelHeader);
                 if (!modelRect || modelRect.count==0 || modelRect.count%weak_self.rowsPerPage>0) [weak_self showNoMoreData:YES];
                 else [weak_self showNoMoreData:NO];
             }
+            [weak_self adjustFooterLabel];
         }
         [weak_self.xy_tableView.mj_footer endRefreshing];
+        weak_self.isFooterRefreshToken = NO;
     }];
 }
 -(void)refresh:(UITableView*)tableView page:(NSUInteger)page complete:(void (^)(NSArray* _Nullable))complete {
