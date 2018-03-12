@@ -92,7 +92,6 @@
     if (!_progress) {
         _progress = [[NJKWebViewProgress alloc] init];
         _progress.webViewProxyDelegate = self;
-        self.web.delegate = _progress;
         __weak typeof(self) weak_self = self;
         _progress.progressBlock = ^(float progress) {
             weak_self.progressView.progress = progress;
@@ -121,8 +120,10 @@
     self.hidesBottomBarWhenPushed = YES;
     self.navigationController.navigationBar.translucent = NO;
     self.view.backgroundColor=[UIColor whiteColor];
-
+    
+    self.web.delegate = self.progress;
     [self loadFromParma];
+    
     __weak typeof(self) weak_self = self;
     
     XYButton* btn1 = [[XYButton new] set_customUI:^(UIView *theView) {
@@ -159,37 +160,37 @@
     self.btnArray = @[item1,item2];
 }
 -(void)loadIsGet:(BOOL)isGet url:(NSString*)url parma:(NSDictionary*)parma web:(UIWebView*)web{
-//    if (isGet) {
-//        [XYNet GETUrl:url Parma:parma HeaderParma:nil downloadProgress:nil success:^(NSURLSessionDataTask * _Nullable task, id  _Nonnull responseObject, NSInteger code, NSString * _Nullable info) {
-//            DLogVerbose(@"\n%@\n%@\n%@",task.originalRequest,task.currentRequest,task.response);
-//            if ([responseObject isKindOfClass:[NSString class]]) {
-//                [web loadHTMLString:responseObject baseURL:nil];
-//            }else if ([responseObject isKindOfClass:[NSData class]]){
-//                NSString *string111 =  [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
-//                [web loadHTMLString:string111 baseURL:nil];
-//            }
-//        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
-//            DLogVerbose(@"\n%@\n%@\n%@",task.originalRequest,task.currentRequest,task.response);
-//            if (task.currentRequest) {
-//                [web loadRequest:task.currentRequest];
-//            }
-//        } hudInView:web.superview];
-//    }else{
-//        [XYNet POSTUrl:url Parma:nil BodyParma:parma HeaderParma:nil uploadProgress:nil downloadProgress:nil success:^(NSURLSessionDataTask * _Nullable task, id  _Nonnull responseObject, NSInteger code, NSString * _Nullable info) {
-//            DLogVerbose(@"\n%@\n%@\n%@",task.originalRequest,task.currentRequest,task.response);
-//            if ([responseObject isKindOfClass:[NSString class]]) {
-//                [web loadHTMLString:responseObject baseURL:nil];
-//            }else if ([responseObject isKindOfClass:[NSData class]]){
-//                NSString *string111 =  [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
-//                [web loadHTMLString:string111 baseURL:nil];
-//            }
-//        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
-//            DLogVerbose(@"\n%@\n%@\n%@",task.originalRequest,task.currentRequest,task.response);
-//            if (task.currentRequest) {
-//                [web loadRequest:task.currentRequest];
-//            }
-//        } hudInView:web.superview cache:nil cacheType:XYZHttpCacheTypeDefault];
-//    }
+    //    if (isGet) {
+    //        [XYNet GETUrl:url Parma:parma HeaderParma:nil downloadProgress:nil success:^(NSURLSessionDataTask * _Nullable task, id  _Nonnull responseObject, NSInteger code, NSString * _Nullable info) {
+    //            DLogVerbose(@"\n%@\n%@\n%@",task.originalRequest,task.currentRequest,task.response);
+    //            if ([responseObject isKindOfClass:[NSString class]]) {
+    //                [web loadHTMLString:responseObject baseURL:nil];
+    //            }else if ([responseObject isKindOfClass:[NSData class]]){
+    //                NSString *string111 =  [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+    //                [web loadHTMLString:string111 baseURL:nil];
+    //            }
+    //        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
+    //            DLogVerbose(@"\n%@\n%@\n%@",task.originalRequest,task.currentRequest,task.response);
+    //            if (task.currentRequest) {
+    //                [web loadRequest:task.currentRequest];
+    //            }
+    //        } hudInView:web.superview];
+    //    }else{
+    //        [XYNet POSTUrl:url Parma:nil BodyParma:parma HeaderParma:nil uploadProgress:nil downloadProgress:nil success:^(NSURLSessionDataTask * _Nullable task, id  _Nonnull responseObject, NSInteger code, NSString * _Nullable info) {
+    //            DLogVerbose(@"\n%@\n%@\n%@",task.originalRequest,task.currentRequest,task.response);
+    //            if ([responseObject isKindOfClass:[NSString class]]) {
+    //                [web loadHTMLString:responseObject baseURL:nil];
+    //            }else if ([responseObject isKindOfClass:[NSData class]]){
+    //                NSString *string111 =  [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+    //                [web loadHTMLString:string111 baseURL:nil];
+    //            }
+    //        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
+    //            DLogVerbose(@"\n%@\n%@\n%@",task.originalRequest,task.currentRequest,task.response);
+    //            if (task.currentRequest) {
+    //                [web loadRequest:task.currentRequest];
+    //            }
+    //        } hudInView:web.superview cache:nil cacheType:XYZHttpCacheTypeDefault];
+    //    }
 }
 -(void)back{
     if ([self.web canGoBack]){
@@ -213,5 +214,8 @@
         self.title = title;
     }
 }
-
+-(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
+    
+}
 @end
+
