@@ -21,7 +21,7 @@
 @property(nonatomic,strong)NJKWebViewProgress* progress;
 @property(nonatomic,strong)NJKWebViewProgressView* progressView;
 @property(nonnull,strong)NSArray* btnArray;
-
+@property(nonatomic,strong)UIImage* returnImage;
 @end
 
 @implementation XYWebVC
@@ -53,6 +53,7 @@
     if (!image) {
         image = [UIImage imageNamed:@"return" inBundle:[NSBundle bundleForClass:[XYWebVC class]] compatibleWithTraitCollection:nil];
     }
+    self.returnImage = image;
     [btn setImage:image forState:UIControlStateNormal];
     btn.frame = CGRectMake(0, 0, 40, 40);
     btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
@@ -129,7 +130,7 @@
     XYButton* btn1 = [[XYButton new] set_customUI:^(UIView *theView) {
         theView.backgroundColor = [UIColor whiteColor];
         ImageCreate(101);
-        image_101.image = [UIImage imageNamed:@"return" inBundle:[NSBundle bundleForClass:[XYWebVC class]] compatibleWithTraitCollection:nil];
+        image_101.image = weak_self.returnImage;
         LabelCreate(102);
         label_102.textColor = [UIColor blackColor];
         label_102.text = @"返回";
