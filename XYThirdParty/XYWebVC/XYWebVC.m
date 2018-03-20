@@ -116,7 +116,7 @@
 }
 -(void)viewDidLoad{
     [super viewDidLoad];
-    [self addWebviewReturnButton:nil];
+    if (!self.returnImage) [self addWebviewReturnButton:nil];
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.hidesBottomBarWhenPushed = YES;
     self.navigationController.navigationBar.translucent = NO;
@@ -125,6 +125,8 @@
     self.web.delegate = self.progress;
     [self loadFromParma];
     
+}
+-(void)creatBtnArray{
     __weak typeof(self) weak_self = self;
     
     XYButton* btn1 = [[XYButton new] set_customUI:^(UIView *theView) {
@@ -202,6 +204,7 @@
 }
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
     if (navigationType == UIWebViewNavigationTypeLinkClicked) {
+        if (!self.btnArray) [self creatBtnArray];
         self.navigationItem.leftBarButtonItems = self.btnArray;
     }
     return YES;
@@ -219,4 +222,3 @@
     
 }
 @end
-
