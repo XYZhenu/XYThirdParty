@@ -10,9 +10,12 @@
 #import <TZImagePickerController/TZImagePickerController.h>
 
 @implementation UIViewController (XYImagePicker)
-- (void)pickeImagesWithCallback:(void(^)(NSArray<UIImage *> *photos, NSArray *assets,NSArray<NSDictionary *> *infos))callback {
+
+- (void)pickeImagesNum:(NSInteger)num callback:(void(^)(NSArray<UIImage *> *photos, NSArray *assets,NSArray<NSDictionary *> *infos))callback{
+    if (num < 1) return;
     TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:6 delegate:nil];
     imagePickerVc.minImagesCount = 1;
+    imagePickerVc.maxImagesCount = num;
     [imagePickerVc setDidFinishPickingPhotosWithInfosHandle:^(NSArray<UIImage *> *photos,NSArray *assets,BOOL isSelectOriginalPhoto,NSArray<NSDictionary *> *infos){
         callback(photos,assets,infos);
     }];

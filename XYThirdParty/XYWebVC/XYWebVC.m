@@ -57,7 +57,7 @@
     [btn setImage:image forState:UIControlStateNormal];
     btn.frame = CGRectMake(0, 0, 40, 40);
     btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    btn.imageEdgeInsets = UIEdgeInsetsMake(0, -12, 0, 0);
+//    btn.imageEdgeInsets = UIEdgeInsetsMake(0, -12, 0, 0);
     [btn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
     self.navigationController.navigationBar.tintColor = [UIColor blackColor];

@@ -9,6 +9,7 @@
 #define keyWindow UIApplication.sharedApplication.keyWindow
 @implementation XYToast
 + (void)showWithText:(NSString *)text_ {
-    [keyWindow makeToast:text_];
+//    [keyWindow makeToast:text_];
+    [keyWindow makeToast:text_ duration:[CSToastManager defaultDuration] position:[NSValue valueWithCGPoint:CGPointMake(keyWindow.frame.size.width/2, keyWindow.frame.size.height-80)] style:nil];
 }
 @end
