@@ -23,7 +23,7 @@ image_##__TAG__.tag = __TAG__;\
 image_##__TAG__.contentMode = UIViewContentModeCenter;\
 [theView addSubview:image_##__TAG__];
 
-#define ViewCreate(__TAG__) UIView* view##__TAG__ = [[UIView alloc] init];\
+#define ViewCreate(__TAG__) UIView* view_##__TAG__ = [[UIView alloc] init];\
 view_##__TAG__.tag = __TAG__;\
 [theView addSubview:view_##__TAG__];
 
