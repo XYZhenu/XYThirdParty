@@ -27,6 +27,17 @@
     }
     return self;
 }
+-(instancetype)initCls:(Class)cls model:(id)model{
+    self = [super init];
+    if (self) {
+        self.cls = cls;
+        self.message = @{};
+        self.height = -1;
+        self._width = 320;
+        self.model = model;
+    }
+    return self;
+}
 -(void)setCls:(Class)cls {
     _cls = cls;
     self.identifier = [NSStringFromClass(cls) stringByReplacingOccurrencesOfString:[[NSBundle mainBundle].infoDictionary[@"CFBundleExecutable"]stringByAppendingString:@"."] withString:@""];

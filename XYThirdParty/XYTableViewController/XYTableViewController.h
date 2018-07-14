@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN;
 @property (nonatomic,strong)NSDictionary<NSString*,id>* message;
 @property (nonatomic,strong,nullable)id model;
 -(instancetype)initCls:(Class)cls msg:(NSDictionary<NSString*,id>*)msg;
+-(instancetype)initCls:(Class)cls model:(id)model;
 @end
 
 @interface XYSectionModel : NSObject

@@ -180,7 +180,7 @@
             self.contentOffset = CGPointMake(0, 0);
             self.scrollEnabled = NO;
             if (self.messageSet) {
-                self.messageSet(0,_cellArray[0],nil);
+                self.messageSet(0,_cellArray[0],@{});
             }
             break;
         }
