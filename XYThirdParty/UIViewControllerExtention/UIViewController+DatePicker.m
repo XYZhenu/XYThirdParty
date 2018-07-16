@@ -107,6 +107,8 @@ static char datePicker_Formater;
     NSDateFormatter * dateFormatter =[[NSDateFormatter alloc] init];
     if (!formate || formate.length == 0) {
         dateFormatter.dateFormat = @"yyyy-MM-dd";
+    } else {
+        dateFormatter.dateFormat = formate;
     }
     XYPickerSET(datePicker_Formater, dateFormatter);
     
