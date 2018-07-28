@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 NS_ASSUME_NONNULL_BEGIN;
 @interface UIViewController (XYImagePicker)
-- (void)pickeImagesNum:(NSInteger)num callback:(void(^)(NSArray<UIImage *> *photos, NSArray *assets,NSArray<NSDictionary *> *infos))callback;
-- (void)pickeImageWithCallback:(void(^)(UIImage *photos, id assets))callback  crop:(BOOL)crop;
-- (void)previewSelectedAssets:(NSMutableArray *)selectedAssets selectedPhotos:(NSMutableArray *)selectedPhotos index:(NSInteger)index;
+- (UINavigationController*)pickeImagesNum:(NSInteger)num callback:(void(^)(NSArray<UIImage *> *photos, NSArray *assets,NSArray<NSDictionary *> *infos))callback;
+- (UINavigationController*)pickeImageWithCallback:(void(^)(UIImage *photos, id assets))callback  crop:(BOOL)crop;
+- (UINavigationController*)previewSelectedAssets:(NSMutableArray *)selectedAssets selectedPhotos:(NSMutableArray *)selectedPhotos index:(NSInteger)index;
 @end
 NS_ASSUME_NONNULL_END;

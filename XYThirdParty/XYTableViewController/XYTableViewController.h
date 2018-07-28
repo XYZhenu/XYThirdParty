@@ -64,6 +64,7 @@ NS_ASSUME_NONNULL_BEGIN;
 -(void)bindRefreshFooter:(UITableView*)tableview;
 
 @property(nonatomic,assign)BOOL isRefreshing;
+-(void)endRefreshing;
 -(void)refreshHeaderSilently:(BOOL)silently;
 -(void)refreshFooterSilently:(BOOL)silently;
 @property(nonatomic,assign)BOOL shouldAutoLoadMore;
