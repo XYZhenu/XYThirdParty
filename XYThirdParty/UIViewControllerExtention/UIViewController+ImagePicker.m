@@ -12,7 +12,7 @@
 @implementation UIViewController (XYImagePicker)
 
 - (UINavigationController*)pickeImagesNum:(NSInteger)num callback:(void(^)(NSArray<UIImage *> *photos, NSArray *assets,NSArray<NSDictionary *> *infos))callback{
-    if (num < 1) return;
+    if (num < 1) {num = 1;};
     TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:6 delegate:nil];
     imagePickerVc.minImagesCount = 1;
     imagePickerVc.maxImagesCount = num;
