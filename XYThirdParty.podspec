@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
     }
     s.authors      = { "xyzhenu"      => "1515489649@qq.com" }
     s.platform     = :ios
-    s.ios.deployment_target = '7.0'
+    s.ios.deployment_target = '9.0'
     s.source =  { :path => '.' }
     s.xcconfig = { "OTHER_LINK_FLAG" => '$(inherited) -ObjC'}
     s.user_target_xcconfig  = { 'FRAMEWORK_SEARCH_PATHS' => "'$(PODS_ROOT)/XYThirdParty'" }
