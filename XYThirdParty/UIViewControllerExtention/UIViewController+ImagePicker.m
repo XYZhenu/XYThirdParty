@@ -16,6 +16,7 @@
     TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:6 delegate:nil];
     imagePickerVc.minImagesCount = 1;
     imagePickerVc.maxImagesCount = num;
+    imagePickerVc.allowCameraLocation = NO;
     [imagePickerVc setDidFinishPickingPhotosWithInfosHandle:^(NSArray<UIImage *> *photos,NSArray *assets,BOOL isSelectOriginalPhoto,NSArray<NSDictionary *> *infos){
         callback(photos,assets,infos);
     }];
@@ -30,11 +31,13 @@
     }];
     [imagePickerVc.navigationBar setBackgroundImage:[self xy_default_picker_image] forBarMetrics:(UIBarMetricsDefault)];
     imagePickerVc.allowCrop = crop;
+    imagePickerVc.allowCameraLocation = NO;
     [self presentViewController:imagePickerVc animated:YES completion:nil];
     return imagePickerVc;
 }
 - (UINavigationController*)previewSelectedAssets:(NSMutableArray *)selectedAssets selectedPhotos:(NSMutableArray *)selectedPhotos index:(NSInteger)index {
     TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithSelectedAssets:selectedAssets selectedPhotos:selectedPhotos index:index];
+    imagePickerVc.allowCameraLocation = NO;
     [imagePickerVc.navigationBar setBackgroundImage:[self xy_default_picker_image] forBarMetrics:(UIBarMetricsDefault)];
     [self presentViewController:imagePickerVc animated:YES completion:nil];
     return imagePickerVc;

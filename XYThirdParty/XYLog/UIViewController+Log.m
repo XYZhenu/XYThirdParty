@@ -47,16 +47,15 @@
 @end
 @implementation UIViewController (XYLog)
 +(void)load{
+    ddLogLevel = DDLogLevelError;
     [DDTTYLogger sharedInstance].logFormatter = [_LogFormater new];
     [DDLog addLogger:[DDTTYLogger sharedInstance] withLevel:ddLogLevel];
 }
 -(void)addLogGesture{
-#ifdef DEBUG
     UILongPressGestureRecognizer * longGesture =[[UILongPressGestureRecognizer alloc] init];
     longGesture.minimumPressDuration = 2.0;
     [longGesture addTarget:self action:@selector(longPress:)];
     [self.view addGestureRecognizer:longGesture];
-#endif
 }
 
 -(void)longPress:(UILongPressGestureRecognizer*)sender{

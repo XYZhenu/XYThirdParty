@@ -75,8 +75,9 @@ const CGFloat kArrowSize = 9.f;
 - (void)singleTap:(UITapGestureRecognizer *)recognizer
 {
     for (UIView *v in self.subviews) {
-        if ([v isKindOfClass:[XYMenuView class]] && [v respondsToSelector:@selector(dismissMenu:)]) {
-            [v performSelector:@selector(dismissMenu:) withObject:@(YES)];
+        SEL sel = NSSelectorFromString(@"dismissMenu:");
+        if ([v isKindOfClass:[XYMenuView class]] && [v respondsToSelector:sel]) {
+            [v performSelector:sel withObject:@(YES)];
         }
     }
 }
@@ -333,7 +334,7 @@ typedef enum {
                          self.frame = toFrame;
                          
                      } completion:^(BOOL completed) {
-                         _contentView.hidden = NO;
+                         self->_contentView.hidden = NO;
                      }];
     
 }
@@ -412,7 +413,7 @@ typedef enum {
     
     for (XYMenuItem *menuItem in _menuItems) {
         
-        const CGSize titleSize = [menuItem.title sizeWithFont:titleFont];
+        const CGSize titleSize = [menuItem.title sizeWithAttributes:@{NSFontAttributeName:titleFont}];
         const CGSize imageSize = menuItem.image.size;
         
         const CGFloat itemHeight = MAX(titleSize.height, imageSize.height) + kMarginY * 2;

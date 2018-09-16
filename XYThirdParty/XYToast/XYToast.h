@@ -7,4 +7,5 @@
 #import <UIKit/UIKit.h>
 @interface XYToast : UIView 
 + (void)showWithText:(NSString *)text_;
++ (void)showTextOnTop:(NSString *)text_;
 @end
