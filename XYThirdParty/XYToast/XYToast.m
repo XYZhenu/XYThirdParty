@@ -12,6 +12,11 @@
     [keyWindow makeToast:text_ duration:[CSToastManager defaultDuration] position:[NSValue valueWithCGPoint:CGPointMake(keyWindow.frame.size.width/2, keyWindow.frame.size.height-80)] style:nil];
 }
 + (void)showTextOnTop:(NSString *)text_ {
-    [keyWindow makeToast:text_ duration:[CSToastManager defaultDuration] position:[NSValue valueWithCGPoint:CGPointMake(keyWindow.frame.size.width/2, keyWindow.frame.size.height/3)] style:nil];
+    static NSInteger position = 0;
+    if (position<0) position = 0;
+    [keyWindow makeToast:text_ duration:[CSToastManager defaultDuration] position:[NSValue valueWithCGPoint:CGPointMake(keyWindow.frame.size.width/2, keyWindow.frame.size.height/3 + position * 40)] title:nil image:nil style:nil completion:^(BOOL didTap) {
+        position --;
+    }];
+    position ++;
 }
 @end
