@@ -332,8 +332,10 @@ XYTableKey(ModelHeader);
 }
 -(void)refreshHeaderSilently:(BOOL)silently {
     if (!silently) {
-        [self.xy_tableView.mj_header beginRefreshing];
-        [self.xy_tableView.mj_footer setHidden:true];
+        [NSOperationQueue.mainQueue addOperationWithBlock:^{
+            [self.xy_tableView.mj_header beginRefreshing];
+            [self.xy_tableView.mj_footer setHidden:true];
+        }];
         return;
     }
     self.isHeaderTriggerLastToken = YES;
@@ -361,7 +363,9 @@ XYTableKey(ModelHeader);
 }
 -(void)refreshFooterSilently:(BOOL)silently {
     if (!silently) {
-        [self.xy_tableView.mj_footer beginRefreshing];
+        [NSOperationQueue.mainQueue addOperationWithBlock:^{
+            [self.xy_tableView.mj_footer beginRefreshing];
+        }];
         return;
     }
     if (self.isFooterRefreshToken) return;

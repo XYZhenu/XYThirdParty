@@ -366,9 +366,7 @@
         }
         self.contentOffset = point;
         //        } completion:^(BOOL finished) {
-        //            if (finished) {
         [self enableUserInteraction];
-        //            }
         //        }];
     }else{
         [self reloadData];
@@ -390,10 +388,8 @@
         CGPoint point = CGPointMake(2 * CGRectGetWidth(self.frame), 0);
         self.contentOffset = point;
     } completion:^(BOOL finished) {
-        if (finished) {
-            [self showNextPage];
-            [self enableUserInteraction];
-        }
+        [self showNextPage];
+        [self enableUserInteraction];
     }];
 }
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView

@@ -122,9 +122,7 @@ static NSString* const keyRichTextImage = @"keyRichTextImage";
     [UIView animateWithDuration:time animations:^{
         self.textView.frame = CGRectMake(self.textView.frame.origin.x, self.textView.frame.origin.y, self.textView.frame.size.width, self.view.frame.size.height-self.textView.frame.origin.y-frame.size.height);
     } completion:^(BOOL finished) {
-        if (finished) {
-            self.toolBarBottom.constant = frame.origin.y >= self.view.frame.size.height ? 0 : frame.size.height;
-        }
+        self.toolBarBottom.constant = frame.origin.y >= self.view.frame.size.height ? 0 : frame.size.height;
     }];
 }
 
