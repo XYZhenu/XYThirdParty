@@ -341,7 +341,7 @@ XYTableKey(ModelHeader);
     self.isHeaderTriggerLastToken = YES;
     self.isRefreshing = YES;
     __weak typeof(self) weak_self = self;
-    [self refresh:self.xy_tableView page:0 complete:^(NSArray * _Nullable modelRect) {
+    [self refresh:self.xy_tableView page:0 complete:^(NSArray * _Nullable modelRect, BOOL finished) {
         if (weak_self.isHeaderTriggerLastToken) {
             if (modelRect) {
                 NSUInteger currentCount = [self currentItemCount];
@@ -350,12 +350,16 @@ XYTableKey(ModelHeader);
                 if (weak_self.ModelRect.count>0 && [weak_self.ModelRect.firstObject isKindOfClass:[XYSectionModel class]]) weak_self.xy_isRect = YES;
                 [weak_self.xy_tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
             }
-            [weak_self endRefreshing];
-            weak_self.isRefreshing = NO;
-            [weak_self adjustFooterLabel];
+            if (finished) {
+                [weak_self endRefreshing];
+                weak_self.isRefreshing = NO;
+                [weak_self adjustFooterLabel];
+            }
         }
-        [weak_self.xy_tableView.mj_header endRefreshing];
-        [weak_self.xy_tableView.mj_footer setHidden:false];
+        if (finished) {
+            [weak_self.xy_tableView.mj_header endRefreshing];
+            [weak_self.xy_tableView.mj_footer setHidden:false];
+        }
     }];
 }
 -(void)xy_refreshFooter {
@@ -363,42 +367,44 @@ XYTableKey(ModelHeader);
 }
 -(void)refreshFooterSilently:(BOOL)silently {
     if (!silently) {
-        [NSOperationQueue.mainQueue addOperationWithBlock:^{
-            [self.xy_tableView.mj_footer beginRefreshing];
-        }];
+        [self.xy_tableView.mj_footer beginRefreshing];
         return;
     }
     if (self.isFooterRefreshToken) return;
     self.isFooterRefreshToken = YES;
     NSUInteger completePage = [self currentItemCount] / self.rowsPerPage;
-    NSUInteger unCompleteNum = [self currentItemCount] % self.rowsPerPage;
+    __block NSUInteger unCompleteNum = [self currentItemCount] % self.rowsPerPage;
     self.isHeaderTriggerLastToken = NO;
     self.isRefreshing = YES;
     __weak typeof(self) weak_self = self;
-    [self refresh:self.xy_tableView page:completePage complete:^(NSArray<NSDictionary *> * _Nullable modelRect) {
+    [self refresh:self.xy_tableView page:completePage complete:^(NSArray * _Nullable modelRect, BOOL finished) {
         if (!weak_self.isHeaderTriggerLastToken) {
             if (modelRect) {
                 [weak_self.operateRect removeObjectsInRange:NSMakeRange(weak_self.operateRect.count - unCompleteNum, unCompleteNum)];
                 [weak_self.operateRect addObjectsFromArray:modelRect];
                 [weak_self.xy_tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+                unCompleteNum = modelRect.count;
             }
-            [weak_self endRefreshing];
-            weak_self.isRefreshing = NO;
-            if (weak_self.shouldAutoLoadMore) {
-                if (!modelRect || modelRect.count==0 || modelRect.count%weak_self.rowsPerPage>0) [weak_self showNoMoreData:YES];
-                else [weak_self showNoMoreData:NO];
+            if (finished) {
+                [weak_self endRefreshing];
+                weak_self.isRefreshing = NO;
+                if (weak_self.shouldAutoLoadMore) {
+                    if (!modelRect || modelRect.count==0 || modelRect.count%weak_self.rowsPerPage>0) [weak_self showNoMoreData:YES];
+                    else [weak_self showNoMoreData:NO];
+                }
+                [weak_self adjustFooterLabel];
             }
-            [weak_self adjustFooterLabel];
         }
-        [weak_self.xy_tableView.mj_footer endRefreshing];
-        weak_self.isFooterRefreshToken = NO;
+        if (finished) {
+            [weak_self.xy_tableView.mj_footer endRefreshing];
+            weak_self.isFooterRefreshToken = NO;
+        }
     }];
 }
--(void)refresh:(UITableView*)tableView page:(NSUInteger)page complete:(void (^)(NSArray* _Nullable))complete {
-    complete(nil);
+
+- (void)refresh:(UITableView*)tableView page:(NSUInteger)page complete:(void (^)(NSArray* _Nullable, BOOL))complete {
+    complete(nil, YES);
 }
-
-
 
 #pragma mark - xyzdeleate
 
