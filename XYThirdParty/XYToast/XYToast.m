@@ -22,6 +22,7 @@
     }
     [keyWindow makeToast:text_ duration:[CSToastManager defaultDuration] position:[NSValue valueWithCGPoint:CGPointMake(keyWindow.frame.size.width/2, keyWindow.frame.size.height/3 + position * 40)] title:nil image:nil style:nil completion:^(BOOL didTap) {
         position --;
+        previousText = nil;
     }];
     position ++;
 }

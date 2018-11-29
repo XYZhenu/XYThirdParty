@@ -218,6 +218,10 @@
     [self setNeedsLayout];
 }
 -(void)reloadData{
+    if (!self.messageArray)
+    {
+        return;
+    }
     if (self.enableInfiniteScroll) {
         self.contentOffset = CGPointMake(CGRectGetWidth(self.frame), 0);
         if (self.messageSet) {
