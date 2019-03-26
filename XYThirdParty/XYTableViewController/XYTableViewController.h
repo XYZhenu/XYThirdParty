@@ -51,6 +51,7 @@ NS_ASSUME_NONNULL_BEGIN;
 @end
 
 @interface XYTableViewController : UIViewController <UITableViewDataSource,UITableViewDelegate,XYModelDelegate>
+@property(nonatomic,assign)BOOL alwaysHideTabbar;//default NO;
 
 @property(nonatomic,strong)NSMutableArray*ModelRect;
 @property(nonatomic,strong)NSMutableArray*operateRect;

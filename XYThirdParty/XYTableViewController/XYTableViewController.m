@@ -194,6 +194,7 @@ XYTableKey(ModelHeader);
         self.shouldAutoLoadMore = YES;
         self.isRefreshing = NO;
         self.isFooterRefreshToken = NO;
+        self.alwaysHideTabbar = NO;
     }
     return self;
 }
@@ -207,6 +208,7 @@ XYTableKey(ModelHeader);
     self.shouldAutoLoadMore = YES;
     self.isRefreshing = NO;
     self.isFooterRefreshToken = NO;
+    self.alwaysHideTabbar = NO;
 }
 -(BOOL)shouldAutorotate{
     return YES;
@@ -222,12 +224,12 @@ XYTableKey(ModelHeader);
     self.navigationController.navigationBar.hidden = NO;
     self.navigationController.navigationBar.translucent=NO;
     self.automaticallyAdjustsScrollViewInsets = NO;
-    if (self.navigationController.viewControllers.firstObject == self) {
-        self.tabBarController.tabBar.hidden=NO;
-        self.tabBarController.tabBar.translucent=NO;
-    }else{
+    if (self.navigationController.viewControllers.firstObject != self || self.alwaysHideTabbar) {
         self.tabBarController.tabBar.hidden=YES;
         self.tabBarController.tabBar.translucent=YES;
+    }else{
+        self.tabBarController.tabBar.hidden=NO;
+        self.tabBarController.tabBar.translucent=NO;
     }
     [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationPortrait animated:NO];
 }
