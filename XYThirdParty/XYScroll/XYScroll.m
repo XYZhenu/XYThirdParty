@@ -168,7 +168,7 @@
     [self stopTimer];
     _messageArray = messageArray;
 
-    _currentPage = 0;
+    self.currentPage = 0;
     if (_pageControl) {
         _pageControl.currentPage=0;
         _pageControl.numberOfPages = messageArray.count;
@@ -355,6 +355,7 @@
     if (_currentPage == currentPage) {
         return;
     }
+    [self willChangeValueForKey:@"currentPage"];
     _currentPage = currentPage;
     if (_pageControl) {
         _pageControl.currentPage = currentPage;
@@ -375,7 +376,7 @@
     }else{
         [self reloadData];
     }
-
+    [self didChangeValueForKey:@"currentPage"];
 }
 - (void)showNextPage
 {
