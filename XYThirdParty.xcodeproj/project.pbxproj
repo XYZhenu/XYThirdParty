@@ -41,6 +41,7 @@
 		AC8DDE141EEFC3970009C5AC /* XYWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8DDE031EEFC3970009C5AC /* XYWebVC.m */; };
 		AC8DDE171EEFC6830009C5AC /* XYThirdParty.podspec in Resources */ = {isa = PBXBuildFile; fileRef = AC8DDE161EEFC6830009C5AC /* XYThirdParty.podspec */; };
 		ACBCD22A1EFD1CE500D654A7 /* XYRichTextVC.m in Sources */ = {isa = PBXBuildFile; fileRef = ACBCD2291EFD1CE500D654A7 /* XYRichTextVC.m */; };
+		ACF5694E22A3D06D0047FFDF /* XYCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACF5694B22A3D0570047FFDF /* XYCollectionViewController.m */; };
 		B2C5F2AB58E0470F3BFCFABE /* Pods_XYThirdParty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A76582D26C8528E28F0B7D17 /* Pods_XYThirdParty.framework */; };
 /* End PBXBuildFile section */
 
@@ -111,9 +112,11 @@
 		AC8DDE001EEFC3970009C5AC /* XYThirdParty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYThirdParty.h; sourceTree = "<group>"; };
 		AC8DDE021EEFC3970009C5AC /* XYWebVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYWebVC.h; sourceTree = "<group>"; };
 		AC8DDE031EEFC3970009C5AC /* XYWebVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYWebVC.m; sourceTree = "<group>"; };
-		AC8DDE161EEFC6830009C5AC /* XYThirdParty.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = XYThirdParty.podspec; sourceTree = "<group>"; };
+		AC8DDE161EEFC6830009C5AC /* XYThirdParty.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = XYThirdParty.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		ACBCD2281EFD1CE500D654A7 /* XYRichTextVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYRichTextVC.h; sourceTree = "<group>"; };
 		ACBCD2291EFD1CE500D654A7 /* XYRichTextVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYRichTextVC.m; sourceTree = "<group>"; };
+		ACF5694B22A3D0570047FFDF /* XYCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYCollectionViewController.m; sourceTree = "<group>"; };
+		ACF5694C22A3D0570047FFDF /* XYCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYCollectionViewController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -247,6 +250,7 @@
 		AC8DDD7C1EEFC2A50009C5AC /* XYThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				ACF5694A22A3D0570047FFDF /* XYCollectionViewController */,
 				10DF55A51F279AEE009F4999 /* FlyImageManager */,
 				10DF55861F2782B7009F4999 /* XYToast */,
 				10DCC5C31F23A0D000A4B7CA /* XYMenu */,
@@ -393,6 +397,15 @@
 				AC8DDE031EEFC3970009C5AC /* XYWebVC.m */,
 			);
 			path = XYWebVC;
+			sourceTree = "<group>";
+		};
+		ACF5694A22A3D0570047FFDF /* XYCollectionViewController */ = {
+			isa = PBXGroup;
+			children = (
+				ACF5694B22A3D0570047FFDF /* XYCollectionViewController.m */,
+				ACF5694C22A3D0570047FFDF /* XYCollectionViewController.h */,
+			);
+			path = XYCollectionViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -558,6 +571,7 @@
 				AC8DDE091EEFC3970009C5AC /* UIViewController+ImagePicker.m in Sources */,
 				AC8DDE111EEFC3970009C5AC /* XYSegment.m in Sources */,
 				AC8DDE121EEFC3970009C5AC /* XYSlider.m in Sources */,
+				ACF5694E22A3D06D0047FFDF /* XYCollectionViewController.m in Sources */,
 				10DCC5C61F23A0D000A4B7CA /* XYMenu.m in Sources */,
 				10DF55AE1F279AEE009F4999 /* XYImageLoader.m in Sources */,
 				AC00AEB31F00E1FE00EEDC3E /* ImageUploader.m in Sources */,
