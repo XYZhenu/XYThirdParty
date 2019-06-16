@@ -1,6 +1,9 @@
-#github "SnapKit/SnapKit" ~> 3.1.2
-#github "AFNetworking/AFNetworking" ~> 3.0
-#github "rs/SDWebImage"
-#github "ibireme/YYCategories"
-#github "hackiftekhar/IQKeyboardManager"
 github "CocoaLumberjack/CocoaLumberjack"
+github "banchichen/TZImagePickerController"
+github "AFNetworking/AFNetworking"
+github "jdg/MBProgressHUD"
+github "CoderMJLee/MJRefresh"
+github "mineschan/MZTimerLabel"
+github "ibireme/YYText"
+github "ibireme/YYImage"
+github "scalessec/Toast"

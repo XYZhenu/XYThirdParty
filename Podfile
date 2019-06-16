@@ -1,6 +1,6 @@
 #workspace 'XYThirdParty.xcworkspace'
 use_frameworks!
-target 'XYThirdParty' do
+target 'Example' do
     platform :ios, '8.0'
     project 'XYThirdParty.xcodeproj'
     pod 'TZImagePickerController'

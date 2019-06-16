@@ -1,7 +1,7 @@
 # coding: utf-8
 Pod::Spec.new do |s|
     s.name         = "XYThirdParty"
-    s.version      = "0.0.1"
+    s.version      = "0.0.2"
     s.summary      = "XYThirdParty Source ."
     s.description  = <<-DESC
                    xyzhenu framework
@@ -42,14 +42,14 @@ Pod::Spec.new do |s|
         json.requires_arc = false
     end
     s.subspec 'RichText' do |r|
-        r.source_files = 'XYThirdParty/RichText/*.{h,m}'
+        r.source_files = 'RichText/RichText/*.{h,m}'
         r.requires_arc = true
         r.dependency 'YYText'
         r.dependency 'YYImage'
         r.dependency 'TZImagePickerController'
     end
     s.subspec 'FlyImage' do |f|
-        f.source_files = 'XYThirdParty/FlyImageManager/*.{h,m}'
+        f.source_files = 'RichText/FlyImageManager/*.{h,m}'
         f.requires_arc = true
         f.dependency 'FlyImage'
     end

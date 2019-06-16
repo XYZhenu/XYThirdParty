@@ -1,10 +1,14 @@
 //
 //  XYThirdParty.h
-//  XYCategories
+//  XYThirdParty
 //
-//  Created by xyzhenu on 2017/6/8.
-//  Copyright © 2017年 xieyan. All rights reserved.
+//  Created by xyzhenu on 2019/6/14.
+//  Copyright © 2019 xyzhenu. All rights reserved.
 //
+
+#import <UIKit/UIKit.h>
+// In this header, you should import all the public headers of your framework using statements like #import <XYThirdParty/PublicHeader.h>
+
 
 #ifndef XYThirdParty_h
 #define XYThirdParty_h
@@ -29,3 +33,23 @@ view_##__TAG__.tag = __TAG__;\
 
 
 #endif /* XYThirdParty_h */
+
+#import <XYThirdParty/UIViewController+ImagePicker.h>
+#import <XYThirdParty/UIViewController+DatePicker.h>
+
+#import <XYThirdParty/XYLoadingPage.h>
+#import <XYThirdParty/XYToast.h>
+#import <XYThirdParty/XYWebVC.h>
+#import <XYThirdParty/Log.h>
+#import <XYThirdParty/UIViewController+Log.h>
+#import <XYThirdParty/XYMenu.h>
+#import <XYThirdParty/XYNetwork.h>
+
+#import <XYThirdParty/XYButton.h>
+#import <XYThirdParty/XYScroll.h>
+#import <XYThirdParty/XYScrollChartView.h>
+#import <XYThirdParty/XYSegment.h>
+#import <XYThirdParty/XYSlider.h>
+
+#import <XYThirdParty/XYTableViewController.h>
+#import <XYThirdParty/XYCollectionViewController.h>
