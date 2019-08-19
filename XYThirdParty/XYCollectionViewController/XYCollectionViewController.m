@@ -15,7 +15,7 @@
 #define XYTableGET(_K_) objc_getAssociatedObject(self, &_K_)
 
 @interface UICollectionReusableView (_XYLayout)
-- (CGSize)autoLayoutHeightWithWidth:(CGFloat)width;
+- (CGSize)autoLayoutSizeWithWidth:(CGFloat)contentViewWidth;
 @end
 @implementation UICollectionReusableView (_XYLayout)
 

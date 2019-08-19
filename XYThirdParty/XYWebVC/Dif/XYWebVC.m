@@ -13,12 +13,11 @@
 #import "XYNetwork.h"
 #import "XYThirdParty.h"
 #import "Log.h"
-@interface XYWebVC ()<UIWebViewDelegate>
+@interface XYWebVC ()<WKNavigationDelegate>
 @property(nonatomic,strong)NSDictionary*parma;
 @property(nonatomic,copy)NSString*url;
 @property(nonatomic,strong)NSDictionary*parmaDic;
-@property(nonatomic,strong)UIWebView*web;
-@property(nonatomic,strong)NJKWebViewProgress* progress;
+@property(nonatomic,strong)WKWebView*web;
 @property(nonatomic,strong)NJKWebViewProgressView* progressView;
 @property(nonnull,strong)NSArray* btnArray;
 @property(nonatomic,strong)UIImage* returnImage;
@@ -29,7 +28,13 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = NO;
     self.navigationController.navigationBar.translucent=NO;
-    self.automaticallyAdjustsScrollViewInsets = NO;
+    
+    if (@available(iOS 13.0, *)) {
+        self.web.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    } else {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+    
     if (self.navigationController.viewControllers.firstObject == self) {
         self.tabBarController.tabBar.hidden=NO;
         self.tabBarController.tabBar.translucent=NO;
@@ -57,24 +62,23 @@
     [btn setImage:image forState:UIControlStateNormal];
     btn.frame = CGRectMake(0, 0, 40, 40);
     btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-//    btn.imageEdgeInsets = UIEdgeInsetsMake(0, -12, 0, 0);
+    //    btn.imageEdgeInsets = UIEdgeInsetsMake(0, -12, 0, 0);
     [btn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
     self.navigationController.navigationBar.tintColor = [UIColor blackColor];
 }
--(void)bindWebView:(UIWebView*)webView{
+-(void)bindWebView:(WKWebView*)webView{
     _web = webView;
 }
--(UIWebView *)web{
+-(WKWebView *)web{
     if (!_web) {
-        _web = [[UIWebView alloc] init];
+        _web = [[WKWebView alloc] init];
         [self.view addSubview:_web];
         id topGuide = self.topLayoutGuide;
         id bottomGuide = self.bottomLayoutGuide;
         _web.translatesAutoresizingMaskIntoConstraints = NO;
         [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[_web]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_web)]];
         [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[topGuide]-0-[_web]-0-[bottomGuide]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_web,topGuide,bottomGuide)]];
-        _web.scalesPageToFit = YES;
     }
     return _web;
 }
@@ -89,16 +93,10 @@
     }
     return _progressView;
 }
--(NJKWebViewProgress *)progress{
-    if (!_progress) {
-        _progress = [[NJKWebViewProgress alloc] init];
-        _progress.webViewProxyDelegate = self;
-        __weak typeof(self) weak_self = self;
-        _progress.progressBlock = ^(float progress) {
-            weak_self.progressView.progress = progress;
-        };
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"estimatedProgress"]) {
+        self.progressView.progress = self.web.estimatedProgress;
     }
-    return _progress;
 }
 -(void)loadFromParma{
     if (self.parma) {
@@ -122,9 +120,13 @@
     self.navigationController.navigationBar.translucent = NO;
     self.view.backgroundColor=[UIColor whiteColor];
     
-    self.web.delegate = self.progress;
+    self.web.navigationDelegate = self;
+    [self.web addObserver:self forKeyPath:@"estimatedProgress" options:(NSKeyValueObservingOptionNew) context:nil];
     [self loadFromParma];
     
+}
+-(void)dealloc {
+    [self.web removeObserver:self forKeyPath:@"estimatedProgress"];
 }
 -(void)creatBtnArray{
     __weak typeof(self) weak_self = self;
@@ -162,7 +164,7 @@
     UIBarButtonItem* item2 = [[UIBarButtonItem alloc] initWithCustomView:btn2];
     self.btnArray = @[item1,item2];
 }
--(void)loadIsGet:(BOOL)isGet url:(NSString*)url parma:(NSDictionary*)parma web:(UIWebView*)web{
+-(void)loadIsGet:(BOOL)isGet url:(NSString*)url parma:(NSDictionary*)parma web:(WKWebView*)web{
     //    if (isGet) {
     //        [XYNet GETUrl:url Parma:parma HeaderParma:nil downloadProgress:nil success:^(NSURLSessionDataTask * _Nullable task, id  _Nonnull responseObject, NSInteger code, NSString * _Nullable info) {
     //            DLogVerbose(@"\n%@\n%@\n%@",task.originalRequest,task.currentRequest,task.response);
@@ -202,23 +204,22 @@
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
-    if (navigationType == UIWebViewNavigationTypeLinkClicked) {
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+    [webView evaluateJavaScript:@"document.title" completionHandler:^(id _Nullable title, NSError * _Nullable error) {
+        if (title && [title isKindOfClass:[NSString class]] && ((NSString*)title).length > 0) {
+            self.title = (NSString*)title;
+        }
+    }];
+}
+-(void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error {
+    
+}
+
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
+    if (navigationAction.navigationType == WKNavigationTypeLinkActivated) {
         if (!self.btnArray) [self creatBtnArray];
         self.navigationItem.leftBarButtonItems = self.btnArray;
     }
-    return YES;
-}
-- (void)webViewDidStartLoad:(UIWebView *)webView{
-    
-}
-- (void)webViewDidFinishLoad:(UIWebView *)webView{
-    NSString* title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
-    if (title && title.length > 0) {
-        self.title = title;
-    }
-}
--(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
-    
+    decisionHandler(WKNavigationActionPolicyAllow);
 }
 @end
