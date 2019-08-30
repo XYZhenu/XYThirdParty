@@ -8,8 +8,6 @@
 
 #import "XYWebVC.h"
 #import "XYButton.h"
-#import <NJKWebViewProgress/NJKWebViewProgress.h>
-#import <NJKWebViewProgress/NJKWebViewProgressView.h>
 #import "XYNetwork.h"
 #import "XYThirdParty.h"
 #import "Log.h"
@@ -18,7 +16,7 @@
 @property(nonatomic,copy)NSString*url;
 @property(nonatomic,strong)NSDictionary*parmaDic;
 @property(nonatomic,strong)WKWebView*web;
-@property(nonatomic,strong)NJKWebViewProgressView* progressView;
+@property(nonatomic,strong)UIView* progressView;
 @property(nonnull,strong)NSArray* btnArray;
 @property(nonatomic,strong)UIImage* returnImage;
 @end
@@ -28,7 +26,6 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = NO;
     self.navigationController.navigationBar.translucent=NO;
-    
     
     if (@available(iOS 13.0, *)) {
         self.web.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
@@ -83,22 +80,28 @@
     }
     return _web;
 }
--(NJKWebViewProgressView *)progressView{
+-(UIView *)progressView{
     if (!_progressView) {
-        _progressView = [[NJKWebViewProgressView alloc] initWithFrame:CGRectMake(0, 0, self.web.frame.size.width, 2)];
+        _progressView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 2)];
         [self.view addSubview:_progressView];
-        _progressView.translatesAutoresizingMaskIntoConstraints = NO;
-        id topGuide = self.topLayoutGuide;
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[_progressView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_progressView)]];
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[topGuide]-0-[_progressView(2)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_progressView,topGuide)]];
     }
     return _progressView;
 }
+-(void)updateProgress {
+    if (self.web.estimatedProgress == 0 || self.web.estimatedProgress == 1) {
+        self.view.hidden = YES;
+        return;
+    }
+    self.view.hidden = NO;
+    [self.view bringSubviewToFront:self.progressView];
+    self.progressView.frame = CGRectMake(0, self.web.frame.origin.y, self.web.frame.size.width * self.web.estimatedProgress, 2);
+}
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
     if ([keyPath isEqualToString:@"estimatedProgress"]) {
-        self.progressView.progress = self.web.estimatedProgress;
+        [self performSelectorOnMainThread:@selector(updateProgress) withObject:nil waitUntilDone:NO];
     }
 }
+
 -(void)loadFromParma{
     if (self.parma) {
         self.url = self.parma[keyWebVCUrl];
@@ -211,9 +214,7 @@
             self.title = (NSString*)title;
         }
     }];
-}
--(void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error {
-    
+    self.progressView.hidden = YES;
 }
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
@@ -222,5 +223,17 @@
         self.navigationItem.leftBarButtonItems = self.btnArray;
     }
     decisionHandler(WKNavigationActionPolicyAllow);
+}
+
+- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error {
+    self.progressView.hidden = YES;
+}
+
+- (void)webView:(WKWebView *)webView didFailNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error {
+    self.progressView.hidden = YES;
+}
+
+- (void)webViewWebContentProcessDidTerminate:(WKWebView *)webView {
+    self.progressView.hidden = YES;
 }
 @end

@@ -30,7 +30,6 @@ Pod::Spec.new do |s|
         c.dependency 'TAPageControl'
         c.dependency 'AFNetworking'
         c.dependency 'CocoaLumberjack'
-        c.dependency 'NJKWebViewProgress'
         c.dependency 'MBProgressHUD'
         c.dependency 'MJRefresh'
         c.dependency 'MZTimerLabel'

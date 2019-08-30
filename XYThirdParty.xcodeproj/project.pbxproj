@@ -16,6 +16,7 @@
 		AC1752D422B3DE3F00F447B6 /* XYThirdParty.h in Headers */ = {isa = PBXBuildFile; fileRef = AC1752D222B3DE3F00F447B6 /* XYThirdParty.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AC1752D722B3DE3F00F447B6 /* XYThirdParty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC1752D022B3DE3F00F447B6 /* XYThirdParty.framework */; };
 		AC1752D822B3DE3F00F447B6 /* XYThirdParty.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AC1752D022B3DE3F00F447B6 /* XYThirdParty.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AC18DBC42318C190005E14B3 /* XYWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC6EF7622B3E01E00BF0F97 /* XYWebVC.m */; };
 		ACC6EFB422B3E01E00BF0F97 /* XYLoadingPage.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC6EF6D22B3E01E00BF0F97 /* XYLoadingPage.m */; };
 		ACC6EFB522B3E01E00BF0F97 /* XYLoadingPage.h in Headers */ = {isa = PBXBuildFile; fileRef = ACC6EF6E22B3E01E00BF0F97 /* XYLoadingPage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ACC6EFB622B3E01E00BF0F97 /* XYNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC6EF7022B3E01E00BF0F97 /* XYNetwork.m */; };
@@ -46,10 +47,6 @@
 		ACC6EFE622B3E01F00BF0F97 /* XYCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC6EFB222B3E01E00BF0F97 /* XYCollectionViewController.m */; };
 		ACC6EFE722B3E01F00BF0F97 /* XYCollectionViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = ACC6EFB322B3E01E00BF0F97 /* XYCollectionViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ACC6F04422B3E0F300BF0F97 /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC6F00922B3E0F200BF0F97 /* TableViewController.m */; };
-		ACC6F05B22B6258100BF0F97 /* NJKWebViewProgressView.h in Headers */ = {isa = PBXBuildFile; fileRef = ACC6F05722B6258100BF0F97 /* NJKWebViewProgressView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		ACC6F05C22B6258100BF0F97 /* NJKWebViewProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC6F05822B6258100BF0F97 /* NJKWebViewProgress.m */; };
-		ACC6F05D22B6258100BF0F97 /* NJKWebViewProgress.h in Headers */ = {isa = PBXBuildFile; fileRef = ACC6F05922B6258100BF0F97 /* NJKWebViewProgress.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		ACC6F05E22B6258100BF0F97 /* NJKWebViewProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC6F05A22B6258100BF0F97 /* NJKWebViewProgressView.m */; };
 		ACC6F06822B625A600BF0F97 /* TAAbstractDotView.h in Headers */ = {isa = PBXBuildFile; fileRef = ACC6F06022B625A600BF0F97 /* TAAbstractDotView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ACC6F06922B625A600BF0F97 /* TADotView.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC6F06122B625A600BF0F97 /* TADotView.m */; };
 		ACC6F06A22B625A600BF0F97 /* TAPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC6F06222B625A600BF0F97 /* TAPageControl.m */; };
@@ -70,7 +67,6 @@
 		ACC6F08C22B62CB300BF0F97 /* RichText.h in Headers */ = {isa = PBXBuildFile; fileRef = ACC6F08A22B62CB300BF0F97 /* RichText.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ACC6F08F22B62CB300BF0F97 /* RichText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACC6F08822B62CB300BF0F97 /* RichText.framework */; };
 		ACC6F09022B62CB300BF0F97 /* RichText.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = ACC6F08822B62CB300BF0F97 /* RichText.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		ACC6F0AC22B630EE00BF0F97 /* XYWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC6F0AB22B630EE00BF0F97 /* XYWebVC.m */; };
 		ACC6F0B122B6333500BF0F97 /* XYWebVC.h in Headers */ = {isa = PBXBuildFile; fileRef = ACC6EF7722B3E01E00BF0F97 /* XYWebVC.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ACC6F0B522B6340D00BF0F97 /* XYScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC6F0B322B6340D00BF0F97 /* XYScroll.m */; };
 		ACC6F0B622B6340D00BF0F97 /* XYScroll.h in Headers */ = {isa = PBXBuildFile; fileRef = ACC6F0B422B6340D00BF0F97 /* XYScroll.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -174,10 +170,6 @@
 		ACC6F00922B3E0F200BF0F97 /* TableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewController.m; sourceTree = "<group>"; };
 		ACC6F01122B3E0F200BF0F97 /* XYThirdParty-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XYThirdParty-Bridging-Header.h"; sourceTree = "<group>"; };
 		ACC6F03322B3E0F300BF0F97 /* TableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
-		ACC6F05722B6258100BF0F97 /* NJKWebViewProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJKWebViewProgressView.h; sourceTree = "<group>"; };
-		ACC6F05822B6258100BF0F97 /* NJKWebViewProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJKWebViewProgress.m; sourceTree = "<group>"; };
-		ACC6F05922B6258100BF0F97 /* NJKWebViewProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJKWebViewProgress.h; sourceTree = "<group>"; };
-		ACC6F05A22B6258100BF0F97 /* NJKWebViewProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJKWebViewProgressView.m; sourceTree = "<group>"; };
 		ACC6F06022B625A600BF0F97 /* TAAbstractDotView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAAbstractDotView.h; sourceTree = "<group>"; };
 		ACC6F06122B625A600BF0F97 /* TADotView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TADotView.m; sourceTree = "<group>"; };
 		ACC6F06222B625A600BF0F97 /* TAPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPageControl.m; sourceTree = "<group>"; };
@@ -198,7 +190,6 @@
 		ACC6F08822B62CB300BF0F97 /* RichText.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RichText.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACC6F08A22B62CB300BF0F97 /* RichText.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RichText.h; sourceTree = "<group>"; };
 		ACC6F08B22B62CB300BF0F97 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		ACC6F0AB22B630EE00BF0F97 /* XYWebVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYWebVC.m; sourceTree = "<group>"; };
 		ACC6F0B322B6340D00BF0F97 /* XYScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYScroll.m; sourceTree = "<group>"; };
 		ACC6F0B422B6340D00BF0F97 /* XYScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYScroll.h; sourceTree = "<group>"; };
 		ACC6F0B822B634FB00BF0F97 /* XYRichTextVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYRichTextVC.m; sourceTree = "<group>"; };
@@ -316,7 +307,6 @@
 				ACC6EF8022B3E01E00BF0F97 /* XYToast */,
 				ACC6EF7522B3E01E00BF0F97 /* XYWebVC */,
 				AC1752D222B3DE3F00F447B6 /* XYThirdParty.h */,
-				ACC6F05622B6258100BF0F97 /* NJKWebViewProgress */,
 				AC1752D322B3DE3F00F447B6 /* Info.plist */,
 				ACC6F05F22B625A600BF0F97 /* TAPageControl */,
 			);
@@ -376,7 +366,6 @@
 		ACC6EF7522B3E01E00BF0F97 /* XYWebVC */ = {
 			isa = PBXGroup;
 			children = (
-				ACC6F0AA22B630EE00BF0F97 /* Dif */,
 				ACC6EF7622B3E01E00BF0F97 /* XYWebVC.m */,
 				ACC6EF7722B3E01E00BF0F97 /* XYWebVC.h */,
 			);
@@ -485,17 +474,6 @@
 			path = XYCollectionViewController;
 			sourceTree = "<group>";
 		};
-		ACC6F05622B6258100BF0F97 /* NJKWebViewProgress */ = {
-			isa = PBXGroup;
-			children = (
-				ACC6F05722B6258100BF0F97 /* NJKWebViewProgressView.h */,
-				ACC6F05822B6258100BF0F97 /* NJKWebViewProgress.m */,
-				ACC6F05922B6258100BF0F97 /* NJKWebViewProgress.h */,
-				ACC6F05A22B6258100BF0F97 /* NJKWebViewProgressView.m */,
-			);
-			path = NJKWebViewProgress;
-			sourceTree = "<group>";
-		};
 		ACC6F05F22B625A600BF0F97 /* TAPageControl */ = {
 			isa = PBXGroup;
 			children = (
@@ -520,14 +498,6 @@
 				ACC6F08B22B62CB300BF0F97 /* Info.plist */,
 			);
 			path = RichText;
-			sourceTree = "<group>";
-		};
-		ACC6F0AA22B630EE00BF0F97 /* Dif */ = {
-			isa = PBXGroup;
-			children = (
-				ACC6F0AB22B630EE00BF0F97 /* XYWebVC.m */,
-			);
-			path = Dif;
 			sourceTree = "<group>";
 		};
 		ACC6F0B222B6340D00BF0F97 /* Dif_XYScroll */ = {
@@ -585,9 +555,7 @@
 				ACC6F06F22B625A600BF0F97 /* TAPageControl.h in Headers */,
 				ACC6F06E22B625A600BF0F97 /* TAAnimatedDotView.h in Headers */,
 				ACC6F06822B625A600BF0F97 /* TAAbstractDotView.h in Headers */,
-				ACC6F05D22B6258100BF0F97 /* NJKWebViewProgress.h in Headers */,
 				ACC6F0B622B6340D00BF0F97 /* XYScroll.h in Headers */,
-				ACC6F05B22B6258100BF0F97 /* NJKWebViewProgressView.h in Headers */,
 				ACC6F06D22B625A600BF0F97 /* TADotView.h in Headers */,
 				ACC6EFE422B3E01F00BF0F97 /* Log.h in Headers */,
 				ACC6EFD822B3E01F00BF0F97 /* UIViewController+DatePicker.h in Headers */,
@@ -818,11 +786,9 @@
 				ACC6EFBE22B3E01E00BF0F97 /* XYTableViewController.m in Sources */,
 				ACC6EFC022B3E01F00BF0F97 /* XYScrollChartView.m in Sources */,
 				ACC6EFD322B3E01F00BF0F97 /* UIViewController+ImagePicker.m in Sources */,
+				AC18DBC42318C190005E14B3 /* XYWebVC.m in Sources */,
 				ACC6EFE222B3E01F00BF0F97 /* XYButton.m in Sources */,
-				ACC6F0AC22B630EE00BF0F97 /* XYWebVC.m in Sources */,
-				ACC6F05C22B6258100BF0F97 /* NJKWebViewProgress.m in Sources */,
 				ACC6EFC422B3E01F00BF0F97 /* XYMenu.m in Sources */,
-				ACC6F05E22B6258100BF0F97 /* NJKWebViewProgressView.m in Sources */,
 				ACC6EFB922B3E01E00BF0F97 /* XYSlider.m in Sources */,
 				ACC6EFD222B3E01F00BF0F97 /* XYSegment.m in Sources */,
 				ACC6EFB422B3E01E00BF0F97 /* XYLoadingPage.m in Sources */,
