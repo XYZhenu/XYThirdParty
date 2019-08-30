@@ -83,13 +83,14 @@
 -(UIView *)progressView{
     if (!_progressView) {
         _progressView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 2)];
+        _progressView.backgroundColor = self.view.tintColor;
         [self.view addSubview:_progressView];
     }
     return _progressView;
 }
 -(void)updateProgress {
     if (self.web.estimatedProgress == 0 || self.web.estimatedProgress == 1) {
-        self.view.hidden = YES;
+        self.progressView.hidden = YES;
         return;
     }
     self.view.hidden = NO;
