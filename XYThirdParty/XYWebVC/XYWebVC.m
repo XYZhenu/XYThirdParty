@@ -22,6 +22,18 @@
 @end
 
 @implementation XYWebVC
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.alwaysHideTabbar = NO;
+    }
+    return self;
+}
+-(void)awakeFromNib{
+    [super awakeFromNib];
+    self.alwaysHideTabbar = NO;
+}
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = NO;
@@ -33,12 +45,12 @@
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
     
-    if (self.navigationController.viewControllers.firstObject == self) {
-        self.tabBarController.tabBar.hidden=NO;
-        self.tabBarController.tabBar.translucent=NO;
-    }else{
+    if (self.navigationController.viewControllers.firstObject != self || self.alwaysHideTabbar) {
         self.tabBarController.tabBar.hidden=YES;
         self.tabBarController.tabBar.translucent=YES;
+    }else{
+        self.tabBarController.tabBar.hidden=NO;
+        self.tabBarController.tabBar.translucent=NO;
     }
     [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationPortrait animated:NO];
 }

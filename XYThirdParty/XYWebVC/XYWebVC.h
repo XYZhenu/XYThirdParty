@@ -12,6 +12,8 @@ static NSString* keyWebVCGET = @"get";
 static NSString* keyWebVCUrl = @"url";
 static NSString* keyWebVCParma = @"parma";
 @interface XYWebVC : UIViewController
+@property(nonatomic,assign)BOOL alwaysHideTabbar;//default NO;
+
 -(void)bindWebView:(WKWebView*)webView;
 -(void)loadFromParma;
 - (void)addWebviewReturnButton:(id _Nullable)content;
