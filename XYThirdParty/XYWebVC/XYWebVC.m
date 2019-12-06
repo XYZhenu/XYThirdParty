@@ -85,10 +85,11 @@
         _web = [[WKWebView alloc] init];
         [self.view addSubview:_web];
         id topGuide = self.topLayoutGuide;
-        id bottomGuide = self.bottomLayoutGuide;
         _web.translatesAutoresizingMaskIntoConstraints = NO;
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[_web]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_web)]];
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[topGuide]-0-[_web]-0-[bottomGuide]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_web,topGuide,bottomGuide)]];
+        CGFloat left = self.additionalSafeAreaInsets.left;
+        CGFloat right = self.additionalSafeAreaInsets.right;
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[left]-[_web]-[right]-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_web, left, right)]];
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[topGuide]-0-[_web]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_web,topGuide)]];
     }
     return _web;
 }
