@@ -47,7 +47,8 @@
 @end
 @implementation UIViewController (XYLog)
 +(void)load{
-    ddLogLevel = DDLogLevelError;
+    
+    ddLogLevel = [NSUserDefaults.standardUserDefaults integerForKey:@"ddLogLevel"];
     [DDTTYLogger sharedInstance].logFormatter = [_LogFormater new];
     [DDLog addLogger:[DDTTYLogger sharedInstance] withLevel:ddLogLevel];
 }
@@ -61,37 +62,45 @@
 -(void)longPress:(UILongPressGestureRecognizer*)sender{
     if (sender.state == UIGestureRecognizerStateBegan)
     {
+        
         UIAlertController * alertVC = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction * action1 = [UIAlertAction actionWithTitle:@"Verbose" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertAction * action1 = [UIAlertAction actionWithTitle:@"Verbose 记录所有日志" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             ddLogLevel = DDLogLevelVerbose;
+            [NSUserDefaults.standardUserDefaults setInteger:ddLogLevel forKey:@"ddLogLevel"];
             [DDLog removeLogger:[DDTTYLogger sharedInstance]];
             [DDLog addLogger:[DDTTYLogger sharedInstance] withLevel:ddLogLevel];
         }];
         UIAlertAction * action2 = [UIAlertAction actionWithTitle:@"Debug" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             ddLogLevel = DDLogLevelDebug;
+            [NSUserDefaults.standardUserDefaults setInteger:ddLogLevel forKey:@"ddLogLevel"];
             [DDLog removeLogger:[DDTTYLogger sharedInstance]];
             [DDLog addLogger:[DDTTYLogger sharedInstance] withLevel:ddLogLevel];
         }];
         UIAlertAction * action3 = [UIAlertAction actionWithTitle:@"Info" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             ddLogLevel = DDLogLevelInfo;
+            [NSUserDefaults.standardUserDefaults setInteger:ddLogLevel forKey:@"ddLogLevel"];
             [DDLog removeLogger:[DDTTYLogger sharedInstance]];
             [DDLog addLogger:[DDTTYLogger sharedInstance] withLevel:ddLogLevel];
         }];
         UIAlertAction * action4 = [UIAlertAction actionWithTitle:@"Warning" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             ddLogLevel = DDLogLevelWarning;
+            [NSUserDefaults.standardUserDefaults setInteger:ddLogLevel forKey:@"ddLogLevel"];
             [DDLog removeLogger:[DDTTYLogger sharedInstance]];
             [DDLog addLogger:[DDTTYLogger sharedInstance] withLevel:ddLogLevel];
         }];
-        UIAlertAction * action5 = [UIAlertAction actionWithTitle:@"Error" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertAction * action5 = [UIAlertAction actionWithTitle:@"Error 只记录错误" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             ddLogLevel = DDLogLevelError;
+            [NSUserDefaults.standardUserDefaults setInteger:ddLogLevel forKey:@"ddLogLevel"];
             [DDLog removeLogger:[DDTTYLogger sharedInstance]];
             [DDLog addLogger:[DDTTYLogger sharedInstance] withLevel:ddLogLevel];
         }];
-        UIAlertAction * action6 = [UIAlertAction actionWithTitle:@"LogToFile" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertAction * action6 = [UIAlertAction actionWithTitle:@"记录日志到文件" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+            ddLogLevel = DDLogLevelVerbose;
+            [NSUserDefaults.standardUserDefaults setInteger:ddLogLevel forKey:@"ddLogLevel"];
             [DDLog removeLogger:[UIViewController fileLogger]];
             [DDLog addLogger:[UIViewController fileLogger] withLevel:ddLogLevel];
         }];
-        UIAlertAction * action7 = [UIAlertAction actionWithTitle:@"ShareLogFile" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertAction * action7 = [UIAlertAction actionWithTitle:@"分享日志" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
             DDFileLogger* log = [UIViewController fileLogger];
             UIActivityViewController* act = [[UIActivityViewController alloc] initWithActivityItems:@[[NSURL fileURLWithPath:log.currentLogFileInfo.filePath]] applicationActivities:nil];
             [self presentViewController:act animated:YES completion:nil];
