@@ -19,6 +19,7 @@
 @property(nonatomic,strong)UIView* progressView;
 @property(nonnull,strong)NSArray* btnArray;
 @property(nonatomic,strong)UIImage* returnImage;
+@property(nonatomic,strong)NSMutableArray* allCons;
 @end
 
 @implementation XYWebVC
@@ -27,6 +28,7 @@
     self = [super init];
     if (self) {
         self.alwaysHideTabbar = NO;
+        self.allCons = [NSMutableArray array];
     }
     return self;
 }
@@ -86,12 +88,29 @@
         [self.view addSubview:_web];
         id topGuide = self.topLayoutGuide;
         _web.translatesAutoresizingMaskIntoConstraints = NO;
-        CGFloat left = self.additionalSafeAreaInsets.left;
-        CGFloat right = self.additionalSafeAreaInsets.right;
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[left]-[_web]-[right]-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_web, left, right)]];
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[topGuide]-0-[_web]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_web,topGuide)]];
+        NSNumber* left = @(self.view.safeAreaInsets.left);
+        NSNumber* right = @(self.view.safeAreaInsets.right);
+        [self.allCons addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-left-[_web]-right-|" options:0 metrics:NSDictionaryOfVariableBindings(left, right) views:NSDictionaryOfVariableBindings(_web)]];
+        [self.allCons addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[topGuide]-0-[_web]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_web,topGuide)]];
+        [self.view addConstraints:self.allCons];
+        
     }
     return _web;
+}
+- (void)viewSafeAreaInsetsDidChange {
+    [super viewSafeAreaInsetsDidChange];
+    if (self.allCons.count > 0 && _web) {
+        [NSLayoutConstraint deactivateConstraints:self.allCons];
+        [self.allCons removeAllObjects];
+        id topGuide = self.topLayoutGuide;
+        _web.translatesAutoresizingMaskIntoConstraints = NO;
+        NSNumber* left = @(self.view.safeAreaInsets.left);
+        NSNumber* right = @(self.view.safeAreaInsets.right);
+        [self.allCons addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-left-[_web]-right-|" options:0 metrics:NSDictionaryOfVariableBindings(left, right) views:NSDictionaryOfVariableBindings(_web)]];
+        [self.allCons addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[topGuide]-0-[_web]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_web,topGuide)]];
+        [self.view addConstraints:self.allCons];
+    }
+    
 }
 -(UIView *)progressView{
     if (!_progressView) {
@@ -108,7 +127,7 @@
     }
     self.view.hidden = NO;
     [self.view bringSubviewToFront:self.progressView];
-    self.progressView.frame = CGRectMake(0, self.web.frame.origin.y, self.web.frame.size.width * self.web.estimatedProgress, 2);
+    self.progressView.frame = CGRectMake(self.web.frame.origin.x, self.web.frame.origin.y, self.web.frame.size.width * self.web.estimatedProgress, 2);
 }
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
     if ([keyPath isEqualToString:@"estimatedProgress"]) {
