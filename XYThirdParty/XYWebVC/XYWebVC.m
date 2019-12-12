@@ -88,8 +88,12 @@
         [self.view addSubview:_web];
         id topGuide = self.topLayoutGuide;
         _web.translatesAutoresizingMaskIntoConstraints = NO;
-        NSNumber* left = @(self.view.safeAreaInsets.left);
-        NSNumber* right = @(self.view.safeAreaInsets.right);
+        NSNumber* left = @(0);
+        NSNumber* right = @(0);
+        if (@available(iOS 11.0, *)) {
+            NSNumber* left = @(self.view.safeAreaInsets.left);
+            NSNumber* right = @(self.view.safeAreaInsets.right);
+        }
         [self.allCons addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-left-[_web]-right-|" options:0 metrics:NSDictionaryOfVariableBindings(left, right) views:NSDictionaryOfVariableBindings(_web)]];
         [self.allCons addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[topGuide]-0-[_web]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_web,topGuide)]];
         [self.view addConstraints:self.allCons];
@@ -104,8 +108,12 @@
         [self.allCons removeAllObjects];
         id topGuide = self.topLayoutGuide;
         _web.translatesAutoresizingMaskIntoConstraints = NO;
-        NSNumber* left = @(self.view.safeAreaInsets.left);
-        NSNumber* right = @(self.view.safeAreaInsets.right);
+        NSNumber* left = @(0);
+        NSNumber* right = @(0);
+        if (@available(iOS 11.0, *)) {
+            NSNumber* left = @(self.view.safeAreaInsets.left);
+            NSNumber* right = @(self.view.safeAreaInsets.right);
+        }
         [self.allCons addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-left-[_web]-right-|" options:0 metrics:NSDictionaryOfVariableBindings(left, right) views:NSDictionaryOfVariableBindings(_web)]];
         [self.allCons addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[topGuide]-0-[_web]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_web,topGuide)]];
         [self.view addConstraints:self.allCons];
