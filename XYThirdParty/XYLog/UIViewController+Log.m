@@ -52,6 +52,14 @@
     [DDTTYLogger sharedInstance].logFormatter = [_LogFormater new];
     [DDLog addLogger:[DDTTYLogger sharedInstance] withLevel:ddLogLevel];
 }
+
+-(void)defaultLogAllToFile {
+    ddLogLevel = DDLogLevelVerbose;
+    [NSUserDefaults.standardUserDefaults setInteger:ddLogLevel forKey:@"ddLogLevel"];
+    [DDLog removeLogger:[UIViewController fileLogger]];
+    [DDLog addLogger:[UIViewController fileLogger] withLevel:ddLogLevel];
+}
+
 -(void)addLogGesture{
     UILongPressGestureRecognizer * longGesture =[[UILongPressGestureRecognizer alloc] init];
     longGesture.minimumPressDuration = 2.0;

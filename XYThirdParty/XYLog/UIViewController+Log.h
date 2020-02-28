@@ -10,4 +10,5 @@
 
 @interface UIViewController (XYLog)
 -(void)addLogGesture;
+-(void)defaultLogAllToFile;
 @end
