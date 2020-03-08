@@ -14,7 +14,7 @@
 @end
 @implementation _LogFormater
 - (NSString * __nullable)formatLogMessage:(DDLogMessage *)logMessage{
-    return [NSString stringWithFormat:@"%@ file %@.m, line %ld, msg %@",[_LogFormater logLevelStr:logMessage.flag],logMessage.fileName,logMessage.line,logMessage.message];
+    return [NSString stringWithFormat:@"%@ file %@.m, line %lu, msg %@",[_LogFormater logLevelStr:logMessage.flag],logMessage.fileName,(unsigned long)logMessage.line,logMessage.message];
 }
 +(NSString*)logLevelStr:(DDLogFlag)flag{
     switch (flag) {
@@ -47,22 +47,32 @@
 @end
 @implementation UIViewController (XYLog)
 +(void)load{
+    NSString* level = [NSUserDefaults.standardUserDefaults stringForKey:@"log_level"];
+    if ([level isEqualToString:@"error"]) {
+        ddLogLevel = DDLogLevelError;
+    } else if ([level isEqualToString:@"warning"]) {
+        ddLogLevel = DDLogLevelWarning;
+    } else if ([level isEqualToString:@"info"]) {
+        ddLogLevel = DDLogLevelInfo;
+    } else if ([level isEqualToString:@"debug"]) {
+        ddLogLevel = DDLogLevelDebug;
+    } else {
+        ddLogLevel = DDLogLevelVerbose;
+    }
     
-    ddLogLevel = [NSUserDefaults.standardUserDefaults integerForKey:@"ddLogLevel"];
     [DDTTYLogger sharedInstance].logFormatter = [_LogFormater new];
     [DDLog addLogger:[DDTTYLogger sharedInstance] withLevel:ddLogLevel];
-}
-
--(void)defaultLogAllToFile {
-    ddLogLevel = DDLogLevelVerbose;
-    [NSUserDefaults.standardUserDefaults setInteger:ddLogLevel forKey:@"ddLogLevel"];
-    [DDLog removeLogger:[UIViewController fileLogger]];
-    [DDLog addLogger:[UIViewController fileLogger] withLevel:ddLogLevel];
+    
+    BOOL log_in_file = [NSUserDefaults.standardUserDefaults boolForKey:@"log_in_file"];
+    if (log_in_file) {
+        [DDLog removeLogger:[UIViewController fileLogger]];
+        [DDLog addLogger:[UIViewController fileLogger] withLevel:ddLogLevel];
+    }
 }
 
 -(void)addLogGesture{
     UILongPressGestureRecognizer * longGesture =[[UILongPressGestureRecognizer alloc] init];
-    longGesture.minimumPressDuration = 2.0;
+    longGesture.minimumPressDuration = 1.5;
     [longGesture addTarget:self action:@selector(longPress:)];
     [self.view addGestureRecognizer:longGesture];
 }
@@ -102,12 +112,6 @@
             [DDLog removeLogger:[DDTTYLogger sharedInstance]];
             [DDLog addLogger:[DDTTYLogger sharedInstance] withLevel:ddLogLevel];
         }];
-        UIAlertAction * action6 = [UIAlertAction actionWithTitle:@"记录日志到文件" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-            ddLogLevel = DDLogLevelVerbose;
-            [NSUserDefaults.standardUserDefaults setInteger:ddLogLevel forKey:@"ddLogLevel"];
-            [DDLog removeLogger:[UIViewController fileLogger]];
-            [DDLog addLogger:[UIViewController fileLogger] withLevel:ddLogLevel];
-        }];
         UIAlertAction * action7 = [UIAlertAction actionWithTitle:@"分享日志" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
             DDFileLogger* log = [UIViewController fileLogger];
             UIActivityViewController* act = [[UIActivityViewController alloc] initWithActivityItems:@[[NSURL fileURLWithPath:log.currentLogFileInfo.filePath]] applicationActivities:nil];
@@ -118,12 +122,23 @@
         [alertVC addAction:action3];
         [alertVC addAction:action4];
         [alertVC addAction:action5];
-        [alertVC addAction:action6];
         [alertVC addAction:action7];
         [self presentViewController:alertVC animated:YES completion:nil];
     }
 }
-
++ (void) shareAllLogfiles {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectory = [paths objectAtIndex:0];
+    NSArray* files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentDirectory error:nil];
+    NSMutableArray* logs = [NSMutableArray array];
+    for (NSString* file in files) {
+        if ([file.pathExtension isEqualToString:@"log"]) {
+            [logs addObject:[NSURL fileURLWithPath:file]];
+        }
+    }
+    UIActivityViewController* act = [[UIActivityViewController alloc] initWithActivityItems:logs applicationActivities:nil];
+    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:act animated:YES completion:nil];
+}
 +(DDFileLogger*)fileLogger{
     static DDFileLogger *fileLogger = nil;
     static dispatch_once_t onceToken;
@@ -132,6 +147,7 @@
         NSString *documentDirectory = [paths objectAtIndex:0];
         fileLogger = [[DDFileLogger alloc] initWithLogFileManager:[[DDLogFileManagerDefault alloc] initWithLogsDirectory:documentDirectory]];
         fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
+        fileLogger.maximumFileSize = 0;
         fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
     });
     return fileLogger;

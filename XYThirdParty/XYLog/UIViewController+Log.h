@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface UIViewController (XYLog)
--(void)addLogGesture;
--(void)defaultLogAllToFile;
+-(void) addLogGesture;
++(void) shareAllLogfiles;
 @end
