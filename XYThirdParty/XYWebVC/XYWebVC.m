@@ -54,7 +54,6 @@
         self.tabBarController.tabBar.hidden=NO;
         self.tabBarController.tabBar.translucent=NO;
     }
-    [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationPortrait animated:NO];
 }
 - (void)addWebviewReturnButton:(id _Nullable)content {
     if (!self.navigationController || self.navigationController.viewControllers.firstObject == self) {
