@@ -36,10 +36,6 @@ Pod::Spec.new do |s|
         c.dependency 'GVUserDefaults'
         c.dependency 'Toast'
     end
-    s.subspec 'JSON' do |json|
-        json.source_files = 'XYThirdParty/JSON/*.{h,m}'
-        json.requires_arc = false
-    end
     s.subspec 'RichText' do |r|
         r.source_files = 'RichText/RichText/*.{h,m}'
         r.requires_arc = true

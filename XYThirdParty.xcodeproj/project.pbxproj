@@ -31,8 +31,6 @@
 		ACC6EFC222B3E01F00BF0F97 /* XYToast.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC6EF8222B3E01E00BF0F97 /* XYToast.m */; };
 		ACC6EFC322B3E01F00BF0F97 /* XYMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = ACC6EF8422B3E01E00BF0F97 /* XYMenu.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ACC6EFC422B3E01F00BF0F97 /* XYMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC6EF8522B3E01E00BF0F97 /* XYMenu.m */; };
-		ACC6EFCF22B3E01F00BF0F97 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC6EF9422B3E01E00BF0F97 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		ACC6EFD022B3E01F00BF0F97 /* JSONKit.h in Headers */ = {isa = PBXBuildFile; fileRef = ACC6EF9522B3E01E00BF0F97 /* JSONKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ACC6EFD122B3E01F00BF0F97 /* XYSegment.h in Headers */ = {isa = PBXBuildFile; fileRef = ACC6EF9722B3E01E00BF0F97 /* XYSegment.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ACC6EFD222B3E01F00BF0F97 /* XYSegment.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC6EF9822B3E01E00BF0F97 /* XYSegment.m */; };
 		ACC6EFD322B3E01F00BF0F97 /* UIViewController+ImagePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC6EF9A22B3E01E00BF0F97 /* UIViewController+ImagePicker.m */; };
@@ -152,8 +150,6 @@
 		ACC6EF8522B3E01E00BF0F97 /* XYMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYMenu.m; sourceTree = "<group>"; };
 		ACC6EF9122B3E01E00BF0F97 /* XYScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYScroll.m; sourceTree = "<group>"; };
 		ACC6EF9222B3E01E00BF0F97 /* XYScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYScroll.h; sourceTree = "<group>"; };
-		ACC6EF9422B3E01E00BF0F97 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
-		ACC6EF9522B3E01E00BF0F97 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		ACC6EF9722B3E01E00BF0F97 /* XYSegment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYSegment.h; sourceTree = "<group>"; };
 		ACC6EF9822B3E01E00BF0F97 /* XYSegment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYSegment.m; sourceTree = "<group>"; };
 		ACC6EF9A22B3E01E00BF0F97 /* UIViewController+ImagePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ImagePicker.m"; sourceTree = "<group>"; };
@@ -291,7 +287,6 @@
 			isa = PBXGroup;
 			children = (
 				ACC6F0B222B6340D00BF0F97 /* Dif_XYScroll */,
-				ACC6EF9322B3E01E00BF0F97 /* JSON */,
 				ACC6EF9922B3E01E00BF0F97 /* UIViewControllerExtention */,
 				ACC6EFAA22B3E01E00BF0F97 /* XYButton */,
 				ACC6EFB122B3E01E00BF0F97 /* XYCollectionViewController */,
@@ -415,15 +410,6 @@
 				ACC6EF9122B3E01E00BF0F97 /* XYScroll.m */,
 			);
 			path = XYScroll;
-			sourceTree = "<group>";
-		};
-		ACC6EF9322B3E01E00BF0F97 /* JSON */ = {
-			isa = PBXGroup;
-			children = (
-				ACC6EF9422B3E01E00BF0F97 /* JSONKit.m */,
-				ACC6EF9522B3E01E00BF0F97 /* JSONKit.h */,
-			);
-			path = JSON;
 			sourceTree = "<group>";
 		};
 		ACC6EF9622B3E01E00BF0F97 /* XYSegment */ = {
@@ -560,7 +546,6 @@
 				ACC6EFE422B3E01F00BF0F97 /* Log.h in Headers */,
 				ACC6EFD822B3E01F00BF0F97 /* UIViewController+DatePicker.h in Headers */,
 				ACC6EFE122B3E01F00BF0F97 /* XYButton.h in Headers */,
-				ACC6EFD022B3E01F00BF0F97 /* JSONKit.h in Headers */,
 				ACC6EFE322B3E01F00BF0F97 /* UIViewController+Log.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -796,7 +781,6 @@
 				ACC6F06A22B625A600BF0F97 /* TAPageControl.m in Sources */,
 				ACC6F06B22B625A600BF0F97 /* TAAnimatedDotView.m in Sources */,
 				ACC6EFE622B3E01F00BF0F97 /* XYCollectionViewController.m in Sources */,
-				ACC6EFCF22B3E01F00BF0F97 /* JSONKit.m in Sources */,
 				ACC6EFE522B3E01F00BF0F97 /* UIViewController+Log.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
