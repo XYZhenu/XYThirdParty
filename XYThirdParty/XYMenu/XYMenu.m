@@ -389,7 +389,7 @@ typedef enum {
         return nil;
     
     const CGFloat kMinMenuItemHeight = 44.f;
-    const CGFloat kMinMenuItemWidth = 162.f;
+    const CGFloat kMinMenuItemWidth = 100.f;
     const CGFloat kMarginX = 0.f;
     const CGFloat kMarginY = 0.f;
     
@@ -399,16 +399,23 @@ typedef enum {
     CGFloat maxImageWidth = 54;
     CGFloat maxItemHeight = 0;
     CGFloat maxItemWidth = 0;
+    BOOL isNoImage = YES;
     
     for (XYMenuItem *menuItem in _menuItems) {
         
         const CGSize imageSize = menuItem.image.size;
         if (imageSize.width > maxImageWidth)
             maxImageWidth = imageSize.width;
+        if (menuItem.image) {
+            isNoImage = NO;
+        }
     }
     
     if (maxImageWidth) {
         maxImageWidth += kMarginX;
+    }
+    if (isNoImage) {
+        maxImageWidth = 10;
     }
     
     for (XYMenuItem *menuItem in _menuItems) {
