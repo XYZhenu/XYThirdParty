@@ -288,6 +288,9 @@ XYTableKey(ModelHeader);
     }
     _xy_tableView.backgroundView = nil;
     _xy_tableView.backgroundColor = [UIColor clearColor];
+    if (@available(iOS 15.0, *)) {
+        _xy_tableView.sectionHeaderTopPadding = 0.01;
+    }
 }
 -(void)bindRefreshHeader:(UITableView*)tableview withText:(BOOL)withText {
     if (tableview) {
