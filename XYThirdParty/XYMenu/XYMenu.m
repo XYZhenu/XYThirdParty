@@ -536,7 +536,7 @@ typedef enum {
         ++itemNum;
     }
     
-    contentView.frame = (CGRect){0, 0, maxItemWidth, itemY + kMarginY * 2};
+    contentView.frame = (CGRect){0, 0, maxItemWidth+20, itemY + kMarginY * 2};
     
     return contentView;
 }
