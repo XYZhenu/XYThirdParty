@@ -391,7 +391,7 @@ XYTableKey(ModelCell);
     return cell;
 }
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    XYSectionModel*data = self.xy_isRect?self.ModelRect[indexPath.section]:nil;
+    XYSectionModel*data = self.xy_isRect?self.ModelRect[indexPath.section]:self.section;
     if (data.header && [kind isEqualToString:UICollectionElementKindSectionHeader]) {
         return [self getReuseHeaderFooterWithModel:data.header collectionView:collectionView kind:kind atIndexPath:indexPath];
     } else if (data.footer && [kind isEqualToString:UICollectionElementKindSectionFooter]) {
@@ -422,14 +422,14 @@ XYTableKey(ModelCell);
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
-    XYSectionModel*data = self.xy_isRect?self.ModelRect[section]:nil;
+    XYSectionModel*data = self.xy_isRect?self.ModelRect[section]:self.section;
     if (data.header) {
         return [self getReuseHeaderFooterSizeWithModel:data.header collectionView:collectionView];
     }
     return CGSizeZero;
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
-    XYSectionModel*data = self.xy_isRect?self.ModelRect[section]:nil;
+    XYSectionModel*data = self.xy_isRect?self.ModelRect[section]:self.section;
     if (data.footer) {
         return [self getReuseHeaderFooterSizeWithModel:data.footer collectionView:collectionView];
     }
