@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)UICollectionViewFlowLayout* flowLayout;//Lazy load;
 
 @property(nonatomic,assign)BOOL alwaysHideTabbar;//default NO;
-
+@property(nonatomic,strong)XYSectionModel*section;
 @property(nonatomic,strong)NSMutableArray*ModelRect;
 @property(nonatomic,strong)NSMutableArray*operateRect;
 -(NSUInteger)currentItemCount;

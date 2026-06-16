@@ -12,5 +12,6 @@ NS_ASSUME_NONNULL_BEGIN;
 - (UINavigationController*)pickeImagesNum:(NSInteger)num callback:(void(^)(NSArray<UIImage *> *photos, NSArray *assets,NSArray<NSDictionary *> *infos))callback;
 - (UINavigationController*)pickeImageWithCallback:(void(^)(UIImage *photos, id assets))callback  crop:(BOOL)crop;
 - (UINavigationController*)previewSelectedAssets:(NSMutableArray *)selectedAssets selectedPhotos:(NSMutableArray *)selectedPhotos index:(NSInteger)index;
+- (UINavigationController*)pickeImagesAndVideoNum:(NSInteger)num callback:(void(^)(NSArray<UIImage *> *photos, NSArray*assets,NSArray<NSDictionary *> *infos))callback;
 @end
 NS_ASSUME_NONNULL_END;
